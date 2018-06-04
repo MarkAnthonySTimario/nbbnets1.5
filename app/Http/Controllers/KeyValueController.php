@@ -8,6 +8,8 @@ use App\BloodType;
 use App\CodeValue;
 use App\Nation;
 use App\Exam;
+use App\User;
+use DB;
 
 class KeyValueController extends Controller
 {
@@ -37,6 +39,15 @@ class KeyValueController extends Controller
 
     function bloodbags(){
         return CodeValue::whereCode('BLOOD_BAG')->whereDisableFlg('N')->pluck('code_val','codedtl_cd');
+    }
+
+    function contact_search(Request $request){
+        $search = $request->get('search');
+        return User::with('facility')->whereDisableFlag('N')->where(DB::raw('concat(user_fname," ",user_lname)') , 'LIKE' , '%'.$search.'%')->get();
+    }
+
+    function contact_info(Request $request,$user_id){
+        return User::with('facility')->whereDisableFlag('N')->whereUserId($user_id)->first();
     }
 
     function nations(){

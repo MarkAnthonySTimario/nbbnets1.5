@@ -8,6 +8,10 @@ import VueSession from 'vue-session';
 import VeeValidate from 'vee-validate';
 import _ from 'lodash';
 import $ from 'jquery';
+import ioClient from 'socket.io-client';
+
+
+
 import router from './router';
 import store from './store';
 import http from './http';
@@ -38,7 +42,23 @@ const app = new Vue({
     el: '#app',
     template: `<start></start>`,
     router,
-    store
+    store,
+    data : {
+        messages : []
+    },
+    watch : {
+        messages(){
+            this.$store.state.messages = this.messages;
+        }
+    }
 });
+
+let socket = ioClient('http://localhost:3000');
+Window.socket = socket;
+
+socket.on('init-chat', function(messages){
+    app.messages = messages;
+});
+
 
 window.app = app;

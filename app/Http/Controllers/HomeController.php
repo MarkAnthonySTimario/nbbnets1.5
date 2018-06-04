@@ -9,7 +9,7 @@ use App\Blood;
 class HomeController extends Controller
 {
     protected $client_id = 1;
-    protected $client_secret = 'zBIjeCg8aT3JYpx2CXcgRnBYPF8dVTNqpwgTP31d';
+    protected $client_secret = 'XesSjoeABrC07AKQcImehiIHKz13T3ylDe7pajXy';
 
     function login(Request $request){
         $user = User::with('facility','level')
@@ -44,7 +44,7 @@ class HomeController extends Controller
 
     function token(){
         $http = new \GuzzleHttp\Client;
-
+        
         $response = $http->post(url('/oauth/token'), [
             'form_params' => [
                 'grant_type' => 'client_credentials',

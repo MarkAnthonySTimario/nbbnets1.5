@@ -80,9 +80,16 @@
               </ul>
 
             </li>
+            
           </ul>
-
           <ul class="nav navbar-nav navbar-right">
+            <li v-if="!guest">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" >
+                  <span class="glyphicon glyphicon-chevron-down"></span>
+                  <span class="badge badge-danger" style="background-color:#dc3545;" v-if="$store.state.messages.length">{{$store.state.messages.length}}</span>
+              </a>
+              <chat-box></chat-box>
+            </li>
             <li v-if="!guest"><a href="#" @click.prevent="logout">Logout</a></li>
           </ul>
 
@@ -92,7 +99,10 @@
 </template>
 
 <script>
+import ChatBox from './Chat/Chatbox.vue';
+
 export default {
+  components : {ChatBox},
   methods : {
     logout(){
       this.$session.clear();
