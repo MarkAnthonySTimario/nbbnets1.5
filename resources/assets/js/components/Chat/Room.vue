@@ -65,15 +65,15 @@ export default {
     watch : {
         allMessages(){
             this.getRoomMessages();
-        },
-        msg(){
-            this.msg = this.msg.toUpperCase();
         }
     }
 }
 </script>
 
 <style scoped>
+#btn-input{
+    text-transform: none !important;
+}
 @media (max-width: 500px) {
     #box{
         position:relative;

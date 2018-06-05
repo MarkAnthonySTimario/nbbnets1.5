@@ -20,10 +20,10 @@
                 <small class=" text-muted"><span class="glyphicon glyphicon-time"></span><timeago :since="message.date"></timeago></small>
                 <b class="pull-right primary-font" style="margin-right:1em;">{{message.from}}</b>
             </div>
-            <p v-if="message.from != user_id">
+            <p v-if="message.from != user_id" class="message-container">
                 &nbsp;&nbsp;&nbsp;{{message.text}}
             </p>
-            <p v-if="message.from == user_id">
+            <p v-if="message.from == user_id" class="message-container">
                 {{message.text}}
             </p>
         </div>
@@ -64,6 +64,9 @@ export default {
 </script>
 
 <style scoped>
+.message-container{
+    text-transform: none !important;
+}
 .chat li
 {
     margin-bottom: 10px;

@@ -56,7 +56,7 @@ const app = new Vue({
     }
 });
 
-let socket = ioClient('http://10.100.100.12:3000');
+let socket = ioClient('http://'+window.location.hostname+':3000');
 Window.socket = socket;
 
 if(app.$session.get('user')){

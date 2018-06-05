@@ -9,7 +9,7 @@ use App\Blood;
 class HomeController extends Controller
 {
     protected $client_id = 1;
-    protected $client_secret = 'XesSjoeABrC07AKQcImehiIHKz13T3ylDe7pajXy';
+    protected $client_secret = '78uCA2PiRDElh6AiGsjt4jDTVukWsKyW6dj3UKxd';
 
     function login(Request $request){
         $user = User::with('facility','level')
