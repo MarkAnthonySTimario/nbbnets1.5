@@ -19,9 +19,11 @@ class TestResult extends Model
             $max = TestResult::select('bloodtest_no')
                     ->whereFacilityCd($facility_cd)
                     ->where('bloodtest_no','like',$facility_cd.'%')
-                    ->orderBy('bloodtest_no','desc')->first()->bloodtest_no;
+                    ->orderBy('bloodtest_no','desc')->first();
             if(!$max){
                 return $facility_cd.date('Y').str_pad('1',7,'0',STR_PAD_LEFT);
+            }else{
+                $max = $max->bloodtest_no;
             }
         }
 

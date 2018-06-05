@@ -1,10 +1,13 @@
 <template>
     <li :class="(message.from != user_id ? 'left' : 'right') +'clearfix'">
-        <span class="chat-img pull-left" v-if="message.from != user_id">
-            <img :src="'http://placehold.it/50/55C1E7/fff&text=' + message.from.substr(0,1)" alt="User Avatar" class="img-circle" />
+        <span class="chat-img pull-left" v-if="message.from != user_id && message.to == 'ALL'">
+            <img v-if="contactFetch" :src="'http://placehold.it/50/55C1E7/fff&text=' + contactFetch.user_fname.substr(0,1) + contactFetch.user_lname.substr(0,1)" alt="User Avatar" class="img-circle" />
+        </span>
+        <span class="chat-img pull-left" v-if="message.from != user_id && message.to != 'ALL'">
+            <img :src="'http://placehold.it/50/55C1E7/fff&text=' + contact.user_fname.substr(0,1) + contact.user_lname.substr(0,1)" alt="User Avatar" class="img-circle" />
         </span>
         <span class="chat-img pull-right" v-if="message.from == user_id">
-            <img :src="'http://placehold.it/50/FA6F57/fff&text=' + message.from.substr(0,1)" alt="User Avatar" class="img-circle" />
+            <img :src="'http://placehold.it/50/FA6F57/fff&text=' + user.user_fname.substr(0,1) + user.user_lname.substr(0,1)" alt="User Avatar" class="img-circle" />
         </span>
         <div class="chat-body clearfix">
             <div class="header" v-if="message.from != user_id">
@@ -39,12 +42,23 @@ Vue.use(VueTimeago, {
 });
 
 export default {
-    props : ['message'],
+    props : ['message','contact'],
     data(){
-        let {user_id} = this.$session.get('user');
+        let user = this.$session.get('user');
+        let {user_id} = user;
         return {
-            user_id
+            user_id, user, contactFetch : null
         }
+    },
+    mounted(){
+        let {user_id} = this.$session.get('user');
+        if(this.message.from != user_id){
+            Window.socket.emit("seen",this.message);
+        }
+        this.$http.get(this,"contact/"+this.message.from)
+            .then(({data}) => {
+                this.contactFetch = data;
+            });
     }
 }
 </script>

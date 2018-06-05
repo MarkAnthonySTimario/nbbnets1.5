@@ -86,7 +86,7 @@
             <li v-if="!guest">
               <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" >
                   <span class="glyphicon glyphicon-chevron-down"></span>
-                  <span class="badge badge-danger" style="background-color:#dc3545;" v-if="$store.state.messages.length">{{$store.state.messages.length}}</span>
+                  <span class="badge badge-danger" style="background-color:#dc3545;" v-if="myMessages.length">{{myMessages.length}}</span>
               </a>
               <chat-box></chat-box>
             </li>
@@ -108,11 +108,23 @@ export default {
       this.$session.clear();
       this.$store.commit('USER',null);
       this.$store.commit('TOKEN',null);
+      window.location.reload();
     }
   },
   computed : {
     guest(){
       return !this.$store.state.user;
+    },
+    myMessages(){
+      let {user_id} = this.$session.get('user');
+      let {messages} = this.$store.state;
+      return _.filter(messages, message => {
+        if((message.to.toUpperCase() == user_id.toUpperCase() || message.to.toUpperCase() == 'ALL' || message.to.toUpperCase() == 'FACILITY') && message.seen == false){
+          if(message.from != user_id){
+            return message;
+          }
+        }
+      })
     }
   }
 }

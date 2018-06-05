@@ -25,7 +25,8 @@ export default new Vuex.Store({
             sched_id : null, agency_cd : null
         },
         chat : 0,
-        messages : []
+        messages : [],
+        users : []
     },
     mutations : {
         USER : (state,user) => {

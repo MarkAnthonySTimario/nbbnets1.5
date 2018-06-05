@@ -43,7 +43,11 @@ class KeyValueController extends Controller
 
     function contact_search(Request $request){
         $search = $request->get('search');
-        return User::with('facility')->whereDisableFlag('N')->where(DB::raw('concat(user_fname," ",user_lname)') , 'LIKE' , '%'.$search.'%')->get();
+        return User::with('facility')->whereDisableFlag('N')
+                ->where(function($query) use ($search){
+                    $query->where(DB::raw('concat(user_fname," ",user_lname)') , 'LIKE' , '%'.$search.'%')
+                        ->orWhere('user_id','=',$search);
+                })->get();
     }
 
     function contact_info(Request $request,$user_id){

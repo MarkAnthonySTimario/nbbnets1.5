@@ -1,7 +1,7 @@
 <template>
     <li>
         <span class="chat-img pull-left">
-            <img :src="'http://placehold.it/50/55C1E7/fff&text=' + contact.user_fname.substr(0,1)" alt="User Avatar" class="img-circle" />
+            <img :src="avatarUri + contact.user_fname.substr(0,1) + contact.user_lname.substr(0,1)" alt="User Avatar" class="img-circle" />
         </span>
         <div class="chat-body clearfix">
             <div class="header">
@@ -17,6 +17,12 @@
 
 <script>
 export default {
-    props : ['contact','badge']
+    props : ['contact','badge'],
+    computed : {
+        avatarUri(){
+            let color = _.filter(this.$store.state.users,{user_id : this.contact.user_id}).length ? 'd9534f' : '55C1E7';
+            return 'http://placehold.it/50/'+color+'/fff&text=';
+        }
+    }
 }
 </script>

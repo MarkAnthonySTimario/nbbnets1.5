@@ -52,6 +52,13 @@ export default {
           })
           .then(({data}) => {
 			if(data.status){
+
+				if(_.filter(this.$store.state.users,{user_id : username}).length == 0){
+					Window.socket.emit("add-user",username);
+				}
+				
+				Window.socket.connect();
+
 				this.$session.set("token",data.token);
 				this.$store.commit('TOKEN',data.token);
 				

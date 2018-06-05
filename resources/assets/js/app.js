@@ -44,21 +44,41 @@ const app = new Vue({
     router,
     store,
     data : {
-        messages : []
+        messages : [] , users : []
     },
     watch : {
         messages(){
             this.$store.state.messages = this.messages;
+        },
+        users(){
+            this.$store.state.users = this.users;
         }
     }
 });
 
-let socket = ioClient('http://localhost:3000');
+let socket = ioClient('http://10.100.100.12:3000');
 Window.socket = socket;
 
-socket.on('init-chat', function(messages){
+if(app.$session.get('user')){
+    socket.emit("add-user",app.$session.get('user').user_id);
+}
+
+socket.on('init', function(messages){
     app.messages = messages;
 });
 
+socket.on('read', function(message){
+    app.messages.push(message);
+});
+
+socket.on('seen-message', function(index){
+    app.messages[index].seen = true;
+    app.$store.state.messages = this.messages;
+});
+
+socket.on('update-users', function(users){
+    app.users = users;
+    app.$store.state.users = users;
+});
 
 window.app = app;

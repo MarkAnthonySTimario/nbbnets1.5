@@ -8,30 +8,17 @@
                     <hr/>   
                     <loadingInline v-if="loading" label="searching for contact"></loadingInline>
                     <ul class="chat" v-if="!loading">
-                        <contact @select="selectContact" v-for="contact in filteredContacts" :key="contact.user_id" :contact="contact"></contact>
+                        <contact @select="selectContact" v-for="contact in filteredContacts" :key="contact.user_id" :contact="contact" ></contact>
                     </ul>
                     <div v-if="!loading && filteredContacts.length == 0">
-                       <contact-fetch @select="selectContact" :userid="pm" badge="1+" v-for="(msg , pm) in pms" :key="pm" ></contact-fetch>
-                       <contact @select="selectContact" :contact="{user_id : 'FACILITY', user_fname : 'FACILITY' , user_lname : 'CHAT' , facility : {facility_name : $session.get('user').facility.facility_name} }" :badge="facilityCount" ></contact>
-                       <contact @select="selectContact" :contact="{user_id : 'ALL', user_fname : 'PUBLIC' , user_lname : 'CHAT' , facility : {facility_name : 'PUBLIC'} }" :badge="publicCount" ></contact>
+                       <contact-fetch @select="selectContact" :userid="pm" :badge="msg.length" v-for="(msg , pm) in pms" :key="pm" ></contact-fetch>
+                       <!-- <contact @select="selectContact" :contact="{user_id : 'FACILITY', user_fname : 'FACILITY' , user_lname : 'CHAT' , facility : {facility_name : $session.get('user').facility.facility_name} }" :badge="pms2['FACILITY'] ? pms2['FACILITY'].length : 0" ></contact> -->
+                       <contact @select="selectContact" :contact="{user_id : 'ALL', user_fname : 'PUBLIC' , user_lname : 'CHAT' , facility : {facility_name : 'PUBLIC'} }" :badge="pms2['ALL'] ? pms2['ALL'].length : 0" ></contact>
                     </div>
                 </div>
-                <div class="panel-body" v-if="contact">
-                    <a href="#" @click="contact = null" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-arrow-left"></span> Back to Contacts</a>
-                    <hr/>   
-                    <ul class="chat">
-                        <message v-for="(message,i) in mymessages" :key="i" :message="message"></message>
-                    </ul>
-                </div>
-                <div class="panel-footer" v-if="contact">
-                    <div class="input-group">
-                        <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-                        <span class="input-group-btn">
-                            <button class="btn btn-warning btn-sm" id="btn-chat">
-                                Send</button>
-                        </span>
-                    </div>
-                </div>
+
+                <room v-if="contact" :contact="contact" @close="contact = null;search = '';"></room>
+                
             </div>
         </div>
     </div>
@@ -39,25 +26,26 @@
 </template>
 
 <script>
-import Message from './Message.vue';
+import Room from './Room.vue';
 import Contact from './Contact.vue';
 import ContactFetch from './ContactFetch.vue';
 
 export default {
-    components : {Message,Contact,ContactFetch},
+    props : ['reset'],
+    components : {Room,Contact,ContactFetch},
     data(){
         let {user_id} = this.$session.get('user');
-        return {contact : null, publicCount: 0, facilityCount: 0,
+        return {contact : null,
         search : null, filteredContacts : [], loading : false, 
         user_id
         };
     },
-    mounted(){
-        Window.socket.emit("load-messages",this.user_id);
-    },
     watch : {
         search(){
             this.doSearch(this);
+        },
+        reset(){
+            this.search = ''; this.contact = null;
         }
     },
     methods : {
@@ -79,19 +67,24 @@ export default {
     },
     computed : {
         mymessages(){
-            return _.filter(this.messages, message => {
-                if(message.from.upperCase() == user_id.upperCase()){
-                    return message;
-                }else if(message.to.upperCase() == user_id.upperCase()){
-                    return message;
+            let {user_id} = this.$session.get('user');
+            return _.filter(this.$store.state.messages, message => {
+                if((message.to.toUpperCase() == user_id.toUpperCase() || message.to == 'ALL' || message.to == 'FACILITY') && !message.seen){
+                    if(message.from != user_id){
+                        return message;
+                    }
                 }
             });
         },
-        pmCount(){
-            return this.$store.state.messages.length();
+        pms2(){
+            return _.groupBy(this.mymessages,'to');
         },
         pms(){
-            return _.groupBy(this.$store.state.messages,'from');
+            return _.groupBy(_.filter(this.mymessages, message => {
+                if(message.to != 'ALL' && message.to != 'FACILITY'){
+                    return message;
+                }
+            }),'from');
         }
     }
 }
