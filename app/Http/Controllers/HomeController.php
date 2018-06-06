@@ -9,7 +9,12 @@ use App\Blood;
 class HomeController extends Controller
 {
     protected $client_id = 1;
-    protected $client_secret = '78uCA2PiRDElh6AiGsjt4jDTVukWsKyW6dj3UKxd';
+    protected $client_secret = '';
+
+    function __construct(){
+        $this->client_id = env('API_CLIENT_ID');
+        $this->client_secret = env('API_CLIENT_SECRET');
+    }
 
     function login(Request $request){
         $user = User::with('facility','level')
