@@ -35,6 +35,7 @@ Route::middleware('client')->group(function(){
     Route::post('mbd/donationRemove', 'DonationController@donationRemove');
     Route::post('mbd/checkDonationIDs', 'DonationController@checkDonationIDs');
     Route::post('mbd/updateDonationDetails', 'DonationController@updateDonationDetails');
+    Route::post('mbd/report', 'MBDController@report');
 
     Route::post('donors', 'DonorController@search');
     Route::post('donor/create', 'DonorController@create');

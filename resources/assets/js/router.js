@@ -34,6 +34,8 @@ import Labeling from './components/BloodUnit/Labeling.vue';
 
 import Templates from './components/Administration/Labels.vue';
 
+import MBDReport from './components/Reports/MBDReport.vue';
+
 Vue.use(VueRouter);
 
 export default new VueRouter({
@@ -72,5 +74,7 @@ export default new VueRouter({
         { path : '/Discard', component : Discard },
         { path : '/Label', component : Labeling },
         { path : '/Labels', component : Templates },
+
+        { path : '/MBDReport', component : MBDReport },
     ]
 })

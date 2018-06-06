@@ -62,6 +62,7 @@
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu">
+                <li><router-link to="/MBDReport">MBD Report</router-link></li>
                 <li><router-link to="/BSI">BSI Report</router-link></li>
                 <li><router-link to="/Census">Census</router-link></li>
                 <li><router-link to="/AgencyReport">Agency Report</router-link></li>
