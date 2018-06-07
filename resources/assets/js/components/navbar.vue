@@ -85,10 +85,7 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li v-if="!guest">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" >
-                  <span class="glyphicon glyphicon-chevron-down"></span>
-                  <span class="badge badge-danger" style="background-color:#dc3545;" v-if="myMessages.length">{{myMessages.length}}</span>
-              </a>
+              <notification-toggle></notification-toggle>
               <chat-box></chat-box>
             </li>
             <li v-if="!guest"><a href="#" @click.prevent="logout">Logout</a></li>
@@ -100,10 +97,11 @@
 </template>
 
 <script>
+import NotificationToggle from './Chat/NotificationToggle.vue';
 import ChatBox from './Chat/Chatbox.vue';
 
 export default {
-  components : {ChatBox},
+  components : {NotificationToggle,ChatBox},
   methods : {
     logout(){
       this.$session.clear();
@@ -115,17 +113,6 @@ export default {
   computed : {
     guest(){
       return !this.$store.state.user;
-    },
-    myMessages(){
-      let {user_id} = this.$session.get('user');
-      let {messages} = this.$store.state;
-      return _.filter(messages, message => {
-        if((message.to.toUpperCase() == user_id.toUpperCase() || message.to.toUpperCase() == 'ALL' || message.to.toUpperCase() == 'FACILITY') && message.seen == false){
-          if(message.from != user_id){
-            return message;
-          }
-        }
-      })
     }
   }
 }

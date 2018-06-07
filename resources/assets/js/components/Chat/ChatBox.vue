@@ -1,90 +1,116 @@
 <template>
-<div>
-    <div class="col-md-12" id="box">
-        <div class="panel panel-primary">
-            <div class="panel-collapse collapse" id="collapseOne">
-                <div class="panel-body" v-if="!contact">
-                    <input type="text" class="form-control input-sm" placeholder="Search Name of User" v-model="search">
-                    <hr/>   
-                    <loadingInline v-if="loading" label="searching for contact"></loadingInline>
-                    <ul class="chat" v-if="!loading">
-                        <contact @select="selectContact" v-for="contact in filteredContacts" :key="contact.user_id" :contact="contact" ></contact>
-                    </ul>
-                    <div v-if="!loading && filteredContacts.length == 0">
-                       <contact-fetch @select="selectContact" :userid="pm" :badge="msg.length" v-for="(msg , pm) in pms" :key="pm" ></contact-fetch>
-                       <!-- <contact @select="selectContact" :contact="{user_id : 'FACILITY', user_fname : 'FACILITY' , user_lname : 'CHAT' , facility : {facility_name : $session.get('user').facility.facility_name} }" :badge="pms2['FACILITY'] ? pms2['FACILITY'].length : 0" ></contact> -->
-                       <contact @select="selectContact" :contact="{user_id : 'ALL', user_fname : 'PUBLIC' , user_lname : 'CHAT' , facility : {facility_name : 'PUBLIC'} }" :badge="pms2['ALL'] ? pms2['ALL'].length : 0" ></contact>
-                    </div>
-                </div>
+    <div>
+        <div class="col-md-12" id="box">
+            <div class="panel panel-primary">
+                <div class="panel-collapse collapse" id="collapseOne">
+                    <div class="panel-body" v-if="!contact">
 
-                <room v-if="contact" :contact="contact" @close="contact = null;search = '';"></room>
-                
+                        <search-contact :search="search" :contact="contact" @selectContact="selectContact"></search-contact>
+
+                        <div>
+                        
+                            <!-- Recent New Messages -->
+                            <contact-fetch 
+                                v-for="(msg , pm) in mymessages_from" :key="pm" 
+                                :userid="pm" 
+                                :badge="msg.length" 
+                                @selectContact="selectContact" >
+                            </contact-fetch>
+
+                            <!-- Hot Contacts (Public, Support) -->
+                            <contact 
+                                :contact="contact_all" 
+                                :badge="mymessages_to['ALL'] ? mymessages_to['ALL'].length : 0" 
+                                @selectContact="selectContact" >
+                            </contact>
+
+                            <contact 
+                                v-if="user_id != 'admin'" 
+                                :contact="contact_support" 
+                                :badge="mymessages_to['admin'] ? mymessages_to['admin'].length : 0" 
+                                @selectContact="selectContact" >
+                            </contact>
+
+                        </div>
+
+                    </div>
+
+                    <room v-if="contact" :contact="contact" @close="contact = null;search = '';"></room>
+                    
+                </div>
             </div>
         </div>
     </div>
-</div>
 </template>
 
 <script>
-import Room from './Room.vue';
-import Contact from './Contact.vue';
-import ContactFetch from './ContactFetch.vue';
+import Room from './ChatBox/Room.vue';
+import SearchContact from './ChatBox/SearchContact.vue';
+import Contact from './ChatBox/Contact.vue';
+import ContactFetch from './ChatBox/ContactFetch.vue';
 
 export default {
     props : ['reset'],
-    components : {Room,Contact,ContactFetch},
+    components : {Room,SearchContact,Contact,ContactFetch},
     data(){
-        let {user_id} = this.$session.get('user');
-        return {contact : null,
-        search : null, filteredContacts : [], loading : false, 
-        user_id
+
+        let contact_all = {
+            user_id : 'ALL', 
+            user_fname : 'PUBLIC' , 
+            user_lname : 'CHAT' , 
+            facility : {facility_name : 'PUBLIC'}
         };
+
+        let contact_support = {
+            user_id : 'admin', 
+            user_fname : 'NBBNETS' , 
+            user_lname : 'SUPPORT' , 
+            facility : {facility_name : 'NVBSP - IMU'} 
+        };
+
+        let {user_id} = this.$session.get('user');
+
+        return {
+            search : null, contact : null, contact_all, contact_support ,user_id, loading : false
+        };
+
     },
     watch : {
-        search(){
-            this.doSearch(this);
-        },
         reset(){
             this.search = ''; this.contact = null;
         }
     },
     methods : {
-        doSearch : _.debounce((that) => {
-            if(that.search.length == 0){
-                that.filteredContacts = [];
-                return;
-            }
-            that.loading = true;
-            that.$http.post(that,'contacts/search',{search : that.search})
-            .then(({data}) => {
-                that.filteredContacts = data;
-                that.loading = false;
-            });
-        },500),
+        mustReceive(message){
+            let {user_id} = this;
+            return (message.to == user_id || message.to == 'ALL' || message.to == 'FACILITY') && !message.seen && message.from != user_id;
+        },
         selectContact(contact){
             this.contact = contact;
         }
     },
     computed : {
         mymessages(){
-            let {user_id} = this.$session.get('user');
-            return _.filter(this.$store.state.messages, message => {
-                if((message.to.toUpperCase() == user_id.toUpperCase() || message.to == 'ALL' || message.to == 'FACILITY') && !message.seen){
-                    if(message.from != user_id){
-                        return message;
-                    }
+            let {messages} = this.$store.state;
+            return _.filter(messages, message => {
+                if( this.mustReceive(message)){
+                    return message;
                 }
             });
         },
-        pms2(){
-            return _.groupBy(this.mymessages,'to');
-        },
-        pms(){
+        mymessages_from(){
             return _.groupBy(_.filter(this.mymessages, message => {
-                if(message.to != 'ALL' && message.to != 'FACILITY'){
-                    return message;
+                if(message.to != 'ALL'){
+                    if(this.user_id != 'admin' &&  message.to != 'admin'){
+                        return message;
+                    }else{
+                        return message;
+                    }
                 }
             }),'from');
+        },
+        mymessages_to(){
+            return _.groupBy(this.mymessages,'to');
         }
     }
 }

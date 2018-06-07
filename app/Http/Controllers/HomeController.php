@@ -88,5 +88,9 @@ class HomeController extends Controller
         
     }
 
+    function sound(Request $request){
+        return env("NOTIFICAITON_SOUND_FILE",$request->root().'/chat.mp3');
+    }
+
 }
 

@@ -25,10 +25,11 @@ io.on('connection', function(socket) {
         io.emit('read',message);
     });
 
-    socket.on('seen',({from,to,text}) => {
-        let message_index = _.findIndex(messages,{from,to,text});
-        messages[message_index].seen = true;
-        socket.emit('seen-message',message_index);
+    socket.on('seen',({from,to}) => {
+        _.filter(messages,{from,to}).map(message => {
+            message.seen = true;
+        });
+        socket.emit('seen-message',{from,to});
     });
 
     socket.on('add-user', function(user_id){

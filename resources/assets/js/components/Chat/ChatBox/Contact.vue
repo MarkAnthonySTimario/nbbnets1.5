@@ -5,7 +5,7 @@
         </span>
         <div class="chat-body clearfix">
             <div class="header">
-                <a href="#" @click="$emit('select',contact)"><b class="primary-font" style="margin-left:1em;">{{contact.user_fname}} {{contact.user_lname}}</b></a> 
+                <a href="#" @click="$emit('selectContact',contact)"><b class="primary-font" style="margin-left:1em;">{{contact.user_fname}} {{contact.user_lname}}</b></a> 
                 <span class="badge badge-danger" style="background-color:#dc3545;margin-left:2em;" v-if="badge">{{badge}}</span>
                 <br/>
                 <b class="primary-font" style="margin-left:1em;">{{contact.facility.facility_name}}</b><br/>

@@ -20,33 +20,34 @@
 </template>
 
 <script>
-import Message from './Message.vue';
+import Message from './Room/Message.vue';
 
 export default {
     components : {Message},
     props : ['contact'],
     data(){
         let {messages} = this.$store.state;
+        let {user_id} = this.$session.get('user');
         return {
-            allMessages : messages, messages : [], msg : ''
+            allMessages : messages, messages : [], msg : '', buffer_size : 50, user_id
         }
     },
     methods : {
         getRoomMessages(){
+            let {contact,user_id} = this;
             this.messages = _.filter(this.$store.state.messages, message => {
-                let {contact} = this;
-                let user = this.$session.get('user');
-                if(contact.user_id == 'ALL'){
+                // if(contact.user_id == 'ALL'){
+                //     return true;
+                // }else 
+                if(message.from == contact.user_id && message.to == user_id){
                     return true;
-                }else if(message.from.toUpperCase() == contact.user_id.toUpperCase() && message.to.toUpperCase() == user.user_id.toUpperCase()){
-                    return true;
-                }else if(message.to.toUpperCase() == contact.user_id.toUpperCase() && message.from.toUpperCase() == user.user_id.toUpperCase()){
+                }else if(message.to == contact.user_id && message.from == user_id){
                     return true;
                 }
             });
 
             this.messages = _.orderBy(this.messages,['date'],['desc']);
-            this.messages = _.slice(this.messages,0,20);
+            this.messages = _.slice(this.messages,0,this.buffer_size);
         },
         send(){
             if(this.msg.length == 0){
@@ -59,6 +60,10 @@ export default {
         }
     },
     mounted(){
+        let {contact,user_id} = this;
+        if(contact.from != user_id){
+            Window.socket.emit("seen",{from : contact.user_id, to : user_id});
+        }
         this.allMessages = this.$store.state.messages;
         this.getRoomMessages();
     },

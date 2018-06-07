@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::post('login','HomeController@login');
+Route::get('notificationsound','HomeController@sound');
 
 Route::middleware('client')->group(function(){
     Route::post('verify', 'HomeController@verify');

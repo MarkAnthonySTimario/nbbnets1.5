@@ -71,8 +71,10 @@ socket.on('read', function(message){
     app.messages.push(message);
 });
 
-socket.on('seen-message', function(index){
-    app.messages[index].seen = true;
+socket.on('seen-message', function({from,to}){
+    _.filter(this.messages,{from,to}).map(message => {
+        message.seen = true;
+    });
     app.$store.state.messages = this.messages;
 });
 

@@ -51,14 +51,11 @@ export default {
         }
     },
     mounted(){
-        let {user_id} = this.$session.get('user');
-        if(this.message.from != user_id){
-            Window.socket.emit("seen",this.message);
-        }
+        
         this.$http.get(this,"contact/"+this.message.from)
-            .then(({data}) => {
-                this.contactFetch = data;
-            });
+        .then(({data}) => {
+            this.contactFetch = data;
+        });
     }
 }
 </script>
