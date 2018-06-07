@@ -84,7 +84,7 @@ class MBDController extends Controller
         $sched = $request->get('sched');
         $facility_cd = $request->get('facility_cd');
         
-        $donations = Donation::with('donor','donor.region','donor.province','donor.city','donor.barangay','test','type')->whereSchedId($sched['sched_id']);
+        $donations = Donation::with('donor','donor.region','donor.province','donor.city','donor.barangay','test.details','type')->whereSchedId($sched['sched_id']);
         if($sched['sched_id'] == 'Walk-in'){
             $donations->whereFacilityCd($facility_cd);
             $donations->whereBetween('created_dt',[$sched['from'],$sched['to']]);

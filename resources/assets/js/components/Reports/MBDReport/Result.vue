@@ -27,6 +27,7 @@
                 <table class="report_1 col-lg-12">
                     <thead>
                         <tr>
+                            <th v-if="opts.created_dt.value">Date Encoded</th>
                             <th v-if="opts.lname.value">Last Name</th>
                             <th v-if="opts.fname.value">First Name</th>
                             <th v-if="opts.mname.value">Middle Name</th>
@@ -46,11 +47,12 @@
                             <td :colspan="opts.tti.value ? (Object.keys(activeOpts).length)+Object.keys(exams).length : Object.keys(activeOpts).length">No Result Found</td>
                         </tr>
                         <tr v-for="(row,i) in result" :key="i" v-if="!fetching">
-                            <th v-if="opts.lname.value">{{row.donow ? row.donor.lname : ''}}</th>
-                            <th v-if="opts.fname.value">{{row.donow ? row.donor.fname : ''}}</th>
-                            <th v-if="opts.mname.value">{{row.donow ? row.donor.mname : ''}}</th>
+                            <th v-if="opts.created_dt.value">{{row.created_dt.substr(0,10)}}</th>
+                            <th v-if="opts.lname.value">{{row.donor ? row.donor.lname : ''}}</th>
+                            <th v-if="opts.fname.value">{{row.donor ? row.donor.fname : ''}}</th>
+                            <th v-if="opts.mname.value">{{row.donor ? row.donor.mname : ''}}</th>
                             <th v-if="opts.blood_type.value">{{row.type ? row.type.blood_type : ''}}</th>
-                            <th v-if="opts.bdate.value">{{row.donow ? row.donor.bdate : ''}}</th>
+                            <th v-if="opts.bdate.value">{{row.donor ? row.donor.bdate : ''}}</th>
                             <th v-if="opts.gender.value">
                                 <span v-if="row.donor">{{row.donor.gender | gender}}</span>
                             </th>
@@ -64,10 +66,10 @@
                                 </span>
                             </th>
                             <th v-if="opts.donation_id.value">{{row.donation_id}}</th>
-                            <th v-if="opts.mhpe.value">{{row.mhpe_result}}</th>
-                            <th v-if="opts.collection_stat.value">{{row.collection_stat}}</th>
-                            <th v-if="opts.donor_type.value">{{row.donation_type}}</th>
-                            <td v-for="(exam,cd) in exams" :key="cd" v-if="opts.tti.value">{{exam}}</td>
+                            <th v-if="opts.mhpe.value">{{row.mh_pe_stat | mhpe}}</th>
+                            <th v-if="opts.collection_stat.value">{{row.collection_stat | collection}}</th>
+                            <th v-if="opts.donor_type.value">{{row.donation_type | donationType}}</th>
+                            <td v-for="(exam,cd) in exams" :key="cd" v-if="opts.tti.value">{{getTest(row.test,cd) | testResult}}</td>
                         </tr>
                         <tr v-if="fetching">
                             <td :colspan="opts.tti.value ? (Object.keys(activeOpts).length)+Object.keys(exams).length : Object.keys(activeOpts).length"><loadingInline label="Please wait, retrieving records.."></loadingInline></td>
@@ -103,6 +105,35 @@ export default {
                     return k;
                 }
             });
+        }
+    },
+    methods : {
+        getTest(test,exam_cd){
+            if(!test){
+                return null;
+            }
+            let t = _.find(test.details,{exam_cd});
+            if(!t){
+                return null;
+            }
+            return t.result_int.toUpperCase();
+        }
+    },
+    filters : {
+        testResult(testResult){
+            if(!testResult){
+                return '';
+            }
+            switch(testResult.toUpperCase()){
+                case 'N':
+                    return 'NR';
+                break;
+                case 'R':
+                    return 'R';
+                break;
+                default:
+                    return '';
+            }
         }
     }
     

@@ -12,6 +12,9 @@
         </div>
         <result v-if="!loadingPage" :sched="sched" :exams="exams" :opts="opts" :result="result" :fetching="fetching"></result>
         <loading v-if="loadingPage"></loading>
+        <br/>
+        <br/>
+        <br/>
     </div>
 </template>
 
@@ -21,6 +24,7 @@ import Options from './MBDReport/Options.vue';
 import Result from './MBDReport/Result.vue';
 
 let opts = {
+    created_dt : {value : false, label : "Date Encoded"},
     fname : {value : true, label : "First Name"},  mname : {value: true, label : "Middle Name"},  lname : {value: true, label : "Last Name"},
     blood_type : {value : true, label : "ABO/Rh"},  bdate : {value: true, label : "Birthdate"},  gender : {value: true, label : "Gender"},
     address : {value: true, label : "Address"},  donation_id : {value: true, label : "Donation ID"},  mhpe : {value: true, label : "MH/PE Result"},
