@@ -3,6 +3,8 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var _ = require('lodash');
+var fs = require('fs')
+var util = require('util')
 
 app.set('port', (process.env.PORT || 3000));
 
@@ -42,6 +44,11 @@ io.on('connection', function(socket) {
             return user.id != socket.id;
         });
         io.emit('update-users', users);
+    });
+
+    socket.on('backup', function(){
+        fs.writeFileSync('./chats.js',  util.inspect(messages) , 'utf-8');
+        console.log('backup complete');
     });
 
 });

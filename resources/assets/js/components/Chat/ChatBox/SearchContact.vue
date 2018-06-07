@@ -4,13 +4,16 @@
         <hr/>   
         <loadingInline v-if="loading" label="searching for contact"></loadingInline>
         <ul class="chat" v-if="!loading">
-            <contact @select="selectContact" v-for="contact in filteredContacts" :key="contact.user_id" :contact="contact" ></contact>
+            <contact @selectContact="selectContact" v-for="contact in filteredContacts" :key="contact.user_id" :contact="contact" ></contact>
         </ul>
     </div>
 </template>
 
 <script>
+import Contact from './Contact.vue';
+
 export default {
+    components : {Contact},
     data(){
         return {
             search : null, loading : false,filteredContacts : [] 
