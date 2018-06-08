@@ -64,6 +64,7 @@ Route::middleware('client')->group(function(){
     
     Route::get('admin/templates','TemplateController@lists');
     Route::post('admin/savetemplate','TemplateController@save');
+    Route::post('BSI/item','BSIController@fetch');
 });
 
 Route::middleware('client')->group(function(){
