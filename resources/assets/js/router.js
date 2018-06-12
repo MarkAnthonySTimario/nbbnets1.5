@@ -35,6 +35,9 @@ import Labeling from './components/BloodUnit/Labeling.vue';
 import Templates from './components/Administration/Labels.vue';
 
 import MBDReport from './components/Reports/MBDReport.vue';
+import DonationTypesReport from './components/Reports/DonationTypesReport.vue';
+
+import AvailableBloodStocks from './components/StockManagement/AvailableBloodStocks.vue';
 
 Vue.use(VueRouter);
 
@@ -76,5 +79,7 @@ export default new VueRouter({
         { path : '/Labels', component : Templates },
 
         { path : '/MBDReport', component : MBDReport },
+        { path : '/Reports/Monthly/DonationTypesReport', component : DonationTypesReport },
+        { path : '/AvailableStocks', component : AvailableBloodStocks },
     ]
 })

@@ -11,7 +11,37 @@ class AgencyController extends Controller
         $facility_cd = $request->get('facility_cd');
         $search = $request->get('search');
 
-        return Agency::with('region','province','city','barangay')->whereFacilityCd($facility_cd)->where('agency_name','like','%'.$search.'%')->get();
+        $agencies = Agency::whereFacilityCd($facility_cd)->with('region','province','city','barangay')->where('agency_name','like','%'.$search.'%')->get();
+
+        foreach($agencies as $i => $agency){
+            $agencies[$i] = $this->replaceNye($agency);
+        }
+
+        return $agencies;    
+    }
+    
+    private function replaceNye($agency){
+        if($agency->region){
+            $agency->region->regname = str_replace("??","Ñ",$agency->region->regname);
+            $agency->region->regname = str_replace("Â","Ñ",$agency->region->regname);
+        }
+
+        if($agency->province){
+            $agency->province->provname = str_replace("??","Ñ",$agency->province->provname);
+            $agency->province->provname = str_replace("Â","Ñ",$agency->province->provname);
+        }
+
+        if($agency->city){
+            $agency->city->cityname = str_replace("??","Ñ",$agency->city->cityname);
+            $agency->city->cityname = str_replace("Â","Ñ",$agency->city->cityname);
+        }
+
+        if($agency->barangay){
+            $agency->barangay->bgyname = str_replace("??","Ñ",$agency->barangay->bgyname);
+            $agency->barangay->bgyname = str_replace("Â","Ñ",$agency->barangay->bgyname);
+        }
+        
+        return $agency;
     }
 
     function info(Request $request,$agency_cd){
@@ -33,8 +63,10 @@ class AgencyController extends Controller
     }
 
     function create(Request $request){
+
+        $facility_cd = $request->get('facility_cd');
         
-        $agency_cd = $this->generateAgencyCd(13006);
+        $agency_cd = $this->generateAgencyCd($facility_cd);
 
         $a = new Agency();
         $a->agency_cd = $agency_cd;
@@ -64,7 +96,11 @@ class AgencyController extends Controller
 
     function generateAgencyCd($facility_cd,$i = 1,$max = null){
         if(!$max){
-            $max = Agency::select('agency_cd')->whereFacilityCd($facility_cd)->orderBy('agency_cd','desc')->first()->agency_cd;
+            $firstRecord = Agency::select('agency_cd')->whereFacilityCd($facility_cd)->orderBy('agency_cd','desc')->first();
+            
+            if($firstRecord){
+                $max = $firstRecord->agency_cd;
+            }
             if(!$max){
                 return $facility_cd.str_pad('1',5,'0',STR_PAD_LEFT);
             }

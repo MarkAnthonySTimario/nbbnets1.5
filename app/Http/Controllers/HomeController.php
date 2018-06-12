@@ -64,6 +64,7 @@ class HomeController extends Controller
     function stocks(Request $request){
         return Blood::whereLocation($request->get('facility_cd'))
                 ->where('blood_type','!=','')
+                ->whereCompStat('AVA')
                 ->where('expiration_dt','>',date('Y-m-d'))
                 ->select('blood_type','component_cd')
                 ->selectRaw('count(*) as cnt')

@@ -97,7 +97,7 @@ export default {
   methods : {
     doSearch : _.debounce((that) => {
       that.$http.post(that,"agencies",{
-        facility_cd : that.$store.state.user.facility_cd,
+        facility_cd : that.$session.get('user').facility_cd,
         search : that.search
       })
       .then( ({data}) => {
