@@ -12,7 +12,7 @@
 				    <label for="password">PASSWORD</label>
 				    <input type="password" placeholder="password" v-model="password" :readonly="loading" required/>
   				</p>
-				  <p class="text-danger text-center" v-if="error">
+				  <p class="text-danger text-center" v-if="error && !loading">
 				    {{error}}
 				  </p>
  			 </div>

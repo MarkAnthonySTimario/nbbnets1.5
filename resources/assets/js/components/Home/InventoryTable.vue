@@ -11,8 +11,8 @@
               </tr>
           </thead>
           <tbody class="text-center">
-              <tr v-for="bt in blood_types" :key="bt">
-                  <td>{{bt}}</td>
+              <tr v-for="bt in blood_types" :key="bt" style="font-size:12px;">
+                  <td nowrap>{{bt}}</td>
                   <td v-for="(name,code) in components" :key="code" :name="name" :component="code">{{getStock(code,bt)}}</td>
               </tr>
           </tbody>

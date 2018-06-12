@@ -28,10 +28,38 @@ class DonorController extends Controller
                 if($lname){
                     $s->where('lname','like','%'.$lname.'%');
                 }
-            })->take(20)->get();
+            })->limit(20)->get();
+
+        foreach($search as $i => $donor){
+            $search[$i] = $this->replaceNye($donor);
+        }
 
             
         return $search;
+    }
+
+    private function replaceNye($donor){
+        if($donor->region){
+            $donor->region->regname = str_replace("??","Ñ",$donor->region->regname);
+            $donor->region->regname = str_replace("Â","Ñ",$donor->region->regname);
+        }
+
+        if($donor->province){
+            $donor->province->provname = str_replace("??","Ñ",$donor->province->provname);
+            $donor->province->provname = str_replace("Â","Ñ",$donor->province->provname);
+        }
+
+        if($donor->city){
+            $donor->city->cityname = str_replace("??","Ñ",$donor->city->cityname);
+            $donor->city->cityname = str_replace("Â","Ñ",$donor->city->cityname);
+        }
+
+        if($donor->barangay){
+            $donor->barangay->bgyname = str_replace("??","Ñ",$donor->barangay->bgyname);
+            $donor->barangay->bgyname = str_replace("Â","Ñ",$donor->barangay->bgyname);
+        }
+        
+        return $donor;
     }
 
     function info(Request $request,$seqno){
