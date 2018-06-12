@@ -11,18 +11,18 @@ class Agency extends Model
     protected $primaryKey = 'agency_cd';
 
     function region(){
-        return $this->belongsTo('App\Region','adg_region','regcode');
+        return $this->belongsTo('App\Region','adg_region','regcode')->select('regcode','regname');
     }
 
     function province(){
-        return $this->belongsTo('App\Province','adg_prov','provcode');
+        return $this->belongsTo('App\Province','adg_prov','provcode')->select('provcode','provname');
     }
 
     function city(){
-        return $this->belongsTo('App\City','adg_city','citycode');
+        return $this->belongsTo('App\City','adg_city','citycode')->select('citycode','cityname');
     }
 
     function barangay(){
-        return $this->belongsTo('App\Barangay','adg_bgy','bgycode');
+        return $this->belongsTo('App\Barangay','adg_bgy','bgycode')->select('bgycode','bgyname');
     }
 }

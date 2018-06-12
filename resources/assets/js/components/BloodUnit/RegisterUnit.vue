@@ -105,6 +105,18 @@ export default {
           if(!this.sched.sched_id){
               this.err.push("Select MBD / Agency first");
           }
+
+          let hasData = _.filter(this.rows, row => {
+              if(row.donation_id){
+                  return row;
+              }
+          });
+
+          if(!hasData.length()){
+              this.err.push("Nothing to save");
+          }
+
+
           this.rows.forEach((r,i) => {
               if(!r.donation_id){
                   this.err.push("Blank Donation ID at row "+(i+1));

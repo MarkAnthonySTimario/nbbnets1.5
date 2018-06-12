@@ -39,14 +39,14 @@
                   <tr>
                     <td class="text-center" colspan="8" v-if="isSearching"><loadingInline label="Searching Agency"></loadingInline></td>
                   </tr>
-                  <tr v-if="!isSearching" v-for="a in result" :key="a.agency_cd">
+                  <tr v-if="!isSearching" v-for="a in result" :key="a.agency_cd" style="font-size:12px;">
                     <td>{{a.agency_name}}</td>
                     <td>{{a.owner}}</td>
                     <td>{{a.contact_person}}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td><span v-if="a.region">{{a.region.regname}}</span></td>
+                    <td><span v-if="a.province">{{a.province.provname}}</span></td>
+                    <td><span v-if="a.city">{{a.city.cityname}}</span></td>
+                    <td><span v-if="a.barangay">{{a.barangay.bgyname}}</span></td>
                     <td>
                       <router-link :to="('/Agency/' + a.agency_cd)" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-search"></span></router-link>
                       <router-link :to="('/Agency/update/'+a.agency_cd)" class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-pencil"></span></router-link>

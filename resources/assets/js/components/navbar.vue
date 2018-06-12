@@ -120,7 +120,7 @@ export default {
 
 <style scoped>
 @media (min-width: 768px) and (max-width: 1000px) {
-   .navbar-header {
+    .navbar-header {
         float: none;
     }
     .navbar-left,.navbar-right {

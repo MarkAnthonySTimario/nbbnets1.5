@@ -28,7 +28,7 @@ class DonorController extends Controller
                 if($lname){
                     $s->where('lname','like','%'.$lname.'%');
                 }
-            })->take(20)->get();
+            })->limit(20)->get();
 
             
         return $search;

@@ -120,8 +120,13 @@ export default {
 <style scoped>
 @media (max-width: 500px) {
     #box{
-        position:relative;
+        position:fixed;
         margin-left:0px;
+        width:100%;
+        margin-top: -300px;
+    }
+    .panel-body{
+        height: 100%;
     }
 }
 @media (min-width: 1000px) {
@@ -129,11 +134,15 @@ export default {
     #box{
         position: absolute;
         margin-left:-300px;
+        width:500px;
+    }
+    .panel-body{
+        height: 400px;
     }
 }
 #box{
     z-index: 5000;
-    width:500px;
+    
 }
 .chat
 {
@@ -174,7 +183,6 @@ export default {
 .panel-body
 {
     overflow-y: scroll;
-    height: 400px;
 }
 
 ::-webkit-scrollbar-track

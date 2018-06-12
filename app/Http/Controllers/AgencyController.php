@@ -11,7 +11,7 @@ class AgencyController extends Controller
         $facility_cd = $request->get('facility_cd');
         $search = $request->get('search');
 
-        return Agency::whereFacilityCd($facility_cd)->where('agency_name','like','%'.$search.'%')->get();
+        return Agency::with('region','province','city','barangay')->whereFacilityCd($facility_cd)->where('agency_name','like','%'.$search.'%')->get();
     }
 
     function info(Request $request,$agency_cd){
