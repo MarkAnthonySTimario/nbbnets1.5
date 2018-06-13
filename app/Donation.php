@@ -35,6 +35,10 @@ class Donation extends Model
         return $this->belongsTo('App\MBD','sched_id','sched_id');
     }
 
+    function mbd_min(){
+        return $this->belongsTo('App\MBD','sched_id','sched_id')->select('sched_id','agency_name','donation_dt');
+    }
+
     function units(){
         return $this->hasMany('App\Blood','donation_id','donation_id');
     }
