@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="label">
       <loading v-if="loading"></loading>
       <div class="paper" v-if="!loading">
           <table class="barcode-table">
@@ -13,7 +13,13 @@
                   </td>
               </tr>
           </table>
-          <barcode v-bind:value="preview.donation_id" width="2" height="30"></barcode>
+          <table class="barcode-tab" style="border-top:1px solid #000;">
+              <tr>
+                  <td>
+                      <img src="barcode/NVBSP20181231231" width="300" height="50" alt="">
+                  </td>
+              </tr>
+          </table>
           <table class="barcode-table" style="border-top:1px solid #000;">
               <tr>
                   <td rowspan="2" class="abo" width="100"><center>B</center></td>
@@ -50,15 +56,17 @@
 </template>
 
 <script>
-import VueBarcode from 'vue-barcode';
+import printJS from 'print-js';
 
 export default {
-  components : {'barcode' : VueBarcode},
   props : ['preview'],
   data(){
       return {
           loading : false
       }
+  },
+  mounted(){
+    //   printJS('label','html');
   }
 }
 </script>

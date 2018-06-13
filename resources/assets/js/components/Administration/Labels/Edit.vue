@@ -42,11 +42,9 @@ String.prototype.replaceAll = function(search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
 };
-import VueBarcode from 'vue-barcode';
 
 export default {
   props : ['edit'],
-  components : {'barcode' : VueBarcode},
   data(){
       let {edit} = this;
       return {
