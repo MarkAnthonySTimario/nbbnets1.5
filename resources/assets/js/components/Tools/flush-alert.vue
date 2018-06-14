@@ -11,7 +11,7 @@
                   <div class="text-center">{{$store.state.msg.content}}</div>
               </div>
               <div class="modal-footer">
-                  <div class="pull-right"><button class="btn btn-sm btn-primary" data-dismiss="modal" @click="closeAndClear">Close</button></div>
+                  <div class="pull-right"><button class="btn btn-sm btn-primary" data-dismiss="modal" @click="closeAndClear" id="alert-close">Close</button></div>
               </div>
           </div>
       </div>
@@ -23,7 +23,8 @@
 export default {
   updated(){
       if(this.$store.state.msg != null){
-          $("#flush-msg").modal("show");
+          $("#flush-msg").modal("show").focus();
+          $("#alert-close").focus();
       }
   },
   methods : {

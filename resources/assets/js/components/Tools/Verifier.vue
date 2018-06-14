@@ -15,7 +15,7 @@
                         <div class="form-group required">
                             <label for="" class="control-label col-lg-4">User Name</label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control input-sm" placeholder="User Name" v-model="username">
+                                <input type="text" class="form-control input-sm" id="user_id" placeholder="User Name" v-model="username">
                             </div>
                         </div>
                         <div class="form-group required">
@@ -76,6 +76,9 @@ export default {
               this.loading = false;
           })
       }
+  },
+  mounted(){
+      $("#user_id").focus();
   }
 }
 </script>

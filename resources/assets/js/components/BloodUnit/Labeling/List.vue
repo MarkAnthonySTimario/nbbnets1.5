@@ -193,7 +193,10 @@ export default {
               this.$store.state.msg = {
                   content : 'Blood Labeling succesfully saved.'
               };
-              this.donations = [];
+              this.selected = [];
+            this.donations = [];
+            this.loading = false;
+            this.fetchDonations();
           })
       },
       clone(obj){
