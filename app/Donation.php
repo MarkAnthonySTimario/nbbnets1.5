@@ -15,6 +15,10 @@ class Donation extends Model
         return $this->belongsTo('App\Donor','donor_sn','seqno')->exclude('donor_photo');
     }
 
+    function donor_min(){
+        return $this->belongsTo('App\Donor','donor_sn','seqno')->select('seqno','fname','lname');
+    }
+
     function processing(){
         return $this->belongsTo('App\Processing','donation_id','donation_id');
     }
@@ -41,6 +45,10 @@ class Donation extends Model
 
     function units(){
         return $this->hasMany('App\Blood','donation_id','donation_id');
+    }
+
+    function units_min(){
+        return $this->hasMany('App\Blood','donation_id','donation_id')->select('donation_id');
     }
 
     function discards(){

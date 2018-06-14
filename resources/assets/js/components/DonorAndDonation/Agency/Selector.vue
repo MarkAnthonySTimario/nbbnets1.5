@@ -15,7 +15,7 @@
                   </div>
               </div>
             <div class="table-responsive">
-                <table class="table table-bordered table-condensed table-hover">
+                <table class="table table-bordered table-condensed table-hover" style="font-size:12px;">
                     <thead>
                         <tr>
                             <th>Agency</th>

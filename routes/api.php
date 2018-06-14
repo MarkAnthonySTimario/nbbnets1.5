@@ -61,6 +61,7 @@ Route::middleware('client')->group(function(){
     Route::post('discard/list','DiscardController@lists');
     Route::post('discard/save','DiscardController@save');
     Route::post('labeling/list','LabelController@lists');
+    Route::post('labeling/save','LabelController@save');
     
     Route::get('admin/templates','TemplateController@lists');
     Route::post('admin/savetemplate','TemplateController@save');

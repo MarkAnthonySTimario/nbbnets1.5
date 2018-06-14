@@ -21,7 +21,5 @@ Route::get('/login', function () {
     return view('welcome');
 })->name('login');
 
-Route::get('/barcode/{donation_id}',function ($donation_id){
-    $barcode = DNS1D::getBarcodePNG($donation_id, "C128",2,30,[0,0,0],true);
-    return response($barcode, 200)->header('Content-Type','image/png');
-});
+Route::get('/barcode/{donation_id}','TemplateController@barcode');
+Route::get('/label','TemplateController@preview');

@@ -58,12 +58,12 @@
                           <td colspan="7">
                               <div class="row">
                                   <div class="col-lg-4">
-                                    <button class="btn btn-primary" @click.prevent="validateForm" :disabled="loading">Register Units</button>
-                                    <button class="btn btn-default" @click.prevent="newRow" :disabled="loading">New Row</button>
+                                    <button class="btn btn-primary btn-sm" @click.prevent="validateForm" :disabled="loading">Register Units</button>
+                                    <button class="btn btn-default btn-sm" @click.prevent="newRow" :disabled="loading">New Row</button>
                                   </div>
                                     <loadingInline class="col-lg-4" v-if="loading" label="Please wait.."></loadingInline>
                                     <div class="col-lg-2 pull-right">
-                                        <button class="btn btn-danger" @click.prevent="clearAll" :disabled="loading">Clear All</button>
+                                        <button class="btn btn-danger btn-sm" @click.prevent="clearAll" :disabled="loading">Clear All</button>
                                     </div>
                               </div>
                           </td>
@@ -105,16 +105,22 @@ export default {
           if(!this.sched.sched_id){
               this.err.push("Select MBD / Agency first");
           }
-
-          let hasData = _.filter(this.rows, row => {
-              if(row.donation_id){
-                  return row;
+          
+          _.remove(this.rows, (item) => {
+              if(!item.donation_id){
+                  return true;
               }
           });
 
-          if(!hasData.length()){
-              this.err.push("Nothing to save");
-          }
+        //   let hasData = _.filter(this.rows, row => {
+        //       if(row.donation_id){
+        //           return row;
+        //       }
+        //   });
+
+        //   if(!hasData.length()){
+        //       this.err.push("Nothing to save");
+        //   }
 
 
           this.rows.forEach((r,i) => {

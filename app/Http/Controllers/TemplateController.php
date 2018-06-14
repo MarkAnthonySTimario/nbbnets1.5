@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Template;
+use App\Facility;
+use App\Blood;
+
+use Milon\Barcode\Facades\DNS1DFacade;
+use Response;
+use Storage;
 
 class TemplateController extends Controller
 {
@@ -29,5 +35,59 @@ class TemplateController extends Controller
             $t->save();
         }
 
+    }
+
+    function barcode($donation_id){
+        $barcode = DNS1DFacade::getBarcodePNG($donation_id, "C128",2,30);
+        $barcode = base64_decode($barcode);
+        $response = Response::make($barcode);
+        $response->header('Content-Type','image/png');
+        return $response;
+    }
+
+    function preview(Request $request){
+        $facility_cd = $request->get('facility_cd');
+        $donation_id = $request->get('donation_id');
+        $component_cd = $request->get('component_cd');
+
+        $label = $this->prepareTemplate($facility_cd,$donation_id,$component_cd);
+        return view('layout.label')->withContent($label);
+    }
+    
+    private function getTemplate($facility_cd){
+        $template = Template::whereFacilityCd($facility_cd)->first();
+
+        if($template){
+            return $template->template;
+        }
+        // return asset('storage/label-template.html');
+        return Storage::get('label-template.html');
+    }
+
+    private function prepareTemplate($facility_cd,$donation_id,$component_cd){
+        
+        $facility = Facility::whereFacilityCd($facility_cd)->firstOrFail();
+        $unit = Blood::with('component','donation_min.mbd_min')
+                    ->whereLocation($facility_cd)
+                    ->whereDonationId($donation_id)
+                    ->whereComponentCd($component_cd)
+                    ->whereNotIn('comp_stat',['AVA','EXP','DIS','ISS'])
+                    ->firstOrFail();
+        $bt = explode(' ',$unit->blood_type);
+        $collection_dt = $unit->donation_min->sched_id == 'Walk-in' ? $unit->donation_min->created_dt : $unit->donation_min->mbd_min->donation_dt;
+        $collection_dt = date('M d, Y',strtotime($collection_dt));
+        $template = $this->getTemplate($facility_cd);
+        
+        $template = str_replace('<!--FACILITY_NAME-->',$facility->facility_name,$template);
+        $template = str_replace('<!--BARCODE-->','<div style="font-size:14px;font-family:arial;background:#fff;width:98%;height:50px;text-align:center;vertical-align:middle;padding:2px;"><img src="barcode/'.$donation_id.'" width="95%" height="30" /><center><b>'.$donation_id.'</b></center></div>',$template);
+        $template = str_replace('<!--ABO-->',$bt[0],$template);
+        $template = str_replace('<!--RH-->',$bt[1],$template);
+        $template = str_replace('<!--COMPONENT-->',$unit->component->comp_name,$template);
+        $template = str_replace('<!--VOLUME-->',$unit->component_vol,$template);
+        $template = str_replace('<!--COLLECTION_DATE-->',$collection_dt,$template);
+        $template = str_replace('<!--EXPIRATION_DATE-->',date('M d, Y',strtotime($unit->expiration_dt)).' 23:59:00',$template);
+        $template = str_replace('<!--STORE-->','Store at '.$unit->component->min_storage.' to '.$unit->component->max_storage.' &deg;C',$template);
+
+         return $template;
     }
 }

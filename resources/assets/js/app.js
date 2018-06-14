@@ -37,6 +37,20 @@ Vue.component('error',error);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+ Vue.mixin({
+     methods : {
+         printBloodBagLabel(facility_cd,donation_id,component_cd){
+            let url =  'http://'+window.location.host+window.location.pathname+'label?facility_cd='+facility_cd+'&donation_id='+donation_id+'&component_cd='+component_cd;
+            
+            let w = window.open(url,'winname','directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=375,height=270');
+            w.onload = () => {
+                    w.print();
+                w.close();
+            };
+         }
+     }
+ })
+
 
 const app = new Vue({
     el: '#app',

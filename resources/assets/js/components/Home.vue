@@ -2,7 +2,7 @@
   <div>
       <br/>
       <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-7">
           <div class="row">
             <div class="col-lg-12">
               <div class="panel panel-success">
@@ -15,7 +15,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-5">
           <div class="row">
             <div class="col-lg-12">
               <user></user>

@@ -26,7 +26,6 @@
     "bootstrap-vue": "^2.0.0-rc.6",
     "date-fns": "^1.29.0",
     "npm": "^5.8.0",
-    "print-js": "^1.0.47",
     "socketio": "^1.0.0",
     "vee-validate": "^2.0.6",
     "vue-timeago": "^4.0.1",

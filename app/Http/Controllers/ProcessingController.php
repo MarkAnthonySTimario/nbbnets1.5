@@ -19,9 +19,9 @@ class ProcessingController extends Controller
         if($sched_id == 'Walk-in'){
             $from = $sched['from'];
             $to = $sched['to'];
-            $donations = Donation::with('processing','type','test','mbd')->whereNotNull('donation_id')->whereFacilityCd($facility_cd)->whereSchedId($sched_id)->whereBetween('created_dt',[$from,$to])->get();
+            $donations = Donation::with('processing','units_min','type','test','mbd')->whereNotNull('donation_id')->whereFacilityCd($facility_cd)->whereSchedId($sched_id)->whereBetween('created_dt',[$from,$to])->get();
         }else{
-            $donations = Donation::with('processing','type','test','mbd')->whereNotNull('donation_id')->whereFacilityCd($facility_cd)->whereSchedId($sched_id)->get();
+            $donations = Donation::with('processing','units_min','type','test','mbd')->whereNotNull('donation_id')->whereFacilityCd($facility_cd)->whereSchedId($sched_id)->get();
         }
 
         $response = [];
@@ -29,11 +29,11 @@ class ProcessingController extends Controller
             if(!$donation->blood_bag){
 
             }else if(!$donation->test){
-                if(!$donation->processing){
+                if(!$donation->processing && $donation->units_min->count() == 0){
                     $response[] = $donation;
                 }
             }else if($donation->test->result != 'R'){
-                if(!$donation->processing){
+                if(!$donation->processing && $donation->units_min->count() == 0){
                     $response[] = $donation;
                 }
             }

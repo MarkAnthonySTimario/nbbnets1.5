@@ -3,7 +3,7 @@
       <div class="panel-heading">User Details
           <router-link to="/changepassword" class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-lock"></span> Change Password</router-link>
       </div>
-      <table class="table">
+      <table class="table table-condensed" style="font-size:12px;">
           <tbody>
             <tr>
                 <th nowrap>User Name</th><td>{{$store.state.user.user_id}}</td>
