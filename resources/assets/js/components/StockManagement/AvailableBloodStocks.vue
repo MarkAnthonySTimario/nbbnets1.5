@@ -128,7 +128,7 @@
                     return this.result;
                 }
                 return _.filter(this.result,(unit) => {
-                    if(_.startsWith(unit.donation_id.toUpperCase(),this.search.toUpperCase())){
+                    if(unit.donation_id.toUpperCase().indexOf(this.search.toUpperCase())  > -1){
                         return unit;
                     }
                 });
