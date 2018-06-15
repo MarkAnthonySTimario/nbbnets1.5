@@ -17,12 +17,18 @@ import store from './store';
 import http from './http';
 import error from './components/Tools/error.vue';
 
+
+
 import _globals from './_globals';
 
 require('./bootstrap');
 
 window.Vue = require('vue');
 import './filters';
+
+// Import and use Vue Froala lib.
+import VueFroala from 'vue-froala-wysiwyg'
+Vue.use(VueFroala);
 
 Vue.use(VueSession);
 Vue.use(VeeValidate);

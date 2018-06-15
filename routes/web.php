@@ -23,3 +23,4 @@ Route::get('/login', function () {
 
 Route::get('/barcode/{donation_id}','TemplateController@barcode');
 Route::get('/label','TemplateController@preview');
+Route::get('/labelpreview','TemplateController@facilitypreview');

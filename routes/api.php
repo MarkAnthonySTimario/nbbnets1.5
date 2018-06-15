@@ -65,6 +65,10 @@ Route::middleware('client')->group(function(){
     
     Route::get('admin/templates','TemplateController@lists');
     Route::post('admin/savetemplate','TemplateController@save');
+    Route::get('labeltemplate/gettemplate/{facility_cd}','TemplateController@getTemplate');
+    Route::post('labeltemplate/savefacilitytemplate','TemplateController@saveFacilityTemplate');
+    Route::post('labeltemplate/checkunit','TemplateController@checkunit');
+    Route::post('labeltemplate/createdummy','TemplateController@createdummy');
     Route::post('BSI/item','BSIController@fetch');
     Route::post('available/list','BloodController@lists');
 });

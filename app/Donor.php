@@ -29,8 +29,10 @@ class Donor extends Model
             $max = Donor::select('donor_id')
                     ->whereFacilityCd($facility_cd)
                     ->where('donor_id','like',$facility_cd.'%')
-                    ->orderBy('donor_id','desc')->first()->donor_id;
-            if(!$max){
+                    ->orderBy('donor_id','desc')->first();
+            if($max){
+                $max = $max->donor_id;
+            }else if(!$max){
                 return $facility_cd.date('Y').str_pad('1',7,'0',STR_PAD_LEFT);
             }
         }

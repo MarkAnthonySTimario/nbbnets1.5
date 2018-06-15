@@ -58,4 +58,27 @@ class Donation extends Model
     function labels(){
         return $this->hasMany('App\Label','donation_id','donation_id');
     }
+
+    static function generateSeqno($facility_cd,$i = 1,$max = null){
+        if(!$max){
+            $max = Donation::select('seqno')->whereFacilityCd($facility_cd)->orderBy('seqno','desc')->first();
+            if($max){
+                $max = $max->seqno;
+            }else if(!$max){
+                return $facility_cd.date('Y').str_pad('1',5,'0',STR_PAD_LEFT);
+            }
+        }
+
+        $num = substr($max,9,strlen($max));
+        $num = abs($num);
+        $num = $num+$i;
+        $new = $facility_cd.date('Y').str_pad($num,7,'0',STR_PAD_LEFT);
+        $isExists = Donation::whereSeqno($new)->first();
+        if($isExists){
+            $i++;
+            return self::generateSeqno($facility_cd,$i,$max);
+        }
+
+        return $new;
+    }
 }

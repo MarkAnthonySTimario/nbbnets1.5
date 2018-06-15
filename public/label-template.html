@@ -5,41 +5,41 @@
                 <img src="images/doh.png" width="50" style="margin-left:auto;margin-right:auto;" />
             </td>
             <td style="font-size: 10px;text-align: center;padding:2px;border-bottom:1px solid #000;">
-                <!--FACILITY_NAME--><br/>
+                {{FACILITY_NAME}}<br/>
                 Blood Bank and Transfusion Services<br/>
                 Quezon Ave. Quezon City<br/>
                 Tel. No. 1234567 local 123
             </td>
         </tr>
     </table>
-    <!--BARCODE-->
+    {{BARCODE}}
     <table style="width:100%;font-size: 10px;border-top:1px solid #000;"  cellpadding="2" cellspacing="0">
         <tr>
-            <td rowspan="2" width="100" style="font-family:Arial, Helvetica, sans-serif; font-size:36px;font-weight: bold;vertical-align: middle;border-right:1px solid #000;border-bottom:1px solid #000;">
+            <td rowspan="2" width="100" style="font-family:Arial, Helvetica, sans-serif; font-size:36px;font-weight: bold;vertical-align: middle;border-top:1px solid #000;border-right:1px solid #000;border-bottom:1px solid #000;">
                 <center>
-                    <!--ABO-->
+                    {{ABO}}
                 </center>
             </td>
-            <td rowspan="2" style="vertical-align: middle;border-right:1px solid #000;border-bottom:1px solid #000;">
-                <center>Rh(D)<br/><!--RH--></center>
+            <td rowspan="2" style="vertical-align: middle;border-top:1px solid #000;border-right:1px solid #000;border-bottom:1px solid #000;">
+                <center>Rh(D)<br/>{{RH}}</center>
             </td>
-            <td style="font-size:10px;border-bottom:1px solid #000;">
+            <td style="font-size:10px;border-top:1px solid #000;border-bottom:1px solid #000;">
                 Collection Date:<br/>
-                <!--COLLECTION_DATE-->
+                {{COLLECTION_DATE}}
             </td>
         </tr>
         <tr>
             <td style="font-size:10px;border-bottom:1px solid #000;">
                 Expiration Date:<br/>
-                <!--EXPIRATION_DATE-->
+                {{EXPIRATION_DATE}}
             </td>
         </tr>
         <tr>
-            <td colspan="3" style="border-bottom:1px solid #000;"><!--COMPONENT--> VOLUME: <!--VOLUME-->ml</td>
+            <td colspan="3" style="border-bottom:1px solid #000;">{{COMPONENT}} VOLUME: {{VOLUME}}ml</td>
         </tr>
         <tr>
             <td colspan="2" style="border-right:1px solid #000;border-bottom:1px solid #000;">Human Blood Product</td>
-            <td style="border-bottom:1px solid #000;"><!--STORE--></td>
+            <td style="border-bottom:1px solid #000;">{{STORE}}</td>
         </tr>
         <tr>
             <td colspan="2" style="border-right:1px solid #000;border-bottom:1px solid #000;">From a volunteer blood donor</td>

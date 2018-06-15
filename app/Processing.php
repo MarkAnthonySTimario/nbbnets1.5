@@ -16,8 +16,10 @@ class Processing extends Model
             $max = self::select('bloodproc_no')
                     ->whereFacilityCd($facility_cd)
                     ->where('bloodproc_no','like',$facility_cd.'%')
-                    ->orderBy('bloodproc_no','desc')->first()->bloodproc_no;
-            if(!$max){
+                    ->orderBy('bloodproc_no','desc')->first();
+            if($max){
+                $max = $max->bloodproc_no;
+            }else if(!$max){
                 return $facility_cd.date('Y').str_pad('1',7,'0',STR_PAD_LEFT);
             }
         }

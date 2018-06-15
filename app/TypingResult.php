@@ -16,8 +16,10 @@ class TypingResult extends Model
             $max = TypingResult::select('bloodtyping_no')
                     ->whereFacilityCd($facility_cd)
                     ->where('bloodtyping_no','like',$facility_cd.'%')
-                    ->orderBy('bloodtyping_no','desc')->first()->bloodtyping_no;
-            if(!$max){
+                    ->orderBy('bloodtyping_no','desc')->first();
+            if($max){
+                $max = $max->bloodtyping_no;
+            }else if(!$max){
                 return $facility_cd.date('Y').str_pad('1',7,'0',STR_PAD_LEFT);
             }
         }

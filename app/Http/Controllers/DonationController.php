@@ -88,8 +88,10 @@ class DonationController extends Controller
 
     function generateSeqno($facility_cd,$i = 1,$max = null){
         if(!$max){
-            $max = Donation::select('seqno')->whereFacilityCd($facility_cd)->orderBy('seqno','desc')->first()->seqno;
-            if(!$max){
+            $max = Donation::select('seqno')->whereFacilityCd($facility_cd)->orderBy('seqno','desc')->first();
+            if($max){
+                $max = $max->seqno;
+            }else if(!$max){
                 return $facility_cd.date('Y').str_pad('1',5,'0',STR_PAD_LEFT);
             }
         }

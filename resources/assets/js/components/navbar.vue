@@ -77,8 +77,12 @@
                 Admistrations
                 <span class="caret"></span>
               </a>
-              <ul class="dropdown-menu" v-if="$session.get('user').ulevel == -1">
+              <ul class="dropdown-menu" v-if="user.ulevel == -1">
                 <li><router-link to="/Labels">Manage Labels</router-link></li>
+              </ul>
+
+              <ul class="dropdown-menu" v-if="user.ulevel == 1">
+                <li><router-link to="/FacilityLabel">Blood Bag Template</router-link></li>
               </ul>
 
             </li>
@@ -104,6 +108,12 @@ import MonthlyReportGroupLinks from './navbar/MonthlyReportGroupLinks.vue';
 
 export default {
   components : {NotificationToggle,ChatBox,MonthlyReportGroupLinks},
+  data(){
+    let user = this.$session.get('user');
+    return {
+      user
+    }
+  },
   methods : {
     logout(){
       this.$session.clear();

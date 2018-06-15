@@ -23,6 +23,7 @@
                                   <select class="form-control input-sm" v-model="donation.abo">
                                       <option value="A">A</option>
                                       <option value="B">B</option>
+                                      <option value="AB">AB</option>
                                       <option value="O">O</option>
                                   </select>
                               </td>
@@ -64,7 +65,7 @@ export default {
           });
       });
       return {
-          donations, loading : false, verify : false
+          donations, loading : false, verify : false 
       };
   },
   computed : {
