@@ -20,15 +20,9 @@
         </div>
         <div class="row" v-if="!page_loading && !no_unit">
             <div class="col-lg-6">
-                <div class="panel panel-success">
-                    <div class="panel-heading">Blood Bag template</div>
-                    <div class="panel-body">
-                        <froala :tag="'textarea'" :config="config" v-model="raw"></froala>
-                    </div>
-                    <div class="panel-footer">
-                        <button class="btn btn-default btn-sm" @click="saveChanges">Save Changes</button>
-                    </div>
-                </div>
+                <html-editor :config="config" :init="raw" @update="updateRaw"></html-editor>
+                <hr/>
+                <button class="btn btn-default btn-sm" @click="saveChanges">Apply Changes</button>
             </div>
             <div class="col-lg-6">
                 <loadingInline v-if="loading" label="Refreshing"></loadingInline>
@@ -37,21 +31,12 @@
                 </div>
             </div>
         </div>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     </div>
 </template>
 
 <script>
 
-    // Require Froala Editor js file.
-    require('froala-editor/js/froala_editor.pkgd.min')
-
-    // Require Froala Editor css files.
-    require('froala-editor/css/froala_editor.pkgd.min.css')
-    // require('font-awesome/css/font-awesome.css')
-    require('froala-editor/css/froala_style.min.css')
-
-    import VueFroala from 'vue-froala-wysiwyg';
+    
 
     export default{
         data(){
@@ -72,6 +57,9 @@
             // this.refreshHTML();
         },
         methods : {
+            updateRaw(raw){
+                this.raw = raw;
+            },
             saveChanges(){
                 this.loading = true;
                 let { facility_cd , raw } = this; 

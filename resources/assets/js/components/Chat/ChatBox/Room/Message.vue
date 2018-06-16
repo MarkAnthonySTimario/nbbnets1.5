@@ -1,13 +1,13 @@
 <template>
     <li :class="(message.from != user_id ? 'left' : 'right') +'clearfix'">
         <span class="chat-img pull-left" v-if="message.from != user_id && message.to == 'ALL'">
-            <img v-if="contactFetch" :src="'http://placehold.it/50/55C1E7/fff&text=' + contactFetch.user_fname.substr(0,1) + contactFetch.user_lname.substr(0,1)" alt="User Avatar" class="img-circle" />
+            <!-- <img v-if="contactFetch" :src="'http://placehold.it/50/55C1E7/fff&text=' + contactFetch.user_fname.substr(0,1) + contactFetch.user_lname.substr(0,1)" alt="User Avatar" class="img-circle" /> -->
         </span>
         <span class="chat-img pull-left" v-if="message.from != user_id && message.to != 'ALL'">
-            <img :src="'http://placehold.it/50/55C1E7/fff&text=' + contact.user_fname.substr(0,1) + contact.user_lname.substr(0,1)" alt="User Avatar" class="img-circle" />
+            <!-- <img :src="'http://placehold.it/50/55C1E7/fff&text=' + contact.user_fname.substr(0,1) + contact.user_lname.substr(0,1)" alt="User Avatar" class="img-circle" /> -->
         </span>
         <span class="chat-img pull-right" v-if="message.from == user_id">
-            <img :src="'http://placehold.it/50/FA6F57/fff&text=' + user.user_fname.substr(0,1) + user.user_lname.substr(0,1)" alt="User Avatar" class="img-circle" />
+            <!-- <img :src="'http://placehold.it/50/FA6F57/fff&text=' + user.user_fname.substr(0,1) + user.user_lname.substr(0,1)" alt="User Avatar" class="img-circle" /> -->
         </span>
         <div class="chat-body clearfix">
             <div class="header" v-if="message.from != user_id">

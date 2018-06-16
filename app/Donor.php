@@ -24,6 +24,29 @@ class Donor extends Model
         return $query->select( array_diff( $this->columns,(array) $value) );
     }
 
+    static function generateSeqno($facility_cd,$i = 1,$max = null){
+        if(!$max){
+            $max = Donor::selectRaw('max(seqno)')->whereFacilityCd($facility_cd)->first();
+            if($max){
+                $max = $max->seqno;
+            }else if(!$max){
+                return $facility_cd.date('Y').str_pad('1',5,'0',STR_PAD_LEFT);
+            }
+        }
+
+        $num = substr($max,9,strlen($max));
+        $num = abs($num);
+        $num = $num+$i;
+        $new = $facility_cd.date('Y').str_pad($num,7,'0',STR_PAD_LEFT);
+        $isExists = Donor::whereSeqno($new)->first();
+        if($isExists){
+            $i++;
+            return $this->generateSeqno($facility_cd,$i,$max);
+        }
+
+        return $new;
+    }
+
     static function generateNo($facility_cd,$i = 1,$max = null){
         if(!$max){
             $max = Donor::select('donor_id')

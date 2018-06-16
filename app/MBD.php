@@ -15,9 +15,9 @@ class MBD extends Model
         return $this->hasMany('App\Donation','sched_id','sched_id');
     }
 
-    function generateSchedID($facility_cd,$i = 1,$max = null){
+    static function generateSchedID($facility_cd,$i = 1,$max = null){
         if(!$max){
-            $max = MBD::select('sched_id')->whereFacilityCd($facility_cd)->orderBy('sched_id','desc')->first();
+            $max = MBD::selectRaw('max(sched_id)')->whereFacilityCd($facility_cd)->first();
             if($max){
                 $max = $max->sched_id;
             }else if(!$max){

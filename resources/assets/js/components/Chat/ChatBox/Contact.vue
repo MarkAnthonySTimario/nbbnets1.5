@@ -1,7 +1,7 @@
 <template>
     <li>
         <span class="chat-img pull-left">
-            <img :src="avatarUri + contact.user_fname.substr(0,1) + contact.user_lname.substr(0,1)" alt="User Avatar" class="img-circle" />
+            <!-- <img :src="avatarUri + contact.user_fname.substr(0,1) + contact.user_lname.substr(0,1)" alt="User Avatar" class="img-circle" /> -->
         </span>
         <div class="chat-body clearfix">
             <div class="header">

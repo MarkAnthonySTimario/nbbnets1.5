@@ -108,7 +108,7 @@ class DonorController extends Controller
         $donor->office_citymun = $office['city'];
         $donor->office_brgy = $office['barangay'];
         $facility_cd = $request->get('facility_cd');
-        $donor->seqno = $this->generateSeqno($facility_cd);
+        $donor->seqno = Donor::generateSeqno($facility_cd);
         $donor->facility_cd = $facility_cd;
         $donor->created_by = $request->get('user_id');
         $donor->created_dt = date('Y-m-d H:i:s');
@@ -149,24 +149,5 @@ class DonorController extends Controller
         return $donor;
     }
 
-    function generateSeqno($facility_cd,$i = 1,$max = null){
-        if(!$max){
-            $max = Donor::select('seqno')->whereFacilityCd($facility_cd)->orderBy('seqno','desc')->first()->seqno;
-            if(!$max){
-                return $facility_cd.date('Y').str_pad('1',5,'0',STR_PAD_LEFT);
-            }
-        }
-
-        $num = substr($max,9,strlen($max));
-        $num = abs($num);
-        $num = $num+$i;
-        $new = $facility_cd.date('Y').str_pad($num,7,'0',STR_PAD_LEFT);
-        $isExists = Donor::whereSeqno($new)->first();
-        if($isExists){
-            $i++;
-            return $this->generateSeqno($facility_cd,$i,$max);
-        }
-
-        return $new;
-    }
+    
 }

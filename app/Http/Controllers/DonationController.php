@@ -16,7 +16,7 @@ class DonationController extends Controller
         }
         $facility_cd = $request->get('facility_cd');
         $donation = new Donation;
-        $donation->seqno = $this->generateSeqno($facility_cd);
+        $donation->seqno = Donation::generateSeqno($facility_cd);
         $donation->donation_id = $donation_id;
         $donation->donor_sn = $request->get('donor')['seqno'];
         $donation->sched_id = 'Walk-in';
@@ -60,7 +60,7 @@ class DonationController extends Controller
         $user_id = $request->get('user_id');
 
         $donation = new Donation;
-        $donation->seqno = $this->generateSeqno($facility_cd);
+        $donation->seqno = Donation::generateSeqno($facility_cd);
         $donation->donor_sn = $seqno;
         $donation->sched_id = $sched_id;
         $donation->pre_registered = 'N';
@@ -84,29 +84,6 @@ class DonationController extends Controller
         FlagReactiveController::flag($request->get('donation_id'),$request->get('facility_cd'));
 
         return $donation;
-    }
-
-    function generateSeqno($facility_cd,$i = 1,$max = null){
-        if(!$max){
-            $max = Donation::select('seqno')->whereFacilityCd($facility_cd)->orderBy('seqno','desc')->first();
-            if($max){
-                $max = $max->seqno;
-            }else if(!$max){
-                return $facility_cd.date('Y').str_pad('1',5,'0',STR_PAD_LEFT);
-            }
-        }
-
-        $num = substr($max,9,strlen($max));
-        $num = abs($num);
-        $num = $num+$i;
-        $new = $facility_cd.date('Y').str_pad($num,7,'0',STR_PAD_LEFT);
-        $isExists = Donation::whereSeqno($new)->first();
-        if($isExists){
-            $i++;
-            return $this->generateSeqno($facility_cd,$i,$max);
-        }
-
-        return $new;
     }
 
     function donationRemove(Request $request){
@@ -193,7 +170,7 @@ class DonationController extends Controller
             $donation = Donation::whereDonationId($row['donation_id'])->first();
             if(!$donation){
                 $d = new Donation;
-                $d->seqno = $this->generateSeqno($facility_cd);
+                $d->seqno = Donation::generateSeqno($facility_cd);
                 $d->donation_id = $row['donation_id'];
                 $d->sched_id = $sched_id;
                 $d->donation_type = 'V';
@@ -214,5 +191,21 @@ class DonationController extends Controller
                 $donation->save();
             }
         }
+    }
+
+    function updateChildRecords($donation){
+
+        // if updates include null donor, previous donor should be revalidated
+
+        // if updates includes a donor, validate new donor and revalidate previous (if present)
+        
+        // revalidating a donor - check all donations if has derferred records or reactive test
+
+        // if donation_stat is REA update components to quarantened , update donor to deferred
+
+        // affected tables includes donor_log, component and donor
+        
+
+
     }
 }

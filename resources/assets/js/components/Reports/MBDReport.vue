@@ -6,7 +6,7 @@
             </div> 
         </div>
         <div class="row">
-            <div class="col-lg-12 text-right">
+            <div class="col-lg-12 text-right" v-if="result.length">
                 <button class="btn btn-default btn-sm" :disabled="!sched.sched_id">Print</button> <button class="btn btn-default btn-sm" :disabled="!sched.sched_id">Spreed Sheet</button>
             </div>
         </div>
@@ -34,7 +34,7 @@ export default {
     components : {Options,Result},
     data(){
         let {sched} = this.$store.state;
-        sched = {"sched_id":"1300620180000636","agency_cd":"1300601860","agency_name":"NVBSP - IMU","donation_dt":"2018-06-04 00:00:00"};
+        
         return {
             opts, sched, loadingPage: false, exams : [], result : [], fetching : false
         }

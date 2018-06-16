@@ -24,3 +24,7 @@ Route::get('/login', function () {
 Route::get('/barcode/{donation_id}','TemplateController@barcode');
 Route::get('/label','TemplateController@preview');
 Route::get('/labelpreview','TemplateController@facilitypreview');
+
+Route::get('/sn',function (){
+    return App\TypingResult::generateNo('08001');
+});

@@ -112,16 +112,6 @@ export default {
               }
           });
 
-        //   let hasData = _.filter(this.rows, row => {
-        //       if(row.donation_id){
-        //           return row;
-        //       }
-        //   });
-
-        //   if(!hasData.length()){
-        //       this.err.push("Nothing to save");
-        //   }
-
 
           this.rows.forEach((r,i) => {
               if(!r.donation_id){

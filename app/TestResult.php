@@ -16,10 +16,10 @@ class TestResult extends Model
 
     static function generateNo($facility_cd,$i = 1,$max = null){
         if(!$max){
-            $max = TestResult::select('bloodtest_no')
+            $max = TestResult::selectRaw('max(bloodtest_no)')
                     ->whereFacilityCd($facility_cd)
                     ->where('bloodtest_no','like',$facility_cd.'%')
-                    ->orderBy('bloodtest_no','desc')->first();
+                    ->first();
             if(!$max){
                 return $facility_cd.date('Y').str_pad('1',7,'0',STR_PAD_LEFT);
             }else{

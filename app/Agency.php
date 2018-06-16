@@ -25,4 +25,25 @@ class Agency extends Model
     function barangay(){
         return $this->belongsTo('App\Barangay','adg_bgy','bgycode')->select('bgycode','bgyname');
     }
+
+    function generateAgencyCd($facility_cd,$i = 1,$max = null){
+        if(!$max){
+            $firstRecord = Agency::select('agency_cd')->whereFacilityCd($facility_cd)->orderBy('agency_cd','desc')->first();
+            
+            if($firstRecord){
+                $max = $firstRecord->agency_cd;
+            }else if(!$max){
+                return $facility_cd.str_pad('1',5,'0',STR_PAD_LEFT);
+            }
+        }
+
+        $new = $max+$i;
+        $isExists = Agency::whereAgencyCd($new)->first();
+        if($isExists){
+            $i++;
+            return self::generateAgencyCd($facility_cd,$i,$max);
+        }
+
+        return $new;
+    }
 }

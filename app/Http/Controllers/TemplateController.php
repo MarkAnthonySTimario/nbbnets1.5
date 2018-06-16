@@ -115,7 +115,7 @@ class TemplateController extends Controller
         
         $d = new Donation;
         $d->seqno = Donation::generateSeqno($facility_cd);
-        $d->donation_id = 'NVBSP'.date('Y').'00DUMMY';
+        $d->donation_id = 'NVBSP'.date('Y').'XX'.$facility_cd;
         $d->sched_id = 'Walk-in';
         $d->pre_registered = 'Y';
         $d->donation_type = 'V';
@@ -130,7 +130,7 @@ class TemplateController extends Controller
         $d->save();
 
         $unit = new Blood;
-        $unit->donation_id = 'NVBSP'.date('Y').'00DUMMY';
+        $unit->donation_id = 'NVBSP'.date('Y').'XX'.$facility_cd;
         $unit->component_cd = '10';
         $unit->blood_type = 'A pos';
         $unit->location = $facility_cd;
