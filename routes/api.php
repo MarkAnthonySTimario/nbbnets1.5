@@ -71,6 +71,7 @@ Route::middleware('client')->group(function(){
     Route::post('labeltemplate/createdummy','TemplateController@createdummy');
     Route::post('BSI/item','BSIController@fetch');
     Route::post('available/list','BloodController@lists');
+    Route::post('facility/search','FacilityController@search');
 });
 
 Route::middleware('client')->group(function(){

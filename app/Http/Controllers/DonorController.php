@@ -115,7 +115,8 @@ class DonorController extends Controller
         $donor->created_dt = date('Y-m-d H:i:s');
         $donor->save();
 
-        DonorLogController::saveFieldsNewDonor($request,$donor->seqno,$request->get('user_id'));
+        // We dont need to capture original data of donor, since old_value is also captured upon update
+        // DonorLogController::saveFieldsNewDonor($request,$donor->seqno,$request->get('user_id'));
         return $donor;
     }
 

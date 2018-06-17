@@ -26,7 +26,8 @@ export default new Vuex.Store({
         },
         chat : 0,
         messages : [],
-        users : []
+        users : [],
+        facilities_search : null
     },
     mutations : {
         USER : (state,user) => {

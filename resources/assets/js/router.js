@@ -40,6 +40,8 @@ import DonationTypesReport from './components/Reports/DonationTypesReport.vue';
 import AvailableBloodStocks from './components/StockManagement/AvailableBloodStocks.vue';
 
 import FacilityTemplate from './components/Administration/FacilityTemplate.vue';
+import ManageFacilities from './components/Administration/ManageFacilities/List.vue';
+import RegisterFacility from './components/Administration/ManageFacilities/RegisterFacility.vue';
 
 Vue.use(VueRouter);
 
@@ -84,5 +86,7 @@ export default new VueRouter({
         { path : '/Reports/Monthly/DonationTypesReport', component : DonationTypesReport },
         { path : '/AvailableStocks', component : AvailableBloodStocks },
         { path : '/FacilityLabel', component : FacilityTemplate },
+        { path : '/ManageFacilities', component : ManageFacilities },
+        { path : '/ManageFacilities/RegisterFacility', component : RegisterFacility },
     ]
 })
