@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\DonorLogController;
 use App\Donor;
 
 class DonorController extends Controller
@@ -113,6 +114,8 @@ class DonorController extends Controller
         $donor->created_by = $request->get('user_id');
         $donor->created_dt = date('Y-m-d H:i:s');
         $donor->save();
+
+        DonorLogController::saveFieldsNewDonor($request,$donor->seqno,$request->get('user_id'));
         return $donor;
     }
 
@@ -121,11 +124,15 @@ class DonorController extends Controller
             'donor_photo','donor_id', 'name_suffix', 'lname', 'fname', 'mname', 'bdate', 'gender', 'civil_stat', 
             'tel_no', 'mobile_no', 'email', 'nationality'];
         $donor = Donor::whereSeqno($request->get('seqno'))->firstOrFail();
+        
+        DonorLogController::saveFieldsExistingDonor($request,$donor,$request->get('user_id'));
+        
         foreach($fields as $field){
             if($request->has($field)){
                 $donor->$field = $request->get($field);
             }
         }
+        
         // $donor->donor_photo = str_replace('data:image/jpeg;base64,','',$donor->donor_photo);
         // $donor->donor_photo = base64_decode($donor->donor_photo);
         // $donor->donor_photo = utf8_encode($donor->donor_photo);
@@ -146,6 +153,9 @@ class DonorController extends Controller
         $donor->updated_by = $request->get('user_id');
         $donor->updated_dt = date('Y-m-d H:i:s');
         $donor->save();
+
+        
+        
         return $donor;
     }
 

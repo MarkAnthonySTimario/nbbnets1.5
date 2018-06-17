@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Donation;
 use App\TypingResult;
+use App\Blood;
 
 class TypingController extends Controller
 {
@@ -55,6 +56,12 @@ class TypingController extends Controller
             $t->created_by = $user_id;
             $t->created_dt = date('Y-m-d H:i:s');
             $t->save();
+
+            $units = Blood::whereDonationId($d['donation_id'])->get();
+            foreach($units as $unit){
+                $unit->blood_type = $d['abo'].' '.$d['rh'];
+                $unit->save();
+            }
         }
     }
 }

@@ -41,7 +41,7 @@ class Donor extends Model
         $isExists = Donor::whereSeqno($new)->first();
         if($isExists){
             $i++;
-            return $this->generateSeqno($facility_cd,$i,$max);
+            return self::generateSeqno($facility_cd,$i,$max);
         }
 
         return $new;

@@ -24,7 +24,9 @@ Route::get('/login', function () {
 Route::get('/barcode/{donation_id}','TemplateController@barcode');
 Route::get('/label','TemplateController@preview');
 Route::get('/labelpreview','TemplateController@facilitypreview');
-
-Route::get('/sn',function (){
-    return App\TypingResult::generateNo('08001');
+Route::get('/sn',function(){
+    $arr = ['region','prov','city','brgy'];
+    unset($arr[1]);
+    // $arr = array_splice($arr,1,1);
+    dd($arr);
 });

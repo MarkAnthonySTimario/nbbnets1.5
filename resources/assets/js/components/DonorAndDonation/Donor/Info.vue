@@ -22,7 +22,7 @@
                   <div class="panel-heading">
                       <span class="glyphicon glyphicon-user"></span> Donor Details
                       <span class="pull-right">
-                        <router-link :to="donation_Id ? ('./../Verifier?donation_id='+donation_id) : ('./../Verifier')" class="btn btn-default btn-xs">
+                        <router-link :to="donation_id ? ('./../Verifier?donation_id='+donation_id) : ('./../Verifier')" class="btn btn-default btn-xs">
                             <span class="glyphicon glyphicon-arrow-left"></span> Back to List
                         </router-link>
                         <router-link :to="('./'+seqno+'/update?donation_id='+donation_id)" class="btn btn-default btn-xs">

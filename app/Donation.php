@@ -61,14 +61,18 @@ class Donation extends Model
 
     static function generateSeqno($facility_cd,$i = 1,$max = null){
         if(!$max){
-            $max = Donation::selectRaw('max(seqno)')->whereFacilityCd($facility_cd)->first();
+            $max = Donation::selectRaw('max(seqno) as seqno')
+                    ->whereFacilityCd($facility_cd)
+                    ->whereRaw('CHAR_LENGTH(seqno) = 16')
+                    ->first();
             if($max){
                 $max = $max->seqno;
             }else if(!$max){
-                return $facility_cd.date('Y').str_pad('1',5,'0',STR_PAD_LEFT);
+                $max = $facility_cd.date('Y').str_pad('1',5,'0',STR_PAD_LEFT);
             }
         }
 
+        
         $num = substr($max,9,strlen($max));
         $num = abs($num);
         $num = $num+$i;
