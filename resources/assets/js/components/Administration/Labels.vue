@@ -37,13 +37,13 @@
       
       <div class="row" v-if="create">
           <div class="col-lg-12">
-              <create @cancel="create = null;" @complete="create = null; fetchTemplates()"></create>
+              <create :facilities="facilities" @cancel="create = null;" @complete="create = null; fetchTemplates()"></create>
           </div>
       </div>
 
       <div class="row" v-if="edit">
           <div class="col-lg-12">
-              <edit-template :edit="edit" @cancel="edit = null;" @complete="edit = null; fetchTemplates()"></edit-template>
+              <edit-template :facilities="facilities" :edit="edit" @cancel="edit = null;" @complete="edit = null; fetchTemplates()"></edit-template>
           </div>
       </div>
   </div>
@@ -57,7 +57,7 @@ export default {
   components : {Create,EditTemplate},
   data(){
       return {
-          loading :false, templates : [], create : false, edit : null
+          loading :false, templates : [], create : false, edit : null, facilities : []
       }
   },
   mounted(){
@@ -71,6 +71,11 @@ export default {
                 this.templates = data;
                 this.loading = false;
             })
+            this.$http.get(this,"admin/facility/listsimple")
+            .then(({data}) => {
+                this.facilities = data;
+            })
+
       },
       remove(t){
 

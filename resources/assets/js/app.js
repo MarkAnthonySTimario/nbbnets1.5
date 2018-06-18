@@ -58,6 +58,21 @@ Vue.component('error',error);
                     w.print();
                 w.close();
             };
+         },
+         prepareTemplate(template){
+            template = template.replaceAll("{{FACILITY_NAME}}",'Department of Health');
+            template = template.replaceAll("{{BARCODE}}",'<div style="background:#fff;width:100%;height:50px;text-align:center;vertical-align:middle;"><img src="images/sample-barcode.jpg" width="320" height="45" /></div>');
+            template = template.replaceAll("{{ABO}}","B");
+            template = template.replaceAll("{{RH}}","Positive");
+            template = template.replaceAll("{{COMPONENT}}","FRESH FROZEN PLASMA");
+            template = template.replaceAll("{{VOLUME}}","150");
+            template = template.replaceAll("{{COLLECTION_DATE}}","January 06, 2018");
+            template = template.replaceAll("{{EXPIRATION_DATE}}","January 06, 2019 23:59:00");
+            template = template.replaceAll("{{STORE}}","Store at -18 to -89 &deg;C");
+            template = template.replaceAll("{{ANTIBODY}}","ANTIBODY SCREEN: NEGATIVE");
+            template = template.replaceAll("{{NAT}}","NUCLIEC ACID TESTING: NEGATIVE");
+            template = template.replaceAll("{{ZIKA}}","ZIKA TESTING: NEGATIVE");
+            return template;
          }
      }
  })

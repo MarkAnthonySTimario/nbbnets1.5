@@ -19,14 +19,14 @@
             </div>
         </div>
         <div class="row" v-if="!page_loading && !no_unit">
-            <div class="col-lg-6">
-                <html-editor :config="config" :init="raw" @update="updateRaw"></html-editor>
+            <div class="col-lg-5 col-lg-offset-1" style="padding-top:0.5em;">
+                <html-editor :config="config" :init="raw" @update="updateRaw" v-if="raw"></html-editor>
                 <hr/>
                 <button class="btn btn-default btn-sm" @click="saveChanges">Apply Changes</button>
             </div>
             <div class="col-lg-6">
                 <loadingInline v-if="loading" label="Refreshing"></loadingInline>
-                <div v-html="html" v-if="!loading" style="width:375px;margin-left:auto;margin-right:auto;">
+                <div v-html="html" v-if="!loading" style="width:375px;">
 
                 </div>
             </div>
@@ -45,16 +45,11 @@
                 config: {
                     width : 425
                 }, raw : null,
-                no_unit : true, page_loading : true, loading : true, html : null, facility_cd
+                no_unit : false, page_loading : false, loading : true, facility_cd
             }
         },
         mounted(){
-            this.checkForUnit();
-            this.$http.get(this,'labeltemplate/gettemplate/'+this.facility_cd)
-            .then(({data}) => {
-                this.raw = data;
-            })
-            // this.refreshHTML();
+            this.refreshHTML();
         },
         methods : {
             updateRaw(raw){
@@ -70,44 +65,25 @@
                     this.refreshHTML();
                 })
             },
-            checkForUnit(){
-                
-                this.$http.post(this,'labeltemplate/checkunit',{
-                    facility_cd : this.facility_cd
-                })
-                .then(({data}) => {
-                    this.page_loading = false;
-                    if(data){
-                        this.no_unit = false;
-                        this.refreshHTML();
-                    }else{
-                        this.no_unit = true;
-                    }
-                });
-            },
-            createDummy(){
-                this.page_loading = true;
-                this.$http.post(this,'labeltemplate/createdummy',{
-                    facility_cd : this.facility_cd
-                })
-                .then(({data}) => {
-                    this.page_loading = false;
-                    this.no_unit = false;
-                    this.refreshHTML();
-                });
-            },
             refreshHTML(){
                 this.loading = true;
                 let {facility_cd} = this;
-                let url = 'http://'+window.location.hostname+window.location.pathname+'labelpreview?facility_cd='+facility_cd;
-                let that = this;
 
-                axios.get(url)
+                this.$http.get(this,"labeltemplate/gettemplate/"+facility_cd)
                 .then(({data}) => {
-                    that.loading = false;
-                    that.html = data;
+                    this.raw = data;
+                    this.loading = false;
                 });
-
+            }
+        },
+        computed : {
+            html : {
+                set(){
+                    this.html = this.prepareTemplate(this.raw);
+                },
+                get(){
+                    return this.prepareTemplate(this.raw);
+                }
             }
         }
     }
