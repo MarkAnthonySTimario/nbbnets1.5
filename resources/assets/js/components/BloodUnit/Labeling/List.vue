@@ -235,10 +235,6 @@ export default {
 </script>
 
 <style scoped>
-.control-label {
-    margin-top:-.5em;
-    font-size: 14px;
-}
 input[type='checkbox']{
     width:15px;
     height:15px;

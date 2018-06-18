@@ -126,11 +126,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.control-label {
-    margin-top:-.5em;
-    font-size: 14px;
-}
-
-</style>

@@ -88,6 +88,8 @@ Route::middleware('client')->group(function(){
     Route::get('keyvalues/collectionstatuses','KeyValueController@collectionstatuses');
     Route::get('keyvalues/exams','KeyValueController@exams');
     Route::get('keyvalues/discardreasons','KeyValueController@discardreasons');
+    Route::get('keyvalues/facilitytypes','KeyValueController@facilitytypes');
+    Route::get('keyvalues/facilitycathergories','KeyValueController@facilitycathergories');
     Route::get('contact/{user_id}','KeyValueController@contact_info');
     Route::post('contacts/search','KeyValueController@contact_search');
 

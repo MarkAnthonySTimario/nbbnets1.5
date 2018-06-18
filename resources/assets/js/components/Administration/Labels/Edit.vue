@@ -40,10 +40,6 @@
 </template>
 
 <script>
-String.prototype.replaceAll = function(search, replacement) {
-    var target = this;
-    return target.replace(new RegExp(search, 'g'), replacement);
-};
 
 export default {
   props : ['edit'],
@@ -89,22 +85,3 @@ export default {
   }
 }
 </script>
-
-
-<style scoped>
-.control-label {
-    margin-top:-.5em;
-    font-size: 14px;
-}
-.form-group.required .control-label:after {
-  content:"*";
-  color:red;
-}
-.error {
-    font-size:12px;
-    margin-top:0.5em;
-}
-.collection-expiration{
-    font-size:8px;
-}
-</style>

@@ -4,6 +4,11 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+
 import VueSession from 'vue-session';
 import VeeValidate from 'vee-validate';
 import _ from 'lodash';

@@ -62,17 +62,4 @@ export default {
 	-o-transition: all 0.5s ease;
 	transition: all 0.5s ease;	
 }
-
-.control-label {
-    margin-top:-.5em;
-    font-size: 14px;
-}
-.form-group.required .control-label:after {
-  content:"*";
-  color:red;
-}
-.error {
-    font-size:12px;
-    margin-top:0.5em;
-}
 </style>

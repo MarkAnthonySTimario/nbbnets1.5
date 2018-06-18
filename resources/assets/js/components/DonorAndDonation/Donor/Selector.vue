@@ -136,8 +136,4 @@ export default {
 .result-row:hover{
     background-color: #aabbcc !important;
 }
-.control-label {
-    margin-top:-.5em;
-    font-size: 14px;
-}
 </style>

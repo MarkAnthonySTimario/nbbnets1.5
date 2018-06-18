@@ -82,4 +82,12 @@ class KeyValueController extends Controller
     function exams(){
         return Exam::whereDisableFlg('N')->pluck('exam_name','exam_cd');
     }
+
+    function facilitytypes(){
+        return CodeValue::whereCode('FACILITY_TYPE')->whereDisableFlg('N')->pluck('code_val','codedtl_cd');
+    }
+
+    function facilitycathergories(){
+        return CodeValue::whereCode('FACILITY_CAT')->whereDisableFlg('N')->pluck('code_val','codedtl_cd');
+    }
 }

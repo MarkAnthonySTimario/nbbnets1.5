@@ -128,13 +128,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-.control-label {
-    margin-top:-.5em;
-    font-size: 14px;
-}
-.form-group.required .control-label:after {
-  content:"*";
-  color:red;
-}
-</style>
