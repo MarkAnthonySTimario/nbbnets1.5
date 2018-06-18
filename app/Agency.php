@@ -26,7 +26,7 @@ class Agency extends Model
         return $this->belongsTo('App\Barangay','adg_bgy','bgycode')->select('bgycode','bgyname');
     }
 
-    function generateAgencyCd($facility_cd,$i = 1,$max = null){
+    static function generateAgencyCd($facility_cd,$i = 1,$max = null){
         if(!$max){
             $firstRecord = Agency::select('agency_cd')->whereFacilityCd($facility_cd)->orderBy('agency_cd','desc')->first();
             
