@@ -28,18 +28,26 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="" class="control-label col-lg-4">Head of Facility</label>
+                <label for="" class="control-label col-lg-4">Lead Facility</label>
                 <div class="col-lg-6">
-                    <input type="text" class="form-control input-sm">
+                    <select type="text" class="form-control input-sm" v-model="facility.lead_facility">
+                        <option :value="f.facility_cd" v-for="f in facilities" :key="f.facility_cd">{{f.facility_name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="control-label col-lg-4">Head of Facility/Owner</label>
+                <div class="col-lg-6">
+                    <input type="text" class="form-control input-sm" placeholder="First  Middle  Last" v-model="facility.owner_name">
                 </div>
             </div>
 
-            <addressPicker :defs="addresspicker" @onchange="newAddress"></addressPicker>
+            <addressPicker :defs="addresspicker" @onchange="newAddress" :req="['region']"></addressPicker>
 
             <div class="form-group">
                 <label for="" class="control-label col-lg-4">No./Street/Block</label>
                 <div class="col-lg-6">
-                    <input type="text" class="form-control input-sm" placeholder="First  Middle  Last" v-model="facility.owner_name">
+                    <input type="text" class="form-control input-sm" placeholder="First  Middle  Last" v-model="facility.address_no_st_blk">
                 </div>
             </div>
             <div class="form-group">
@@ -94,7 +102,7 @@
         props : ['facility'],
         data(){
             return{
-                facility_types : [], facility_cats : []
+                facility_types : [], facility_cats : [], facilities : []
             }
         },
         mounted(){
@@ -107,20 +115,26 @@
             .then(({data}) => {
                 this.facility_cats = data; 
             });
+
+            this.$http.get(this,"admin/facility/listsimple")
+            .then(({data}) => {
+                this.facilities = data;
+            })
         },
         computed : {
             addresspicker(){
+                let {region,province,city,barangay} = this.facility;
                 return {
-                    region : null, province : null, city : null, barangay : null
+                    region , province , city , barangay 
                 };
             },
         },
         methods : {
             newAddress({region,province,city,barangay}){
-                this.adg_region = region;
-                this.adg_prov = province;
-                this.adg_city = city;
-                this.adg_bgy = barangay;
+                this.facility.region = region;
+                this.facility.province = province;
+                this.facility.city = city;
+                this.facility.barangay = barangay;
             }
         }
     }

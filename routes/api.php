@@ -63,12 +63,13 @@ Route::middleware('client')->group(function(){
     Route::post('labeling/list','LabelController@lists');
     Route::post('labeling/save','LabelController@save');
     
+    Route::post('admin/registerfacility','FacilityController@register');
     Route::get('admin/templates','TemplateController@lists');
     Route::post('admin/savetemplate','TemplateController@save');
     Route::get('labeltemplate/gettemplate/{facility_cd}','TemplateController@getTemplate');
     Route::post('labeltemplate/savefacilitytemplate','TemplateController@saveFacilityTemplate');
-    Route::post('labeltemplate/checkunit','TemplateController@checkunit');
-    Route::post('labeltemplate/createdummy','TemplateController@createdummy');
+    // Route::post('labeltemplate/checkunit','TemplateController@checkunit');
+    // Route::post('labeltemplate/createdummy','TemplateController@createdummy');
     Route::post('BSI/item','BSIController@fetch');
     Route::post('available/list','BloodController@lists');
     Route::post('facility/search','FacilityController@search');
@@ -90,6 +91,7 @@ Route::middleware('client')->group(function(){
     Route::get('keyvalues/discardreasons','KeyValueController@discardreasons');
     Route::get('keyvalues/facilitytypes','KeyValueController@facilitytypes');
     Route::get('keyvalues/facilitycathergories','KeyValueController@facilitycathergories');
+    Route::get('keyvalues/userlevels','KeyValueController@userlevels');
     Route::get('contact/{user_id}','KeyValueController@contact_info');
     Route::post('contacts/search','KeyValueController@contact_search');
 

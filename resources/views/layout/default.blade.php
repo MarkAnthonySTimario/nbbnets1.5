@@ -12,6 +12,7 @@
     <title>NBBNETS</title>
 
     <!-- Bootstrap core CSS -->
+    <link rel="shortcut icon" href="{{{ asset('favicon.ico') }}}">
     <link href="{{asset('css/app.css')}}" rel="stylesheet">
     <link href="{{asset('css/sandstone/bootstrap.min.css')}}" rel="stylesheet">
 

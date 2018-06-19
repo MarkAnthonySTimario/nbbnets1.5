@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="form-group">
+    <div :class="'form-group ' + (requires.includes('region') ? 'required' : '')">
         <label for="" class="control-label col-lg-4">{{prefix}} Region</label>
         <div class="col-lg-8">
             <select v-model="region" class="form-control input-sm">
@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div :class="'form-group ' + (requires.includes('province') ? 'required' : '')">
         <label for="" class="control-label col-lg-4">{{prefix}} Province</label>
         <div class="col-lg-8">
             <select v-model="province" class="form-control input-sm">
@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div :class="'form-group ' + (requires.includes('city') ? 'required' : '')">
         <label for="" class="control-label col-lg-4">{{prefix}} City/Municipality</label>
         <div class="col-lg-8">
             <select v-model="city" class="form-control input-sm">
@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div :class="'form-group ' + (requires.includes('barangay') ? 'required' : '')">
         <label for="" class="control-label col-lg-4">{{prefix}} Barangay</label>
         <div class="col-lg-8">
             <select v-model="barangay" class="form-control input-sm">
@@ -41,12 +41,14 @@
 <script>
 
 export default {
-  props : ['defs'],
+  props : ['defs','req'],
   data(){
+      let requires = this.req ? this.req : [];
       return {
           prefix : null,
           region : null, province : null, city : null, barangay : null,
-          regions : [], provinces : [], cities : [], barangays : []
+          regions : [], provinces : [], cities : [], barangays : [],
+          requires
       }
   },
   mounted(){

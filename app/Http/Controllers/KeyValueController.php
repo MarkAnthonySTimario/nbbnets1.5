@@ -9,6 +9,7 @@ use App\CodeValue;
 use App\Nation;
 use App\Exam;
 use App\User;
+use App\UserLevel;
 use DB;
 
 class KeyValueController extends Controller
@@ -89,5 +90,9 @@ class KeyValueController extends Controller
 
     function facilitycathergories(){
         return CodeValue::whereCode('FACILITY_CAT')->whereDisableFlg('N')->pluck('code_val','codedtl_cd');
+    }
+
+    function userlevels(){
+        return UserLevel::all();
     }
 }

@@ -2,7 +2,7 @@
   <div class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a href="../" class="navbar-brand">NBBNETS</a>
+          <a href="./" class="navbar-brand">NBBNETS</a>
           <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -79,6 +79,7 @@
               </a>
 
               <ul class="dropdown-menu">
+                <li><router-link to="/ManageFacilities/RegisterFacility">Register Facility</router-link></li>
                 <li><router-link to="/ManageFacilities">Manage Facilities</router-link></li>
                 <li><router-link to="/Labels">Manage Labels</router-link></li>
                 <li><router-link to="/FacilityLabelTemplate">Blood Bag Template</router-link></li>

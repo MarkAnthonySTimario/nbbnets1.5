@@ -1,13 +1,15 @@
 <template>
-    <div class="col-lg-12">
+    <div class="col-lg-12" >
         <br/><h3 class="text-success" style="border-bottom:1px solid #c1c1c1;">Blood Bag Label Template</h3><br/>
-        <div class="col-lg-6">
-            <div v-html="output" style="width:370px; margin-left:auto;margin-right:auto;">
-
+        
+        <div class="col-lg-12" style="background-color:#c1c1c1;">
+            <div class="col-lg-6">
+                <div v-html="output" style="width:370px; margin-left:auto;margin-right:auto;">
+                </div>
             </div>
-        </div>
-        <div class="col-lg-6">
-            <label-template @update="(raw) => {template = raw}" style="margin-top:0.5em;"></label-template>
+            <div class="col-lg-6">
+                <label-template @update="(raw) => {template = raw}" style="margin-top:0.5em;"></label-template><br/>
+            </div>    
         </div>
     </div>
 </template>
