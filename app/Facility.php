@@ -11,6 +11,10 @@ class Facility extends Model
     public $incrementing = false;
     protected $primaryKey = 'facility_cd';
 
+    function lead(){
+        return $this->belongsTo('App\Facility','lead_facility','facility_cd')->select('facility_cd','facility_name');
+    }
+
     function region(){
         return $this->belongsTo('App\Region','address_region','regcode')->select('regcode','regname');
     }

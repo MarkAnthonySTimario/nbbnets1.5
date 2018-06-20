@@ -34,7 +34,7 @@
                                         <parameters :config="config"></parameters>
                                     </div>
                                     <div role="tabpanel" class="tab-pane" id="LabelTemplate">
-                                        <facility-label :init="template" @update="(raw) => {template = raw}"></facility-label>
+                                        <facility-label :init="label" @update="(raw) => {label = raw}"></facility-label>
                                     </div>
                                     <div role="tabpanel" class="tab-pane" id="Users">
                                         <users :facility="facility"></users>
@@ -72,14 +72,14 @@ export default {
 
         let facility = this.newFacility();
 
-        facility.facility_name = 'test';
-        facility.facility_type = 'HOSP';
-        facility.category = 'BC';
-        facility.region = '08';
-        facility.users = [{"user_id":"test","ulevel":1,"fname":"test","mname":"test","lname":"test"},{"user_id":"test2","ulevel":3,"fname":"test","mname":"test","lname":"test"}];
+        // facility.facility_name = 'test';
+        // facility.facility_type = 'HOSP';
+        // facility.category = 'BC';
+        // facility.region = '08';
+        // facility.users = [{"user_id":"test","ulevel":1,"fname":"test","mname":"test","lname":"test"},{"user_id":"test2","ulevel":3,"fname":"test","mname":"test","lname":"test"}];
 
         return {
-            template : "", config, facility, 
+            label : "", config, facility, 
             
         }
     },
@@ -100,6 +100,10 @@ export default {
                 nat : false,
                 antibody : false,
                 zika : false,
+
+                enable_patient_ward_no : false,
+                enable_patient_room_no : false,
+                enable_patient_bed_no : false,
 
                 access_flg : false,
                 report_email : 'support@nbbnets.net',
@@ -122,7 +126,7 @@ export default {
                 email : 'support@nbbnets.net',
                 mobile_no : null,
                 tel_no : null,
-                fax_no : null,
+                fax : null,
                 address_zip : null,
                 users : [],
                 region : null, province : null, city : null, barangay : null,
@@ -135,19 +139,19 @@ export default {
 
         saveFacility(){
             let {user_id} = this.$session.get('user');
-            let {facility,config,template} = this;
+            let {facility,config,label} = this.$data;
             let {users} = facility;
             this.loading = true;
             this.$http.post(this,'admin/registerfacility',{
-                facility, users, config, template, user_id
+                facility, users, config, template : label, user_id
             })
             .then(({data}) => {
                 
-                // this.loading = false;
-                // this.$store.state.msg = {
-                //     content : 'Facility Registration Complete!'
-                // };
-                // this.$router.replace("/ManageFacilities/info/"+data);
+                this.loading = false;
+                this.$store.state.msg = {
+                    content : 'Facility Registration Complete!'
+                };
+                this.$router.replace("/ManageFacilities/info/"+data.facility_cd);
             })
         }
 

@@ -91,51 +91,51 @@
             </div>
             <div class="form-group">
                 <label for="" class="control-label col-lg-4">Fax No.</label>
-                <div class="col-lg-6"><input type="text" class="form-control input-sm" v-model="facility.fax_no"></div>
+                <div class="col-lg-6"><input type="text" class="form-control input-sm" v-model="facility.fax"></div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    export default{
-        props : ['facility'],
-        data(){
-            return{
-                facility_types : [], facility_cats : [], facilities : []
-            }
-        },
-        mounted(){
-            this.$http.get(this,'keyvalues/facilitytypes')
-            .then(({data}) => {
-                this.facility_types = data; 
-            });
+export default{
+    props : ['facility'],
+    data(){
+        return{
+            facility_types : [], facility_cats : [], facilities : []
+        }
+    },
+    mounted(){
+        this.$http.get(this,'keyvalues/facilitytypes')
+        .then(({data}) => {
+            this.facility_types = data; 
+        });
 
-            this.$http.get(this,'keyvalues/facilitycathergories')
-            .then(({data}) => {
-                this.facility_cats = data; 
-            });
+        this.$http.get(this,'keyvalues/facilitycathergories')
+        .then(({data}) => {
+            this.facility_cats = data; 
+        });
 
-            this.$http.get(this,"admin/facility/listsimple")
-            .then(({data}) => {
-                this.facilities = data;
-            })
+        this.$http.get(this,"admin/facility/listsimple")
+        .then(({data}) => {
+            this.facilities = data;
+        })
+    },
+    computed : {
+        addresspicker(){
+            let {region,province,city,barangay} = this.facility;
+            return {
+                region , province , city , barangay 
+            };
         },
-        computed : {
-            addresspicker(){
-                let {region,province,city,barangay} = this.facility;
-                return {
-                    region , province , city , barangay 
-                };
-            },
-        },
-        methods : {
-            newAddress({region,province,city,barangay}){
-                this.facility.region = region;
-                this.facility.province = province;
-                this.facility.city = city;
-                this.facility.barangay = barangay;
-            }
+    },
+    methods : {
+        newAddress({region,province,city,barangay}){
+            this.facility.region = region;
+            this.facility.province = province;
+            this.facility.city = city;
+            this.facility.barangay = barangay;
         }
     }
+}
 </script>
