@@ -110,3 +110,7 @@ Route::middleware('client')->group(function(){
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// App
+
+Route::get("app/facilities","FacilityController@appFacilityList");

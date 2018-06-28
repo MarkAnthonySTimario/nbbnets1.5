@@ -115,4 +115,8 @@ class FacilityController extends Controller
 
         return $f;
     }
+
+    function appFacilityList(){
+        return Facility::all()->pluck('facility_name','facility_cd');
+    }
 }
