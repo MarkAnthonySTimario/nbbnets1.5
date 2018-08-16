@@ -113,4 +113,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 // App
 
-Route::get("app/facilities","FacilityController@appFacilityList");
+Route::post('app/login','AppController@login');
+Route::get('app/photo/{seqno}','AppController@photo');
+Route::get('app/checkupdates/count/{last}','AppController@count');
+Route::get('app/checkupdates/{rows}/{last}','AppController@checkupdates');
+Route::get('app/getUpdateCount/{regcode}/{last}','AppController@getUpdateCount');
+Route::get('app/getUpdate/{regcode}/{last}','AppController@getUpdate');
+Route::get('app/regions','AppController@regions');
+Route::get('app/provinces','AppController@provinces');
+Route::get('app/cities','AppController@cities');
+Route::get('app/barangays/{regcode}','AppController@barangays');
+Route::get('app/news/{max}','AppController@news');
+Route::post('app/upload','AppController@upload');
+Route::post('app/uploadphoto','AppController@uploadphoto');
