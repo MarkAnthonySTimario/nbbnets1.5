@@ -133,5 +133,9 @@ class BSI_p3 extends BSI_p2{
         return $mbd->count()+$walkin->count();
     }
 
+    function item_2_7_3() {
+        return $this->item_2_7_1()+$this->item_2_7_2();
+    }
+
     
 }

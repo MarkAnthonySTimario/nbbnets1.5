@@ -27,7 +27,7 @@ class FacilityController extends Controller
         extract($config);
         
         // Facility Code
-            $count = Facility::selectRaw('max(facility_cd) as facility_cd')->whereRaw('CHAR_LENGTH(facility_cd) = 5')->whereAddressRegion($region)->first();
+            $count = Facility::selectRaw('max(facility_cd) as facility_cd')->whereRaw('CHAR_LENGTH(facility_cd) = 5')->where('facility_cd','like',$region.'%')->first();
             if($count){
                 $count = $count->facility_cd;
                 if(strlen($count) == 5){
@@ -111,7 +111,7 @@ class FacilityController extends Controller
     function info(Request $request){
         $facility_cd = $request->get('facility_cd');
 
-        $f = Facility::with('lead','region','province','city','barangay')->whereFacilityCd($facility_cd)->first();
+        $f = Facility::with('lead','region','province','city','barangay','r3config','transfusion_config')->whereFacilityCd($facility_cd)->first();
 
         return $f;
     }

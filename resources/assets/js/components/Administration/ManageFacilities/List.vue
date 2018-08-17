@@ -39,7 +39,10 @@
                                 <td><span v-if="row.province">{{row.province.provname}}</span></td>
                                 <td><span v-if="row.city">{{row.city.cityname}}</span></td>
                                 <td>
-                                    <button class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-search"></span></button>
+                                    <router-link :to="'/ManageFacilities/info/' + row.facility_cd">
+                                        <button class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-search"></span></button>
+
+                                    </router-link>
                                 </td>
                             </tr>
                             <tr v-if="!loading && !untouched && !result.length">

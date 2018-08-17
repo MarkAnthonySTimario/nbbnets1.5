@@ -66,10 +66,4 @@ class BSI_p9 extends BSI_p8{
         $compute_age = "$age >= 60";
         return $this->sub_item_6_5_($compute_age);
     }
-
-    function item_6_5_6() {
-        $age = "(DATE_FORMAT(FROM_DAYS(DATEDIFF(bts_blood_request.created_dt,STR_TO_DATE(bdate,'%Y-%m-%d'))), '%Y')+0)";
-        $compute_age = "$age > 4";
-        return $this->sub_item_6_5_($compute_age);       
-    }
 }

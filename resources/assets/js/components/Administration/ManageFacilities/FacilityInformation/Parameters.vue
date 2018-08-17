@@ -10,97 +10,140 @@
                 </tr>
                 <tr>
                     <td class="col-lg-8">Disable</td>
-                    <td></td>
+                    <td>{{facility.disable_flg ? 'Yes' : 'No'}}</td>
                 </tr>
                 <tr>
                     <td>% of Allowed BSF Availment</td>
-                    <td></td>
+                    <td>{{facility.bsf_av}} %</td>
                 </tr>
                 <tr>
                     <td>Maximum Donor Age</td>
-                    <td></td>
+                    <td>{{facility.max_donor_age}}</td>
                 </tr>
                 <tr>
                     <td>Minimum Donor Age</td>
-                    <td></td>
+                    <td>{{facility.min_donor_age}}</td>
                 </tr>
                 <tr>
                     <td>Months before Donor may donate again</td>
-                    <td></td>
+                    <td>{{facility.no_months_to_nxt_don}}</td>
                 </tr>
                 <tr>
                     <td>Hours before reservation expired</td>
-                    <td></td>
+                    <td>{{facility.res_hrs}}</td>
                 </tr>
                 <tr>
                     <td>No. of Days when System Warns Facility of Expiring Units</td>
-                    <td></td>
+                    <td>{{facility.no_days_expire_warning}}</td>
                 </tr>
                 <tr>
                     <td>Using Standard Blood Unit Duration</td>
-                    <td></td>
+                    <td>{{facility.standard_bu_duration}}</td>
                 </tr>
                 <tr>
                     <td colspan="2">Optional Tests</td>
                 </tr>
                 <tr>
                     <td>Nucliec Acid Testing</td>
-                    <td></td>
+                    <td>{{facility.nat ? 'Yes' : 'No'}}</td>
                 </tr>
                 <tr>
                     <td>Donor Antibody Screening</td>
-                    <td></td>
+                    <td>{{facility.antibody ? 'Yes' : 'No'}}</td>
                 </tr>
                 <tr>
                     <td>Zika Testing</td>
-                    <td></td>
+                    <td>{{facility.zika ? 'Yes' : 'No'}}</td>
                 </tr>
                 <tr>
                     <td colspan="2">R3 Access</td>
                 </tr>
                 <tr>
                     <td>Allow R3 Access</td>
-                    <td></td>
+                    <td>
+                        <span v-if="facility.r3config">
+                            {{facility.r3config.access_flg ? 'Yes' : 'No'}}
+                        </span>
+                    </td>
                 </tr>
                 <tr>
                     <td>R3 Report Email</td>
-                    <td></td>
+                    <td>
+                        <span v-if="facility.r3config">
+                            {{facility.r3config.report_email}}
+                        </span>
+                    </td>
                 </tr>
                 <tr>
                     <td>Allow R3 Facility Approval</td>
-                    <td></td>
+                    <td>
+                        <span v-if="facility.r3config">
+                            {{facility.r3config.admin_decide_flg ? 'Yes' : 'No'}}
+                        </span>
+                    </td>
                 </tr>
                 <tr>
                     <td>Allow R3 Staff Access</td>
-                    <td></td>
+                    <td>
+                        <span v-if="facility.r3config">
+                            {{facility.r3config.user_access_flg ? 'Yes' : 'No'}}
+                        </span>
+                    </td>
                 </tr>
                 <tr>
                     <td>Allow R3 Staff Request</td>
-                    <td></td>
+                    <td>
+                        <span v-if="facility.r3config">
+                            {{facility.r3config.user_request_flg ? 'Yes' : 'No'}}
+                        </span>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2">Transfusion Configuration</td>
                 </tr>
                 <tr>
                     <td>Auto-generate Patient ID</td>
-                    <td></td>
+                    <td>
+                        <span v-if="facility.transfusion_config">
+                            {{facility.transfusion_config.auto_patient_id ? 'Yes' : 'No'}}
+                        </span>
+                    </td>
                 </tr>
                 <tr>
-                    <td>Ward No.</td>
-                    <td></td>
+                    <td>Require Ward No.</td>
+                    <td>
+                        <span v-if="facility.transfusion_config">
+                            {{facility.transfusion_config.enable_patient_ward_no ? 'Yes' : 'No'}}
+                        </span>
+                    </td>
                 </tr>
                 <tr>
-                    <td>Room No.</td>
-                    <td></td>
+                    <td>Require Room No.</td>
+                    <td>
+                        <span v-if="facility.transfusion_config">
+                            {{facility.transfusion_config.enable_patient_room_no ? 'Yes' : 'No'}}
+                        </span>
+                    </td>
                 </tr>
                 <tr>
-                    <td>Bed No.</td>
-                    <td></td>
+                    <td>Require Bed No.</td>
+                    <td>
+                        <span v-if="facility.transfusion_config">
+                            {{facility.transfusion_config.enable_patient_bed_no ? 'Yes' : 'No'}}
+                        </span>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
 </template>
+
+<script>
+export default {
+    props : ['facility']
+}
+</script>
+
 
 <style scoped>
 table td{

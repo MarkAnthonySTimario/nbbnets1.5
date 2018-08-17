@@ -149,7 +149,21 @@ class BSI_p5 extends BSI_p4{
     }
 
     function item_2_11_5(){
-        return $this->item_2_11_1()+$this->item_2_11_2()+$this->item_2_11_3()+$this->item_2_11_4();
+        $mbd = Donation::whereFacilityCd($this->facility_cd)
+                ->where('sched_id','!=','Walk-in')
+                ->whereHas('mbd',function($query){
+                    $query->where('donation_dt','like',$this->year.'-'.$this->month.'%');
+                })
+                ->whereCollectionMethod('P')
+                ->get();
+                
+        $walkin = Donation::whereFacilityCd($this->facility_cd)
+                ->whereSchedId('Walk-in')
+                ->where('created_dt','like',$this->year.'-'.$this->month.'%')
+                ->whereCollectionMethod('P')
+                ->get();
+
+        return $mbd->count()+$walkin->count();
     }
 
     // incomplete

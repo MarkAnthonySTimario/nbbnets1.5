@@ -34,4 +34,12 @@ class Facility extends Model
     function users(){
         return $this->hasMany('App\User','facility_cd','facility_cd');
     }
+
+    function r3config(){
+        return $this->belongsTo('App\R3Config','facility_cd','facility_cd');
+    }
+
+    function transfusion_config(){
+        return $this->belongsTo('App\TransfusionConfig','facility_cd','facility_cd');
+    }
 }

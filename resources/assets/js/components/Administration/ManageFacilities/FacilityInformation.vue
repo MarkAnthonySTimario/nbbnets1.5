@@ -4,14 +4,14 @@
             <div class="row">
                 <div class="col-lg-6">
                     <info :facility="facility"></info>
-                </div>
-
-                <div class="col-lg-6">
                     <div class="panel panel-success">
                         <div class="panel-heading">
                             Blood Label
                         </div>
                     </div>
+                </div>
+
+                <div class="col-lg-6">
                     <parameters :facility="facility"></parameters>
                 </div>
             </div>

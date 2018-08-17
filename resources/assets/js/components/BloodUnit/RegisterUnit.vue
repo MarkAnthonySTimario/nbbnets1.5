@@ -42,7 +42,7 @@
                       <tr v-for="(r,i) in rows" :key="i">
                           <td class="text-center">{{(i+1)}}</td>
                           <td>
-                              <input type="text" class="form-control input-sm" maxlength="16" v-model="r.donation_id" v-bind:keyup="r.donation_id = r.donation_id.toUpperCase()">
+                              <input type="text" class="form-control input-sm" maxlength="16" v-model="r.donation_id" @keyup="r.donation_id = r.donation_id ? r.donation_id.toUpperCase() : null; checkDonationID(r);">
                           </td>
                           <td class="text-center"  @click="r.bag = 'S'"><input type="radio" v-model="r.bag" value="S"></td>
                           <td class="text-center"  @click="r.bag = 'D'"><input type="radio" v-model="r.bag" value="D"></td>
@@ -100,6 +100,19 @@ export default {
       
   },
   methods : {
+    checkDonationID(r){
+        if(!r.donation_id){
+            return
+        }
+          if(r.donation_id.length >= 16){
+              this.checkOwnedDonationID(this,r.donation_id,function(status){
+                  if(status == false){
+                    //   alert("Hooy!");
+                      r.donation_id = "";
+                  }
+              })
+          }
+      },
       validateForm(){
           this.err = [];
           if(!this.sched.sched_id){

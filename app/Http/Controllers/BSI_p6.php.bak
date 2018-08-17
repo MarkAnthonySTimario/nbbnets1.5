@@ -93,7 +93,7 @@ class BSI_p6 extends BSI_p5{
         return 0;
     }
 
-    function item_3_7_1(){
+    function item_3_7(){
         $tests = $this->sub_item_3_4_();
         return [
             'HIV' => $tests,

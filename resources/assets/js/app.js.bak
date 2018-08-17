@@ -73,14 +73,7 @@ Vue.component('error',error);
             template = template.replaceAll("{{NAT}}","NUCLIEC ACID TESTING: NEGATIVE");
             template = template.replaceAll("{{ZIKA}}","ZIKA TESTING: NEGATIVE");
             return template;
-         },
-		 checkOwnedDonationID(that,donation_id,cb){
-            let {facility_cd} = that.$session.get("user");
-            that.$http.get(that,"sticker/check/"+facility_cd+"/"+donation_id)
-            .then(({data}) => {
-                cb(data.status);
-            });
-        }
+         }
      }
  })
 
