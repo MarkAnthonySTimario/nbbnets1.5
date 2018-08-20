@@ -72,6 +72,14 @@
               </table>
           </div>
       </div>
+      <div class="col-lg-4" v-show="not_your_donation_id">
+          <div class="panel panel-warning">
+              <div class="panel-heading">Donation ID not Registered</div>
+              <div class="panel-body" style="font-size:12px;">
+                    The Donation ID you tried to enter is not registered for use in your facility.
+              </div>
+          </div>
+      </div>
       <div class="col-lg-4" v-if="err.length" v-show="!verify">
           <div class="panel panel-danger">
               <div class="panel-heading">Some errors where found</div>
@@ -93,21 +101,23 @@ export default {
       }
       let {sched} = this.$store.state;
       return {
-          rows, err : [], loading : false, verify : false, sched
+          rows, err : [], loading : false, verify : false, sched, not_your_donation_id : false
       }
   },
   mounted(){
       
   },
   methods : {
-    checkDonationID(r){
+      checkDonationID(r){
         if(!r.donation_id){
-            return
+                   return
         }
           if(r.donation_id.length >= 16){
+              let that = this
               this.checkOwnedDonationID(this,r.donation_id,function(status){
                   if(status == false){
                     //   alert("Hooy!");
+                    that.showNotYourDonationID();
                       r.donation_id = "";
                   }
               })
@@ -190,6 +200,13 @@ export default {
       selectedMBDAgency(sched){
           this.sched = sched;
           $("#MBDSelector").modal("hide");
+      },
+      showNotYourDonationID(){
+          this.not_your_donation_id = true;
+          
+          window.setTimeout(()=> {
+              this.not_your_donation_id = false;
+          },8000)
       }
   },
   watch : {

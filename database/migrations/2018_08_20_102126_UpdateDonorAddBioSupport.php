@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateDonorTable extends Migration
+class UpdateDonorAddBioSupport extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class UpdateDonorTable extends Migration
      */
     public function up()
     {
-        //
-        DB::statement("DELETE FROM donor WHERE bdate = '0000-00-00'");
-        DB::statement("ALTER TABLE donor MODIFY COLUMN donor_photo MEDIUMBLOB");
+        DB::statement("ALTER TABLE donor ADD COLUMN rfinger BLOB AFTER facility_cd");
+        DB::statement("ALTER TABLE donor ADD COLUMN lfinger BLOB AFTER facility_cd");
     }
 
     /**
@@ -25,6 +24,7 @@ class UpdateDonorTable extends Migration
      */
     public function down()
     {
-        DB::statement("ALTER TABLE donor MODIFY COLUMN donor_photo BLOB");
+        DB::statement("ALTER TABLE donor DROP COLUMN rfinger");
+        DB::statement("ALTER TABLE donor DROP COLUMN lfinger");
     }
 }
