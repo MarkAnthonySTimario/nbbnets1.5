@@ -8,32 +8,43 @@ use App\TestResultDetail;
 
 class BSI_p6 extends BSI_p5{
 
-    function sub_item_3_4_(){
-        $donations = TestResult::whereFacilityCd($this->facility_cd)
-                ->where('bloodtest_dt','like',$this->year.'-'.$this->month.'%')
-                ->get();
+    function sub_item_3_4_($exam_cd = null){
+        if($exam_cd){
+            $donations = TestResultDetail::where('bloodtest_no','like',$this->facility_cd.'%')
+                    // ->where('bloodtest_dt','like',$this->year.'-'.$this->month.'%')
+                    ->whereExamCd($exam_cd)
+                    ->where('created_dt','like',$this->year.'-'.$this->month.'%')
+                    ->whereResultInt('r')
+                    ->get();
+            
+        }else{
+            $donations = TestResultDetail::where('bloodtest_no','like',$this->facility_cd.'%')
+                    ->where('created_dt','like',$this->year.'-'.$this->month.'%')
+                    ->whereResultInt('r')
+                    ->get();
+        }
 
         return $donations->count();
     }
 
     function item_3_4_1(){
-        return $this->sub_item_3_4_();
+        return $this->sub_item_3_4_('HIV');
     }
 
     function item_3_4_2(){
-        return $this->sub_item_3_4_();
+        return $this->sub_item_3_4_('HBSAG');
     }
 
     function item_3_4_3(){
-        return $this->sub_item_3_4_();
+        return $this->sub_item_3_4_('HCV');
     }
 
     function item_3_4_4(){
-        return $this->sub_item_3_4_();
+        return $this->sub_item_3_4_('MALA');
     }
 
     function item_3_4_5(){
-        return $this->sub_item_3_4_();
+        return $this->sub_item_3_4_('RPR');
     }
 
     function sub_item_3_5_($tti){
@@ -94,14 +105,14 @@ class BSI_p6 extends BSI_p5{
     }
 
     function item_3_7_1(){
-        $tests = $this->sub_item_3_4_();
+        // $tests = $this->sub_item_3_4_();
         return [
-            'HIV' => $tests,
-            'HBSAG' => $tests,
-            'HCV' => $tests,
-            'RPR' => $tests,
-            'MALA' => $tests,
-            'TOTAL' => $tests
+            'HIV' => $this->sub_item_3_4_('HIV'),
+            'HBSAG' => $this->sub_item_3_4_('HBSAG'),
+            'HCV' => $this->sub_item_3_4_('HCV'),
+            'RPR' => $this->sub_item_3_4_('RPR'),
+            'MALA' => $this->sub_item_3_4_('MALA'),
+            'TOTAL' => $this->sub_item_3_4_()
         ];
     }
 }
