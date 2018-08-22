@@ -91,7 +91,7 @@ export default {
         let address = agency.agency_name + ' ' + brgy + ' ' + agency.city.cityname + ' ' + agency.province.provname;
         address = encodeURI(address)
         // window.open('https://www.mapdevelopers.com/distance_from_to.php?&from=Philippine%20Blood%20Center%2C%20Quezon%20Avenue%2C%20Diliman%2C%20Quezon%20City%2C%20Metro%20Manila&to='+address,'_blank')
-        window.open('https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=Philippine+Blood+Center&destinations='+address,'_blank')
+        window.open('https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=Davao+Blood+Center&destinations='+address,'_blank')
     },
     getDistance2(agency){
         let brgy = agency.barangay ? agency.barangay.bgyname : ''
