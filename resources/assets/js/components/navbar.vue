@@ -63,6 +63,7 @@
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu">
+                <li><router-link to="/Auc">Auc Report</router-link></li>
                 <li><router-link to="/BSI">BSI Report</router-link></li>
                 <monthly-report-group-links></monthly-report-group-links>
                 <li><router-link to="/Census">Census</router-link></li>

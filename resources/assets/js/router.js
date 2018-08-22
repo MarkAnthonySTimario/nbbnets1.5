@@ -47,6 +47,7 @@ import FacilityLabelTemplate from './components/Administration/FacilityLabelTemp
 import ManageFacilities from './components/Administration/ManageFacilities/List.vue';
 import RegisterFacility from './components/Administration/ManageFacilities/RegisterFacility.vue';
 import FacilityInformation from './components/Administration/ManageFacilities/FacilityInformation.vue';
+import AucList from './components/Auc/List.vue';
 
 Vue.use(VueRouter);
 
@@ -96,5 +97,7 @@ export default new VueRouter({
         { path : '/ManageFacilities', component : ManageFacilities },
         { path : '/ManageFacilities/RegisterFacility', component : RegisterFacility },
         { path : '/ManageFacilities/info/:facility_cd', component : FacilityInformation, props : true },
+        
+        { path : '/Auc', component : AucList },
     ]
 })

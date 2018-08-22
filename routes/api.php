@@ -19,6 +19,10 @@ Route::get('notificationsound','HomeController@sound');
 Route::post('sticker/register','StickerController@register');
 
 Route::middleware('client')->group(function(){
+    Route::get('auc', 'AgencyUpdateController@agencies');
+    Route::post('auc/remote', 'AgencyUpdateController@remote');
+    Route::post('auc/distance', 'AgencyUpdateController@distance');
+    Route::post('auc/distance2', 'AgencyUpdateController@distance2');
     Route::post('verify', 'HomeController@verify');
     Route::post('stocks', 'HomeController@stocks');
     Route::post('changepassword', 'HomeController@changepassword');
