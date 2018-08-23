@@ -85,7 +85,10 @@ class TemplateController extends Controller
                     ->whereDonationId($donation_id)
                     ->whereComponentCd($component_cd)
                     ->whereNotIn('comp_stat',['EXP','DIS','ISS'])
-                    ->firstOrFail();
+                    ->first();
+        if(!$unit){
+            return '<div style="text-align:center;font-family:calibri;">Opps! Sorry, Blood Unit no longer available!</div>';
+        }
         $bt = explode(' ',$unit->blood_type);
         $collection_dt = $unit->donation_min->sched_id == 'Walk-in' ? $unit->donation_min->created_dt : $unit->donation_min->mbd_min->donation_dt;
         $collection_dt = date('M d, Y',strtotime($collection_dt));

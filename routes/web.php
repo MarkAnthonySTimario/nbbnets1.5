@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/test','HomeController@stocks');
+// Route::get('/test','HomeController@stocks');
 
 Route::get('/', function () {
     return view('layout.default');

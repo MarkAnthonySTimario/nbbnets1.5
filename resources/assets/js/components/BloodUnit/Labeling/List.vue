@@ -4,10 +4,10 @@
         <mbdSelector @selected="selectedMBDAgency" :walkinDates="true"></mbdSelector>
         <div class="row" v-show="!rescan">
             <div class="col-lg-12">
-                <div class="panel panel-success">
+                <div class="panel panel-warning">
                     <div class="panel-heading">Blood Labeling</div>
                     <div class="panel-body">
-                        <div class="form-horizontal col-lg-4">
+                        <div class="form-horizontal col-lg-6">
                             <div class="form-group">
                                 <label for="" class="control-label col-lg-4">MBD / Walk-in</label>
                                 <div class="col-lg-8 input-group">
@@ -166,7 +166,6 @@ export default {
           this.rescan = null;
       },
       selectUnit(donation_id,component_cd){
-          
           this.rescan = {donation_id,component_cd};
       },
       confirmSelecting(){

@@ -13,10 +13,12 @@ class TypingResult extends Model
 
     static function generateNo($facility_cd,$i = 1,$max = null){
         if(!$max){
-            $max = TypingResult::selectRaw('max(bloodtyping_no)')
+            $max = TypingResult::selectRaw('bloodtyping_no')
                     ->whereFacilityCd($facility_cd)
                     ->where('bloodtyping_no','like',$facility_cd.'%')
+                    ->orderBy('bloodtyping_no','desc')
                     ->first();
+            
             if($max){
                 $max = $max->bloodtyping_no;
             }else if(!$max){

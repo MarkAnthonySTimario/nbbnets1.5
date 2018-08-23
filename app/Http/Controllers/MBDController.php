@@ -13,8 +13,8 @@ class MBDController extends Controller
         $search = $request->get('search');
         $facility_cd = $request->get('facility_cd');
 
-        return MBD::whereFacilityCd($facility_cd)
-        ->select('sched_id','agency_name','donation_dt')
+        return MBD::select('sched_id','agency_name','donation_dt')
+        ->whereFacilityCd($facility_cd)
         ->where('agency_name','like','%'.$search.'%')
         ->get();
     }
@@ -56,7 +56,8 @@ class MBDController extends Controller
     }
 
     function agencyMBDs($agency_cd){
-        return MBD::select('sched_id','agency_cd','agency_name','donation_dt')->whereAgencyCd($agency_cd)->get();
+        return MBD::select('sched_id','agency_cd','agency_name','donation_dt')
+                ->whereAgencyCd($agency_cd)->get();
     }
 
     function report(Request $request){

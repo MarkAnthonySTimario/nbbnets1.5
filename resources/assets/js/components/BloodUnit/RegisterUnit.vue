@@ -73,7 +73,7 @@
           </div>
       </div>
       <div class="col-lg-4" v-show="not_your_donation_id">
-          <div class="panel panel-warning">
+          <div class="panel panel-danger">
               <div class="panel-heading">Donation ID not Registered</div>
               <div class="panel-body" style="font-size:12px;">
                     The Donation ID you tried to enter is not registered for use in your facility.

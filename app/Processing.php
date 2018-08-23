@@ -13,9 +13,10 @@ class Processing extends Model
 
     static function generateNo($facility_cd,$i = 1,$max = null){
         if(!$max){
-            $max = self::selectRaw('max(bloodproc_no)')
+            $max = self::selectRaw('bloodproc_no')
                     ->whereFacilityCd($facility_cd)
                     ->where('bloodproc_no','like',$facility_cd.'%')
+                    ->orderBy('bloodproc_no','desc')
                     ->first();
             if($max){
                 $max = $max->bloodproc_no;
