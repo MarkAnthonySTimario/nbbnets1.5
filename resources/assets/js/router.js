@@ -49,6 +49,7 @@ import RegisterFacility from './components/Administration/ManageFacilities/Regis
 import FacilityInformation from './components/Administration/ManageFacilities/FacilityInformation.vue';
 import AucList from './components/Auc/List.vue';
 import AucReport1 from './components/Auc/Report1.vue';
+import LabelReprint from './components/BloodUnit/LabelReprint.vue';
 
 Vue.use(VueRouter);
 
@@ -101,5 +102,6 @@ export default new VueRouter({
         
         { path : '/Auc', component : AucList },
         { path : '/Auc/Report1', component : AucReport1 },
+        { path : '/Reprint', component : LabelReprint },
     ]
 })

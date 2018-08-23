@@ -87,6 +87,9 @@ Route::middleware('client')->group(function(){
     Route::post('bsi/yesno','BSIController@yesno');
     Route::post('bsi/create','BSIController@create');
     Route::get('sticker/check/{facility_cd}/{donation_id}','StickerController@check');
+
+    Route::get('LabelReprint/Units/{donation_id}','LabelReprintController@units');
+    Route::post('LabelReprint/ReprintFired','LabelReprintController@reprintFired');
 });
 Route::post('bsi/exist','BSIController@exist');
 Route::post('bsi/item','BSIController@fetch');
