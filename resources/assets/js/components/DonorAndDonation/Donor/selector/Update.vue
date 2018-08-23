@@ -2,7 +2,7 @@
   <div class="row">
       <div v-if="!loading">
         <div class="col-lg-6">
-            <div class="panel panel-success">
+            <div class="panel panel-warning">
                 <div class="panel-heading">
                     MBD Details
                     <router-link :to="('../../SearchDonor?donation_id='+donation_id)" class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-arrow-left"></span> Back to List</router-link>
@@ -24,7 +24,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="panel panel-success">
+            <div class="panel panel-primary">
                 <div class="panel-heading">
                     <span class="glyphicon glyphicon-user"></span> Update Donor
                 </div>

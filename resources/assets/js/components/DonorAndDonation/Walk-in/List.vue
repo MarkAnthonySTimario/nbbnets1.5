@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div class="panel panel-success">
+      <div class="panel panel-warning">
           <div class="panel-heading">Search Walk-in Donation</div>
           <div class="panel-body form-horizontal">
               <router-link to="/Verifier" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span> New Walk-in</router-link>

@@ -5,7 +5,7 @@
         <div class="col-lg-7">
           <div class="row">
             <div class="col-lg-12">
-              <div class="panel panel-success">
+              <div class="panel panel-warning">
                 <div class="panel-heading">Blood Stocks</div>
                 <inventory></inventory>
               </div>

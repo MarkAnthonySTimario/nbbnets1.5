@@ -3,7 +3,7 @@
       <mbdSelector @selected="selectedMBDAgency" :walkinDates="true"></mbdSelector>
       <div class="row">
           <div class="col-lg-8">
-              <div class="panel panel-success">
+              <div class="panel panel-warning">
                 <div class="panel-heading">Blood Typing</div>
                 <div class="panel-body">
                     <div class="form-horizontal">

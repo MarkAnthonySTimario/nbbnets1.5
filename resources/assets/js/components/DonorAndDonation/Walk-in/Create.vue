@@ -2,7 +2,7 @@
   <div class="row">
       <loading v-if="loading"></loading>
       <div class="col-lg-6" v-if="!loading">
-          <div class="panel panel-success">
+          <div class="panel panel-warning">
               <div class="panel-heading">
                   New Walk-in Donation
                   <span class="pull-right">

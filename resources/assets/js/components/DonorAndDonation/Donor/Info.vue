@@ -17,7 +17,7 @@
       </div>
       <div class="row" v-if="!loading">
           <div class="col-lg-6">
-              <div class="panel panel-success">
+              <div class="panel panel-warning">
                   
                   <div class="panel-heading">
                       <span class="glyphicon glyphicon-user"></span> Donor Details
@@ -152,7 +152,7 @@
           </div>
 
           <div class="col-lg-6">
-              <div class="panel panel-success">
+              <div class="panel panel-primary">
                   <div class="panel-heading">Donation History</div>
                 <table class="table table-condensed table-bordered table-striped">
                     <thead>

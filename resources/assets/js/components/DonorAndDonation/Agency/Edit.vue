@@ -3,7 +3,7 @@
       <div class="row">
           <loading v-if="loading"></loading>
           <div class="col-lg-8" v-if="!loading">
-              <div class="panel panel-success">
+              <div class="panel panel-primary">
                   <div class="panel-heading">
                       Edit Agency
                       <router-link to="/Agency" class="pull-right btn btn-xs btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Back to List</router-link>

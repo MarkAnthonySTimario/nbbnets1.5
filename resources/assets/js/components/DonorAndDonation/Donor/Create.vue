@@ -2,7 +2,7 @@
   <div class="row">
       <div v-if="!loading">
         <div class="col-lg-6">
-            <div class="panel panel-success" v-if="donation_id">
+            <div class="panel panel-warning" v-if="donation_id">
                 <div class="panel-heading">Assign Donor to Walk-in Donation</div>
                 <table class="table table-bordered table-condensed">
                     <tbody>
@@ -13,7 +13,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="panel panel-success">
+            <div class="panel panel-primary">
                 <div class="panel-heading">
                     <span class="glyphicon glyphicon-user"></span> Add New Donor
                     <router-link :to="('./../Verifier')" class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-arrow-left"></span> Back to List</router-link>

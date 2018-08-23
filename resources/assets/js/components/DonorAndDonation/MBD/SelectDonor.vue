@@ -4,7 +4,7 @@
     <div v-if="mbd">
         <div class="row">
             <div class="col-lg-6">
-                <div class="panel panel-success">
+                <div class="panel panel-primary">
                     <div class="panel-heading">MBD Details
                         <router-link :to="('/MBD/' + sched_id)" class="pull-right btn btn-default btn-xs"><span class="glyphicon glyphicon-arrow-left"></span> Back to MBD</router-link>
                     </div>

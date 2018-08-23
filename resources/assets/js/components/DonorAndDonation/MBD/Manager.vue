@@ -2,7 +2,7 @@
     <div>
         <div class="row" v-if="!loading && mbd">
             <div class="col-lg-6">
-                <div class="panel panel-success">
+                <div class="panel panel-warning">
                     <div class="panel-heading">MBD Details
                         <router-link to="/MBD" class="pull-right btn btn-default btn-xs"><span class="glyphicon glyphicon-arrow-left"></span> Back to List</router-link>
                     </div>
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="col-lg-12" v-if="!updateDonationMode">
-                <div class="panel panel-success">
+                <div class="panel panel-primary">
                     <div class="panel-heading">
                         <router-link :to="('/MBD/'+sched_id+'/SearchDonor')" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-search"></span> Search Donor</router-link>
                         <button @click="updateDonationMode = true" class="btn btn-default btn-xs" :disabled="!selected.length"><span class="glyphicon glyphicon-pencil"></span> Update Donation Details</button>

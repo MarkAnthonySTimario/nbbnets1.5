@@ -2,7 +2,7 @@
   <div class="row">
       <mbdSelector @selected="selectedMBDAgency"></mbdSelector>
       <div class="col-lg-8" v-show="!verify">
-          <div class="panel panel-success">
+          <div class="panel panel-warning">
               <div class="panel-heading">Register Blood Units</div>
               <div class="panel-body">
                   <div class="form-horizontal">

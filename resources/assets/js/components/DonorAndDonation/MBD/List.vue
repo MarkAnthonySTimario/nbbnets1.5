@@ -1,7 +1,7 @@
 <template>
   <div class="row">
       <div class="col-lg-8">
-          <div class="panel panel-success">
+          <div class="panel panel-warning">
               <div class="panel-heading">
                   Mobile Blood Donations
               </div>

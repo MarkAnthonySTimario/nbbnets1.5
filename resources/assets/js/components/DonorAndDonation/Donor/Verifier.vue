@@ -2,7 +2,7 @@
   <div>
       <div class="row" v-if="donation_id">
         <div class="col-lg-6">
-            <div class="panel panel-success">
+            <div class="panel panel-warning">
                 <div class="panel-heading">
                     Assign Donor to Walk-in Donation
                     <router-link to="/Walkin" class="pull-right btn btn-default btn-xs"><span class="glyphicon glyphicon-arrow-left"></span> Back to List</router-link>
