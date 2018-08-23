@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Agency;
+use App\Don;
 
 class AgencyUpdateController extends Controller
 {
@@ -13,7 +14,7 @@ class AgencyUpdateController extends Controller
         ->whereFacilityCd(11001)
         ->whereNull('distance')
         ->orderBy('adg_prov')
-        ->limit(100)->get();
+        ->limit(10)->get();
     }
 
     function remote(Request $request){
@@ -58,5 +59,23 @@ class AgencyUpdateController extends Controller
         // echo "Time: ".$time." seconds";
         // echo "<br/>";
         // echo "Distance: ".$distance." meters";
+    }
+
+    function report1(Request $request){
+        $agencies = Agency::with('barangay','city','province','region','donors')
+            ->whereFacilityCd($request->facility_cd)
+            // ->where('created_dt','like','2018-%')
+            // ->groupBy('agency_cd')
+            ->orderBy('distance','desc')
+            // ->limit(3,1)
+            // ->skip(0)
+            // ->take(3)
+            ->get();
+
+        // foreach( $agencies as $i => $agency ){
+        //     $agencies[$i]->fdonors = Don::whereAgencyCd($agency->agency_cd)->count();
+        // }
+
+        return $agencies;
     }
 }

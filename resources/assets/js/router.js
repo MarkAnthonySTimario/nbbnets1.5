@@ -48,6 +48,7 @@ import ManageFacilities from './components/Administration/ManageFacilities/List.
 import RegisterFacility from './components/Administration/ManageFacilities/RegisterFacility.vue';
 import FacilityInformation from './components/Administration/ManageFacilities/FacilityInformation.vue';
 import AucList from './components/Auc/List.vue';
+import AucReport1 from './components/Auc/Report1.vue';
 
 Vue.use(VueRouter);
 
@@ -99,5 +100,6 @@ export default new VueRouter({
         { path : '/ManageFacilities/info/:facility_cd', component : FacilityInformation, props : true },
         
         { path : '/Auc', component : AucList },
+        { path : '/Auc/Report1', component : AucReport1 },
     ]
 })

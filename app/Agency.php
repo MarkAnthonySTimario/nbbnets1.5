@@ -9,6 +9,9 @@ class Agency extends Model
     protected $table = 'r_donor_agency';
     public $timestamps = false;
     protected $primaryKey = 'agency_cd';
+    protected $casts = [
+        'agency_cd' => 'string'
+    ];
 
     function region(){
         return $this->belongsTo('App\Region','adg_region','regcode')->select('regcode','regname');
@@ -46,4 +49,12 @@ class Agency extends Model
 
         return $new;
     }
+
+    function donors(){
+        return $this->hasMany('App\Don','agency_cd','agency_cd')->where('created_dt','like','2017-%');
+    }
+
+    // function fdonors(){
+    //     return $this->hasMany('App\Don','agency_cd','agency_cd')->whereDonations(1);
+    // }
 }

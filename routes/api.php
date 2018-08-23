@@ -23,6 +23,7 @@ Route::middleware('client')->group(function(){
     Route::post('auc/remote', 'AgencyUpdateController@remote');
     Route::post('auc/distance', 'AgencyUpdateController@distance');
     Route::post('auc/distance2', 'AgencyUpdateController@distance2');
+    Route::post('auc/report1', 'AgencyUpdateController@report1');
     Route::post('verify', 'HomeController@verify');
     Route::post('stocks', 'HomeController@stocks');
     Route::post('changepassword', 'HomeController@changepassword');
