@@ -71,12 +71,12 @@
                     <input type="text" class="form-control input-sm" v-model="facility.contact_user_id">
                 </div>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="" class="control-label col-lg-4">Designation</label>
                 <div class="col-lg-6">
                     <select name="" id="" class="form-control input-sm" v-model="facility.designation"></select>
                 </div>
-            </div>
+            </div> -->
             <div class="form-group required">
                 <label for="" class="control-label col-lg-4">Email Address</label>
                 <div class="col-lg-6"><input type="email" class="form-control input-sm" v-model="facility.email"></div>
@@ -123,9 +123,12 @@ export default{
     },
     computed : {
         addresspicker(){
-            let {region,province,city,barangay} = this.facility;
+            let {region,province,city,barangay,address_region,address_prov,address_citymun,address_bgy} = this.facility;
             return {
-                region , province , city , barangay 
+                region : address_region ? address_region : region , 
+                province : address_prov ? address_prov : province, 
+                city : address_citymun ? address_citymun : city , 
+                barangay : address_bgy ? address_bgy : barangay
             };
         },
     },

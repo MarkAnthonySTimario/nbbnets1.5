@@ -45,8 +45,10 @@ class FacilityController extends Controller
             $f = new Facility;
             $f->facility_cd = $facility_cd;
             $f->facility_name = $facility_name;
+            $f->lead_facility = isset($lead_facility) ? $lead_facility : null;
             $f->type = $facility_type;
             $f->category = $category;
+            $f->address_no_st_blk = $address_no_st_blk;
             $f->owner_name = $owner_name;
             $f->address_region = $region;
             $f->address_prov = $province;
@@ -66,11 +68,11 @@ class FacilityController extends Controller
             $f->no_months_to_nxt_don = $no_months_to_nxt_don;
             $f->res_hrs = $res_hrs;
             $f->no_days_expire_warning = $no_days_expire_warning;
-            $f->standard_bu_duration = $standard_bu_duration;
-            $f->disable_flg = $disable_flg;
+            $f->standard_bu_duration = $standard_bu_duration ? 'Y' : 'N';
+            $f->disable_flg = $disable_flg ? 'Y' : 'N';
             $f->nat = $nat;
             $f->antibody = $antibody;
-            $f->zika = $zika;
+            $f->zika = $zika ;
 
             $f->created_by = $user_id;
             $f->created_dt = date('Y-m-d H:i:s');
@@ -88,20 +90,20 @@ class FacilityController extends Controller
         // R3 Config
             $r3 = new R3Config;
             $r3->facility_cd = $facility_cd;
-            $r3->access_flg = $access_flg;
+            $r3->access_flg = $access_flg ? 'Y' : 'N';
             $r3->report_email = $report_email;
-            $r3->admin_decide_flg = $admin_decide_flg;
-            $r3->user_access_flg = $user_access_flg;
-            $r3->user_request_flg = $user_request_flg;
+            $r3->admin_decide_flg = $admin_decide_flg ? 'Y' : 'N';
+            $r3->user_access_flg = $user_access_flg ? 'Y' : 'N';
+            $r3->user_request_flg = $user_request_flg ? 'Y' : 'N';
             $r3->save();
         // End R3 Config
 
         // Transfusion Config
             $t = new TransfusionConfig;
             $t->facility_cd = $facility_cd;
-            $t->enable_patient_ward_no = $enable_patient_ward_no;
-            $t->enable_patient_room_no = $enable_patient_room_no;
-            $t->enable_patient_bed_no = $enable_patient_bed_no;
+            $t->enable_patient_ward_no = $enable_patient_ward_no ? 'Y' : 'N';
+            $t->enable_patient_room_no = $enable_patient_room_no ? 'Y' : 'N';
+            $t->enable_patient_bed_no = $enable_patient_bed_no ? 'Y' : 'N';
             $t->save();
         // End Transfusion Config
 
@@ -111,7 +113,7 @@ class FacilityController extends Controller
     function info(Request $request){
         $facility_cd = $request->get('facility_cd');
 
-        $f = Facility::with('lead','region','province','city','barangay','r3config','transfusion_config')->whereFacilityCd($facility_cd)->first();
+        $f = Facility::with('lead','region','province','city','barangay','r3config','transfusion_config','users','users.level')->whereFacilityCd($facility_cd)->first();
 
         return $f;
     }

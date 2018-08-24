@@ -4,7 +4,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-danger">
                     <div class="panel-heading">
-                        Register New Facility
+                        Update Facility
                     </div>
                     <div class="panel-body">
                         <div class="row">
@@ -20,9 +20,6 @@
                                     <li role="presentation">
                                         <a href="#LabelTemplate" aria-controls="LabelTemplate" role="tab" data-toggle="tab">Blood Bag Label</a>
                                     </li>
-                                    <li role="presentation">
-                                        <a href="#Users" aria-controls="Users" role="tab" data-toggle="tab">Users</a>
-                                    </li>
                                 </ul>
                             
                                 <!-- Tab panes -->
@@ -35,9 +32,6 @@
                                     </div>
                                     <div role="tabpanel" class="tab-pane" id="LabelTemplate">
                                         <facility-label :init="label" @update="(raw) => {label = raw}"></facility-label>
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane" id="Users">
-                                        <users :facility="facility"></users>
                                     </div>
                                 </div>
                             </div>
@@ -63,25 +57,21 @@
 import FacilityInfo from './RegisterFacility/FacilityInfo.vue';
 import Parameters from './RegisterFacility/Parameters.vue';
 import FacilityLabel from './RegisterFacility/FacilityLabel.vue';
-import Users from './RegisterFacility/Users.vue';
 
 export default {
-    components : {FacilityInfo,Parameters,FacilityLabel,Users},
+    components : {FacilityInfo,Parameters,FacilityLabel},
+    props : ['facility_cd'],
     data(){
         let config = this.newConfig();
 
-        let facility = this.newFacility();
-
-        // facility.facility_name = 'test';
-        // facility.facility_type = 'HOSP';
-        // facility.category = 'BC';
-        // facility.region = '08';
-        // facility.users = [{"user_id":"test","ulevel":1,"fname":"test","mname":"test","lname":"test"},{"user_id":"test2","ulevel":3,"fname":"test","mname":"test","lname":"test"}];
-
         return {
-            label : "", config, facility, 
+            label : "", config, facility : this.newFacility(), loading : false
             
         }
+    },
+
+    mounted(){
+        this.loadFacility()
     },
 
     methods : {
@@ -133,6 +123,39 @@ export default {
             };
         },
 
+        loadFacility(){
+            // this.loading = true
+            
+            this.$http.post(this,'admin/facility',{facility_cd : this.facility_cd})
+            .then(({data})=>{
+                data.facility_type = data.type
+                let {
+                    disable_flg,bsf_av,max_donor_age,min_donor_age,no_months_to_nxt_don,res_hrs,no_days_expire_warning,standard_bu_duration,
+
+                    nat,antibody,zika,
+
+                    enable_patient_ward_no,enable_patient_room_no,enable_patient_bed_no,
+
+                    access_flg,report_email,admin_decide_flg,user_access_flg,user_request_flg,
+                } = data
+                this.config = {
+                    disable_flg : disable_flg == 'Y',
+                    bsf_av,max_donor_age,min_donor_age,no_months_to_nxt_don,res_hrs,no_days_expire_warning,
+                    standard_bu_duration : standard_bu_duration == 'Y',
+
+                    nat,
+                    antibody,
+                    zika,
+
+                    enable_patient_ward_no,enable_patient_room_no,enable_patient_bed_no,
+
+                    access_flg,report_email,admin_decide_flg,user_access_flg,user_request_flg
+                }
+                this.facility = data
+                this.loading = false
+            })
+        },
+
         hasDuplicates(collection,property) {
             return _.uniqBy(collection,property).length !== collection.length; 
         },
@@ -160,6 +183,10 @@ export default {
     computed : {
 
         incomplete(){
+
+            if(!this.facility){
+                return false;
+            }
             
             let {
                 facility : {facility_name,facility_type,category,region,email,users},

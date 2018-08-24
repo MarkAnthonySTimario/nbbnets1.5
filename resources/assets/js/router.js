@@ -46,6 +46,7 @@ import AvailableBloodStocks from './components/StockManagement/AvailableBloodSto
 import FacilityLabelTemplate from './components/Administration/FacilityLabelTemplate.vue';
 import ManageFacilities from './components/Administration/ManageFacilities/List.vue';
 import RegisterFacility from './components/Administration/ManageFacilities/RegisterFacility.vue';
+import UpdateFacility from './components/Administration/ManageFacilities/UpdateFacility.vue';
 import FacilityInformation from './components/Administration/ManageFacilities/FacilityInformation.vue';
 import AucList from './components/Auc/List.vue';
 import AucReport1 from './components/Auc/Report1.vue';
@@ -98,6 +99,7 @@ export default new VueRouter({
         { path : '/FacilityLabelTemplate', component : FacilityLabelTemplate },
         { path : '/ManageFacilities', component : ManageFacilities },
         { path : '/ManageFacilities/RegisterFacility', component : RegisterFacility },
+        { path : '/ManageFacilities/UpdateFacility/:facility_cd', component : UpdateFacility, props : true },
         { path : '/ManageFacilities/info/:facility_cd', component : FacilityInformation, props : true },
         
         { path : '/Auc', component : AucList },
