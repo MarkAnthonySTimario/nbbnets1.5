@@ -128,7 +128,7 @@ export default {
               letter : this.letter
           })
           .then(({data}) => {
-              this.agencies = data;
+              this.agencies = _.orderBy(data,[agency=>agency.agency_name.toLowerCase()],['asc']);
               this.loading = false;
           });
       },

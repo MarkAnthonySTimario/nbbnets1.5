@@ -52,6 +52,7 @@
                 <li><router-link to="/ReleaseToInventory">Release to Inventory</router-link></li>
                 <li><router-link to="/AvailableStocks">Available Blood Stocks</router-link></li>
                 <li><router-link to="/StatusOfInventory">Inventory Status</router-link></li>
+                <li><router-link to="/BloodBankNetworking">Blood Bank Networking</router-link></li>
                 <li><router-link to="/Transfusion">Transfusion</router-link></li>
                 <li><router-link to="/BRM">Releasing</router-link></li>
               </ul>

@@ -69,6 +69,10 @@ Route::middleware('client')->group(function(){
     Route::post('discard/save','DiscardController@save');
     Route::post('labeling/list','LabelController@lists');
     Route::post('labeling/save','LabelController@save');
+
+    Route::post('releasetoinventory/list','ReleaseToInventoryController@list');
+    Route::post('releasetoinventory/save','ReleaseToInventoryController@save');
+    Route::post('releasetoinventory/test','ReleaseToInventoryController@test');
     
     Route::post('admin/registerfacility','FacilityController@register');
     Route::post('admin/facility','FacilityController@info');

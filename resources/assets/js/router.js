@@ -52,6 +52,8 @@ import AucList from './components/Auc/List.vue';
 import AucReport1 from './components/Auc/Report1.vue';
 import LabelReprint from './components/BloodUnit/LabelReprint.vue';
 
+import ReleaseToInventory from './components/StockManagement/ReleaseToInventory.vue';
+
 Vue.use(VueRouter);
 
 export default new VueRouter({
@@ -105,5 +107,7 @@ export default new VueRouter({
         { path : '/Auc', component : AucList },
         { path : '/Auc/Report1', component : AucReport1 },
         { path : '/Reprint', component : LabelReprint },
+        
+        { path : '/ReleaseToInventory', component : ReleaseToInventory },
     ]
 })
