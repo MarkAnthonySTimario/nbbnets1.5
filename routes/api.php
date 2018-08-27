@@ -72,7 +72,9 @@ Route::middleware('client')->group(function(){
 
     Route::post('releasetoinventory/list','ReleaseToInventoryController@list');
     Route::post('releasetoinventory/save','ReleaseToInventoryController@save');
-    Route::post('releasetoinventory/test','ReleaseToInventoryController@test');
+    
+    Route::get('networking/facilities/{facility_name}','BloodBankNetworkingController@getFacilitiesWithStocks');
+    Route::post('networking/distance','BloodBankNetworkingController@getDistance');
     
     Route::post('admin/registerfacility','FacilityController@register');
     Route::post('admin/facility','FacilityController@info');
