@@ -114,7 +114,7 @@ export default {
   props : ['refresh'],
   data(){
       let {sched} = this.$store.state;
-      sched = {"sched_id":"1300620180000920","agency_cd":"1300602358","agency_name":"Tag 2018","donation_dt":"2018-08-27 00:00:00"};
+    //   sched = {"sched_id":"1300620180000920","agency_cd":"1300602358","agency_name":"Tag 2018","donation_dt":"2018-08-27 00:00:00"};
       let components = this.$session.get('components');
       let all_components = _.clone(components);
       return {

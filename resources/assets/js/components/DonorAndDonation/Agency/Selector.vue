@@ -83,11 +83,13 @@ export default {
                 }
             }));    
           }
-          return _.filter(this.agencies,((r) => {
+          return _.orderBy(_.filter(this.agencies,((r) => {
               if(r.agency_name.substr(0,1).toUpperCase() == this.letter.toUpperCase()){
                   return r;
               }
-          }));
+          })),a=>{
+              return a.agency_name.toUpperCase()
+          });
       }
   },
   methods : {

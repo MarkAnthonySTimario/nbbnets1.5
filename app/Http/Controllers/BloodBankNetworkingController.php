@@ -30,13 +30,7 @@ class BloodBankNetworkingController extends Controller
         ->whereIn('facility_cd',$facility_cds)->get();
 
         foreach($facilities as $i => $facility){
-            $bloods = Blood::select('component_cd','blood_type')
-                ->selectRaw('count(*)')
-                ->whereLocation($facility->facility_cd)
-                ->whereCompStat('AVA')
-                ->groupBy('component_cd','blood_type')
-                ->get();
-            $facilities[$i]->bloods = $bloods;
+            $facilities[$i]->bloods = $this->getBloods($facility);
             // $facilities[$i]->distance = $this->getDistance($facility_name,$facility->facility_name);
         }
         return $facilities;
@@ -45,6 +39,12 @@ class BloodBankNetworkingController extends Controller
     function getDistance(Request $request){
         $from = $request->get('from');
         $to = $request->get('to');
+       
+        return $this->distance($from,$to);
+
+    }
+
+    function distance($from,$to){
         $from = urlencode($from);
         $to = urlencode($to);
         
@@ -71,6 +71,31 @@ class BloodBankNetworkingController extends Controller
         return [
             'time' => $time, 'distance' => $distance
         ];
+    }
 
+    function facility(Request $request){
+        $facility_cd = $request->get('facility_cd');
+        $origin = $request->get('origin');
+
+        $facility = Facility::find($facility_cd);
+        $facility->distance = $this->distance($origin['facility_name'],$facility->facility_name);
+       
+        $facility->bloods = $this->getBloods($facility);
+        return $facility;
+    }
+
+    function getBloods($facility){
+        $bloods = Blood::select('component_cd','blood_type')
+        ->selectRaw('count(*) as quantity')
+        ->whereLocation($facility->facility_cd)
+        ->whereCompStat('AVA')
+        ->groupBy('component_cd','blood_type')
+        ->get();
+
+        foreach($bloods as $i => $blood){
+            $bloods[$i]->quantity = round($blood->quantity * ($facility->bsf_av/100));
+        }
+
+        return $bloods;
     }
 }

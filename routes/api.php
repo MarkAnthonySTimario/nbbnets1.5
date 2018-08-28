@@ -75,6 +75,7 @@ Route::middleware('client')->group(function(){
     
     Route::get('networking/facilities/{facility_name}','BloodBankNetworkingController@getFacilitiesWithStocks');
     Route::post('networking/distance','BloodBankNetworkingController@getDistance');
+    Route::post('networking/facility','BloodBankNetworkingController@facility');
     
     Route::post('admin/registerfacility','FacilityController@register');
     Route::post('admin/facility','FacilityController@info');
