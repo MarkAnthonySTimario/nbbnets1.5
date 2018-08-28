@@ -88,7 +88,8 @@ Route::middleware('client')->group(function(){
     Route::post('BSI/item','BSIController@fetch');
     Route::post('available/list','BloodController@lists');
     Route::post('facility/search','FacilityController@search');
-	Route::post('emergencypool/create', 'EmergencyPoolController@create');
+    
+    Route::post('emergencypool/create', 'EmergencyPoolController@create');
     Route::get('emergencypool/get/{facility_cd}', 'EmergencyPoolController@get');
 
     Route::post('bsi/yesno','BSIController@yesno');

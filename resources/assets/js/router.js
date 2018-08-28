@@ -33,7 +33,7 @@ import Discard from './components/BloodUnit/Discard.vue';
 import Labeling from './components/BloodUnit/Labeling.vue';
 
 import Templates from './components/Administration/Labels.vue';
-// import EmergencyPool from './components/Administration/EmergencyPool.vue';
+import EmergencyPool from './components/Administration/EmergencyPool.vue';
 
 import BSI from './components/Reports/BSI.vue';
 import BSICreate from './components/Reports/BSI/Create.vue';
@@ -97,7 +97,7 @@ export default new VueRouter({
         { path : '/BSI', component : BSI },
         { path : '/BSI/Create', component : BSICreate },    
         { path : '/MBDReport', component : MBDReport },
-		// { path : '/EmergencyPool', component : EmergencyPool },
+		{ path : '/EmergencyPool', component : EmergencyPool },
         { path : '/Reports/Monthly/DonationTypesReport', component : DonationTypesReport },
         { path : '/AvailableStocks', component : AvailableBloodStocks },
         { path : '/FacilityLabelTemplate', component : FacilityLabelTemplate },

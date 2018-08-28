@@ -86,6 +86,7 @@
                 <li><router-link to="/ManageFacilities">Manage Facilities</router-link></li>
                 <li><router-link to="/Labels">Manage Labels</router-link></li>
                 <li><router-link to="/FacilityLabelTemplate">Blood Bag Template</router-link></li>
+                <li><router-link to="/EmergencyPool">Emergency Pool</router-link></li>
               </ul>
             
             </li>
