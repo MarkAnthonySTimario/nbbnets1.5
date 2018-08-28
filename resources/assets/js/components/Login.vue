@@ -6,7 +6,7 @@
   			<div class="inset">
 	  			<p>
 	    		 <label for="userName">USER NAME</label>
-   	 			<input type="text" placeholder="User Name" v-model="username" :readonly="loading" required/>
+   	 			<input type="text" placeholder="User Name" v-model="username" :readonly="loading" required autofocus/>
 				</p>
   				<p>
 				    <label for="password">PASSWORD</label>

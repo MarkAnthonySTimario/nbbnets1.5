@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Facility;
 use App\Blood;
 use App\Donation;
+use App\EmergencyPool;
+use App\NetworkIntent;
 
 class BloodBankNetworkingController extends Controller
 {
@@ -89,13 +91,51 @@ class BloodBankNetworkingController extends Controller
         ->selectRaw('count(*) as quantity')
         ->whereLocation($facility->facility_cd)
         ->whereCompStat('AVA')
+        ->where('expiration_dt','>=',date('Y-m-d'))
         ->groupBy('component_cd','blood_type')
         ->get();
 
-        foreach($bloods as $i => $blood){
-            $bloods[$i]->quantity = round($blood->quantity * ($facility->bsf_av/100));
+        $emergency = EmergencyPool::select('blood_type','component_cd','pool')->whereFacilityCd($facility->facility_cd)->get();
+        $ep = [];
+        foreach($emergency as $e){
+            $ep[$e->blood_type.$e->component_cd] = $e->pool;
         }
 
+        foreach($bloods as $i => $blood){
+            $bloods[$i]->quantity = round($blood->quantity * ($facility->bsf_av/100));
+            if(array_key_exists($blood->blood_type.$blood->component_cd,$ep) !== false){
+                $emergencyPool = $ep[$blood->blood_type.$blood->component_cd];
+                $bloods[$i]->quantity -= $emergencyPool;
+            }
+            if($bloods[$i]->quantity < 0){
+                $bloods[$i]->quantity = 0;
+            }
+        }
+
+
         return $bloods;
+    }
+
+    function addIntent(Request $request){
+        $from = $request->get('from');
+        $to = $request->get('to');
+        $details = json_encode($request->get('details'));
+        $by = $request->get('by');
+        // return json_encode($details);
+
+        $intent = new NetworkIntent;
+        $intent->from = $from;
+        $intent->to = $to;
+        $intent->details = $details;
+        $intent->by = $by;
+        $intent->save();
+    }
+
+    function facilities(){
+        return Facility::select('facility_name','facility_cd')->get();
+    }
+
+    function intents($facility_cd){
+        return NetworkIntent::whereFrom($facility_cd)->select('id','created_at');
     }
 }

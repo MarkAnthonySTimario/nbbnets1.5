@@ -21,7 +21,8 @@
                     <ResultRow v-if="!loading && results.length > 0" 
                         v-for="r in results" 
                         :facility="r" 
-                        :key="r.facility_cd"  />
+                        :key="r.facility_cd" 
+                        @showFacility="$emit('showFacility',r)" />
                     <tr v-if="!loading && results.length == 0 && !fresh">
                         <td colspan="3" class="text-center">No Result Found</td>
                     </tr>

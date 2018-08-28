@@ -1,12 +1,12 @@
 <template>
     <tr>
-        <td><router-link :to="'BloodBankNetworking/'+facility.facility_cd" class="text-primary">{{facility.facility_name}}</router-link></td>
+        <td><p class="text-primary" style="cursor:pointer;" @click="$emit('showFacility',facility)">{{facility.facility_name}}</p></td>
         <td>{{facility.distance.distance}} km</td>
         <td>{{facility.distance.time}}</td>
     </tr>
 </template>
 <script>
     export default {
-        props : ['facility']
+        props : ['facility','details']
     }
 </script>

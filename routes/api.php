@@ -17,6 +17,7 @@ Route::post('login','HomeController@login');
 Route::get('notificationsound','HomeController@sound');
 
 Route::post('sticker/register','StickerController@register');
+Route::post('networking/distance','BloodBankNetworkingController@getDistance');
 
 Route::middleware('client')->group(function(){
     Route::get('auc', 'AgencyUpdateController@agencies');
@@ -73,9 +74,11 @@ Route::middleware('client')->group(function(){
     Route::post('releasetoinventory/list','ReleaseToInventoryController@list');
     Route::post('releasetoinventory/save','ReleaseToInventoryController@save');
     
+    Route::get('networking/facilities','BloodBankNetworkingController@facilities');
     Route::get('networking/facilities/{facility_name}','BloodBankNetworkingController@getFacilitiesWithStocks');
-    Route::post('networking/distance','BloodBankNetworkingController@getDistance');
+    Route::get('networking/intents/{facility_cd}','BloodBankNetworkingController@getIntents');
     Route::post('networking/facility','BloodBankNetworkingController@facility');
+    Route::post('networking/sendintent','BloodBankNetworkingController@addIntent');
     
     Route::post('admin/registerfacility','FacilityController@register');
     Route::post('admin/facility','FacilityController@info');
@@ -98,6 +101,7 @@ Route::middleware('client')->group(function(){
 
     Route::get('LabelReprint/Units/{donation_id}','LabelReprintController@units');
     Route::post('LabelReprint/ReprintFired','LabelReprintController@reprintFired');
+
 });
 Route::post('bsi/exist','BSIController@exist');
 Route::post('bsi/item','BSIController@fetch');

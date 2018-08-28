@@ -54,7 +54,7 @@ import LabelReprint from './components/BloodUnit/LabelReprint.vue';
 
 import ReleaseToInventory from './components/StockManagement/ReleaseToInventory.vue';
 import BloodBankNetworking from './components/StockManagement/BloodBankNetworking.vue';
-import NetworkingFacility from './components/StockManagement/BloodBankNetworking/NetworkingFacility.vue';
+import ServeNetworking from './components/StockManagement/BLoodBankNetworking/ServeNetworking.vue';
 
 Vue.use(VueRouter);
 
@@ -112,6 +112,6 @@ export default new VueRouter({
         
         { path : '/ReleaseToInventory', component : ReleaseToInventory },
         { path : '/BloodBankNetworking', component : BloodBankNetworking },
-        { path : '/BloodBankNetworking/:facility_cd', component : NetworkingFacility, props : true },
+        { path : '/ServeNetworking', component : ServeNetworking },
     ]
 })

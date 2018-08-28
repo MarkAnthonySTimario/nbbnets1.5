@@ -3,7 +3,7 @@
         <div v-if="!loading && facility">
             <div class="row">
                 <div class="col-lg-12">
-                    <router-link to="/BloodBankNetworking" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-arrow-left"></span> Back</router-link>
+                    <button class="btn btn-default btn-sm" @click="$emit('focusOut',true)"><span class="glyphicon glyphicon-arrow-left"></span> Back</button>
                 </div>
 
             </div>
@@ -18,7 +18,7 @@
             <div class="row" v-if="!show">
                 <div class="col-lg-6">
                     <div style="font-size:12px;" class="alert alert-info"><span class="glyphicon glyphicon-info-sign"></span> By pressing the button, you are sending an intent to request blood units to this facility.<br/>The Facility will not be informed yet, but will have your request details ready for processing.<br/>
-                        You may call the Facility to inform about your request later, if you wan't to proceed.<br/>
+                        You may call the Facility to inform about your request later, if you would like to proceed.<br/>
                         <br/>
                         <button class="btn btn-default btn-sm" @click="showDetails">Show Contact Details</button>
                     </div>
@@ -41,7 +41,7 @@
                     </table>
                 </div>
                 <div class="col-lg-6">
-                    <table class="table table-bordered table-striped" style="font-size:10px;">
+                    <table class="table table-bordered table-striped" style="font-size:12px;">
                         <thead>
                             <tr>
                                 <th>Component</th>
@@ -66,7 +66,7 @@
 
 <script>
 export default {
-    props : ['facility_cd'],
+    props : ['facilitycd','details'],
     data(){
         let components = this.$session.get('components')
         return {
@@ -77,7 +77,7 @@ export default {
         this.loading = true
         let {facility} = this.$session.get('user')
         this.$http.post(this,'networking/facility',{
-            facility_cd : this.facility_cd,
+            facility_cd : this.facilitycd,
             origin : facility
         })
         .then(({data}) => {
@@ -88,11 +88,15 @@ export default {
     methods : {
         showDetails(){
             this.show = true
-            let {facility} = this.$session.get('user')
-            // this.$http.post('networking/sendintent',{
-            //     facility_cd : this.facility_cd,
-            //     orign : facility
-            // })
+            let user = this.$session.get('user')
+            let {facility} = user
+            
+            this.$http.post(this,'networking/sendintent',{
+                from : facility.facility_cd,
+                to : this.facilitycd,
+                by : user.user_id,
+                details : this.details
+            }).then(({data})=>console.log(data))
         }
     }
 }

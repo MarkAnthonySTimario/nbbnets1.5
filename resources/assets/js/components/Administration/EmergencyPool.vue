@@ -12,15 +12,7 @@
                                 <div class="form-group">
                                     <label for="blood_type">Blood Type</label>
                                     <select class="form-control input-sm" required="required" v-model="blood_type">
-                                        <option value=""></option>
-                                        <option value="A pos">A pos</option>
-                                        <option value="A neg">A neg</option>
-                                        <option value="B pos">B pos</option>
-                                        <option value="B neg">B neg</option>
-                                        <option value="O pos">O pos</option>
-                                        <option value="O neg">O neg</option>
-                                        <option value="AB pos">AB pos</option>
-                                        <option value="AB neg">AB neg</option>
+                                        <option v-for="(bt,i) in blood_types" :value="bt" :key="i">{{bt}}</option>
                                     </select>                                    
                                 </div>
 
@@ -36,7 +28,7 @@
                                     <input type="number" class="form-control input-sm" required="required"  v-model="pool">
                                 </div>
 	                                
-                                <button type="submit" class="btn btn-primary btn-sm" @click="create">Submit</button>
+                                <button type="button" class="btn btn-primary btn-sm" @click.prevent="create">Submit</button>
                             </form>                            
                         </div>
                         <div class="col-lg-8">
@@ -84,7 +76,8 @@ export default {
         blood_type : null,
         pool : null,
         records : [],
-        components : this.$session.get('components')
+        components : this.$session.get('components'),
+        blood_types : this.$session.get('blood_types'),
       }
   },
   created(){
