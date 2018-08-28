@@ -41,7 +41,9 @@
                                 <td>
                                     <router-link :to="'/ManageFacilities/info/' + row.facility_cd">
                                         <button class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-search"></span></button>
-
+                                    </router-link>
+                                    <router-link :to="'/ManageFacilities/users/' + row.facility_cd">
+                                        <button class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-user"></span></button>
                                     </router-link>
                                 </td>
                             </tr>

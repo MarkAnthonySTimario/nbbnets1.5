@@ -102,7 +102,11 @@ class BloodBankNetworkingController extends Controller
         }
 
         foreach($bloods as $i => $blood){
-            $bloods[$i]->quantity = round($blood->quantity * ($facility->bsf_av/100));
+            if($facility->bsf_av){
+                $bloods[$i]->quantity = round($blood->quantity * ($facility->bsf_av/100));
+            }else{
+                $bloods[$i]->quantity = $blood->quantity;
+            }
             if(array_key_exists($blood->blood_type.$blood->component_cd,$ep) !== false){
                 $emergencyPool = $ep[$blood->blood_type.$blood->component_cd];
                 $bloods[$i]->quantity -= $emergencyPool;

@@ -48,6 +48,7 @@ import ManageFacilities from './components/Administration/ManageFacilities/List.
 import RegisterFacility from './components/Administration/ManageFacilities/RegisterFacility.vue';
 import UpdateFacility from './components/Administration/ManageFacilities/UpdateFacility.vue';
 import FacilityInformation from './components/Administration/ManageFacilities/FacilityInformation.vue';
+import FacilityUsers from './components/Administration/ManageFacilities/Users.vue';
 import AucList from './components/Auc/List.vue';
 import AucReport1 from './components/Auc/Report1.vue';
 import LabelReprint from './components/BloodUnit/LabelReprint.vue';
@@ -105,6 +106,7 @@ export default new VueRouter({
         { path : '/ManageFacilities/RegisterFacility', component : RegisterFacility },
         { path : '/ManageFacilities/UpdateFacility/:facility_cd', component : UpdateFacility, props : true },
         { path : '/ManageFacilities/info/:facility_cd', component : FacilityInformation, props : true },
+        { path : '/ManageFacilities/users/:facility_cd', component : FacilityUsers, props : true },
         
         { path : '/Auc', component : AucList },
         { path : '/Auc/Report1', component : AucReport1 },

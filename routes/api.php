@@ -82,6 +82,7 @@ Route::middleware('client')->group(function(){
     
     Route::post('admin/registerfacility','FacilityController@register');
     Route::post('admin/facility','FacilityController@info');
+    Route::get('admin/facilityusers/{facility_cd}','FacilityController@users');
     Route::get('admin/templates','TemplateController@lists');
     Route::post('admin/savetemplate','TemplateController@save');
     Route::get('labeltemplate/gettemplate/{facility_cd}','TemplateController@getTemplate');

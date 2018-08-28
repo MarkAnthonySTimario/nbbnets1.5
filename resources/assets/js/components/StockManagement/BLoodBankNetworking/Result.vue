@@ -52,7 +52,9 @@
                 this.results = _.filter(this.facilities,f => {
                     let pass = false;
                     this.details.map(d => {
-                        pass = _.filter(f.bloods,{component_cd : d.component_cd*1, blood_type : d.blood_type}).length > 0
+                        pass = _.filter(f.bloods,f=>{
+                            return f.component_cd == d.component_cd*1 && f.blood_type == d.blood_type && f.quantity > 0
+                        }).length > 0
                     })
                     return pass
                 })

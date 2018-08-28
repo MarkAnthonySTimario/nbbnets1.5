@@ -7,6 +7,7 @@ use App\Facility;
 use App\Template;
 use App\R3Config;
 use App\TransfusionConfig;
+use App\User;
 
 class FacilityController extends Controller
 {
@@ -120,5 +121,9 @@ class FacilityController extends Controller
 
     function appFacilityList(){
         return Facility::all()->pluck('facility_name','facility_cd');
+    }
+
+    function users($facility_cd){
+        return User::select('user_id','user_fname','user_lname')->with('level')->whereFacilityCd($facility_cd)->get();
     }
 }
