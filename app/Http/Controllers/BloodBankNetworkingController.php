@@ -139,7 +139,9 @@ class BloodBankNetworkingController extends Controller
         return Facility::select('facility_name','facility_cd')->get();
     }
 
-    function intents($facility_cd){
-        return NetworkIntent::whereFrom($facility_cd)->select('id','created_at');
+    function getIntents(Request $request){
+        $from = $request->get('from');
+        $to = $request->get('to');
+        return NetworkIntent::whereFrom($from)->whereTo($to)->select('id','created_at','by','details')->get();
     }
 }
