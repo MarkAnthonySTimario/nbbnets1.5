@@ -1,15 +1,19 @@
 <template>
     <div>
         <div class="row" v-if="!loading">
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="panel panel-warning">
                     <div class="panel-heading">
                         Select Blood Service Facility
                     </div>
                     <div class="panel-body">
                         <select class="form-control input-sm" v-model="facility">
+                            <option :value="null"></option>
                             <option v-for="f in facilities" :value="f" :key="f.facility_cd">{{f.facility_name}}</option>
                         </select>
+                    </div>
+                    <div class="panel-footer" v-if="!facility">
+                        <center>Start by Selecting the Name of the Facility</center>
                     </div>
                     <table class="table table-condensed" v-if="facility">
                         <tbody>
@@ -21,46 +25,65 @@
                             <tr v-if="intentLoading">
                                 <td class="text-center"><LoadingInline label="Please wait, loading.." /></td>
                             </tr>
+                            <tr v-if="!intentLoading && intents.length == 0">
+                                <td class="text-center">No Records Found</td>
+                            </tr>
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td class="text-center">
+                                    <button class="btn btn-default btn-xs" @click.prevent="newIntent">Create Request of this facility</button>
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
-            <div class="col-lg-8" v-if="intent">
+            <div class="col-lg-9" v-if="intent && facility">
                 <Intent :intent="intent" />
             </div>
+            <div class="col-lg-9" v-if="!loading && !facility">
+                <Requests />
+            </div>
         </div>
-        <Loading v-if="loading"  />
+        <Loading v-if="loading" />
     </div>
 </template>
 
 <script>
 import Intent from './ServeNetworking/Intent'
+import Requests from './ServeNetworking/Requests'
+
 export default {
-    components : {Intent},
+    components : {Intent,Requests},
     data(){
         return {
-            facilities : [], loading : false, facility : null, intents : [], intentLoading : false, intent : null
+            facilities : [], loading : false, facility : null, intents : [], intentLoading : false, intent : null, 
         }
     },
     mounted(){
-        this.facility = {"facility_name":"Philippine Blood Center","facility_cd":"13006"}
-        this.intents = [{"id":1,"created_at":"2018-08-28 21:03:13","by":"13006","details":"[{\"blood_type\":\"A pos\",\"component_cd\":10,\"quantity\":0}]"},{"id":2,"created_at":"2018-08-28 21:03:52","by":"13006","details":"[{\"blood_type\":\"A pos\",\"component_cd\":10,\"quantity\":\"1\"},{\"blood_type\":\"B pos\",\"component_cd\":\"20\",\"quantity\":\"1\"}]"}]
-        this.loading = true
-        this.$http.get(this,'networking/facilities')
-        .then(({data}) => {
-            this.facilities = _.orderBy(data,f=>{
-                return f.facility_name.toUpperCase()
-            },['asc'])
-            this.loading = false
-        })
+        // this.facility = {"facility_name":"Cotabato Regional Medical Center - Blood Bank","facility_cd":"12002"}
+        // this.intent = {"id":4,"created_at":"2018-08-29 11:32:37","by":"12002","details":"[{\"blood_type\":\"A pos\",\"component_cd\":\"20\",\"quantity\":\"2\"},{\"blood_type\":\"A pos\",\"component_cd\":\"30\",\"quantity\":\"2\"},{\"blood_type\":\"A pos\",\"component_cd\":\"40\",\"quantity\":\"2\"}]"}
+        this.loadFacilities()
     },
     methods : {
+        loadFacilities(){
+            this.loading = true
+            this.$http.get(this,'networking/facilities')
+            .then(({data}) => {
+                this.facilities = _.orderBy(data,f=>{
+                    return f.facility_name.toUpperCase()
+                },['asc'])
+                _.remove(this.facilities,f=>{
+                    return f.facility_cd == this.$session.get('user').facility.facility_cd
+                })
+                this.loading = false
+            })
+        },
         loadIntent(intent){
             this.intent = intent
-        }
-    },
-    watch : {
-        facility(){
+        },
+        getIntents(){
             if(!this.facility){
                 return
             }
@@ -70,9 +93,31 @@ export default {
                 to : this.$session.get('user').facility.facility_cd
             })
             .then(({data})=> {
-                this.intents = data
+                this.intents = _.orderBy(data,['created_at'],['desc'])
                 this.intentLoading = false
             })
+        },
+        newIntent(){
+            let user = this.$session.get('user')
+            this.loading = true
+            
+            this.$http.post(this,'networking/sendintent',{
+                from : this.facility.facility_cd,
+                to : user.facility.facility_cd,
+                by : this.facility.facility_cd,
+                details : [
+                    {blood_type : 'A pos', component_cd : '10', quantity : 1}
+                ]
+            })
+            .then(({data})=>{
+                this.getIntents()
+                this.loading = false
+            })
+        }
+    },
+    watch : {
+        facility(){
+            this.getIntents()
         }
     }
 }

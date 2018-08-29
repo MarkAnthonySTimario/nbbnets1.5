@@ -79,6 +79,7 @@ Route::middleware('client')->group(function(){
     Route::post('networking/intents','BloodBankNetworkingController@getIntents');
     Route::post('networking/facility','BloodBankNetworkingController@facility');
     Route::post('networking/sendintent','BloodBankNetworkingController@addIntent');
+    Route::post('networking/intentavailable','BloodBankNetworkingController@intentAvailable');
     
     Route::post('admin/registerfacility','FacilityController@register');
     Route::post('admin/facility','FacilityController@info');

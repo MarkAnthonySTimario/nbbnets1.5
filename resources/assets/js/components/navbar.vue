@@ -54,8 +54,8 @@
                 <li><router-link to="/StatusOfInventory">Inventory Status</router-link></li>
                 <li><router-link to="/BloodBankNetworking">Blood Bank Networking</router-link></li>
                 <li><router-link to="/ServeNetworking">Serve Blood Request</router-link></li>
-                <li><router-link to="/Transfusion">Transfusion</router-link></li>
-                <li><router-link to="/BRM">Releasing</router-link></li>
+                <!-- <li><router-link to="/Transfusion">Transfusion</router-link></li>
+                <li><router-link to="/BRM">Releasing</router-link></li> -->
               </ul>
             </li>
 

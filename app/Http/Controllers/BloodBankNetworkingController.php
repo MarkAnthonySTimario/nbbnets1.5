@@ -144,4 +144,42 @@ class BloodBankNetworkingController extends Controller
         $to = $request->get('to');
         return NetworkIntent::whereFrom($from)->whereTo($to)->select('id','created_at','by','details')->get();
     }
+
+    function intentAvailable(Request $request){
+        $facility_cd = $request->get('facility_cd');
+        $facility = Facility::find($facility_cd);
+
+        return $this->getBloods($facility);
+        // $details = $request->get('details');
+
+        // $emergency = EmergencyPool::select('blood_type','component_cd','pool')->whereFacilityCd($facility->facility_cd)->get();
+        // $ep = [];
+        // foreach($emergency as $e){
+        //     $ep[$e->blood_type.$e->component_cd] = $e->pool;
+        // }
+
+        // foreach($details as $i => $d){
+        //     $ava = Blood::selectRaw('count(*) as quantity')
+        //     ->whereLocation($facility_cd)
+        //     ->whereCompStat('AVA')
+        //     ->where('expiration_dt','>=',date('Y-m-d'))
+        //     ->whereComponentCd($d['component_cd'])
+        //     ->whereBloodType($d['blood_type'])
+        //     ->first();
+        //     $details[$i]['available'] = $ava->quantity;
+
+        //     if($facility->bsf_av){
+        //         $details[$i]['available'] = round($details[$i]['available'] * ($facility->bsf_av/100));
+        //     }
+        //     if(array_key_exists($d['blood_type'].$d['component_cd'],$ep) !== false){
+        //         $emergencyPool = $ep[$d['blood_type'].$d['component_cd']];
+        //         $details[$i]['available'] -= $emergencyPool;
+        //     }
+        //     if($details[$i]['available'] < 0){
+        //         $details[$i]['available'] = 0;
+        //     }
+        // }
+
+        // return $details;
+    }
 }
