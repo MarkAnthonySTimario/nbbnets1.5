@@ -1,7 +1,7 @@
 <template>
     <div>
         <LoadingInline v-if="loading" />
-        <div class="row" v-if="!loading">
+        <div class="row" v-if="!loading && !reserve">
             <div class="col-lg-12">
                 <div class="panel panel-success">
                     <div class="panel-heading">
@@ -41,7 +41,7 @@
                             <tr>
                                 <td colspan="5" class="text-right">
                                     <button @click="addDetail" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span> Add Row</button>
-                                    <button @click="proceed" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-arrow-right"></span> Reserve Units</button>
+                                    <button @click="reserve = true" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-arrow-right"></span> Reserve Units</button>
                                 </td>
                             </tr>
                         </tfoot>
@@ -49,11 +49,14 @@
                 </div>
             </div>
         </div>
+        <Reserve v-if="reserve" :details="details" @proceed="proceed" />
     </div>
 </template>
 
 <script>
+    import Reserve from './Reserve'
     export default{
+        components : {Reserve},
         props : ['intent'],
         data(){
             return {
@@ -62,7 +65,8 @@
                 loading : false,
                 components : this.$session.get('components'),
                 blood_types : this.$session.get('blood_types'),
-                availables : []
+                availables : [],
+                reserve : false
             }
         },
         mounted(){

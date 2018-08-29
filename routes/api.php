@@ -80,6 +80,10 @@ Route::middleware('client')->group(function(){
     Route::post('networking/facility','BloodBankNetworkingController@facility');
     Route::post('networking/sendintent','BloodBankNetworkingController@addIntent');
     Route::post('networking/intentavailable','BloodBankNetworkingController@intentAvailable');
+    Route::post('networking/serveintent','BloodBankNetworkingController@serveIntent');
+    Route::get('networking/getservedintent/{facility_cd}','BloodBankNetworkingController@getServeIntent');
+    Route::get('networking/deleterequest/{facility_cd}','BloodBankNetworkingController@deletServeIntent');
+    Route::post('networking/lookupunits','BloodBankNetworkingController@lookUpUnits');
     
     Route::post('admin/registerfacility','FacilityController@register');
     Route::post('admin/facility','FacilityController@info');

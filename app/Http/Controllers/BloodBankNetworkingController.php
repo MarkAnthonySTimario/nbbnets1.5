@@ -132,6 +132,7 @@ class BloodBankNetworkingController extends Controller
         $intent->to = $to;
         $intent->details = $details;
         $intent->by = $by;
+        $intent->serve = false;
         $intent->save();
     }
 
@@ -142,7 +143,11 @@ class BloodBankNetworkingController extends Controller
     function getIntents(Request $request){
         $from = $request->get('from');
         $to = $request->get('to');
-        return NetworkIntent::whereFrom($from)->whereTo($to)->select('id','created_at','by','details')->get();
+        return NetworkIntent::whereFrom($from)
+        ->whereTo($to)
+        ->whereServe(0)
+        ->select('id','created_at','by','details')
+        ->get();
     }
 
     function intentAvailable(Request $request){
@@ -181,5 +186,46 @@ class BloodBankNetworkingController extends Controller
         // }
 
         // return $details;
+    }
+
+    function serveIntent(Request $request){
+        $id = $request->get('id');
+        $reserved_by = $request->get('reserved_by');
+        $details = $request->get('details');
+        $facility_cd = $request->get('facility_cd');
+
+        $intent = NetworkIntent::find($id);
+        $intent->details = $details;
+        $intent->reserved_by = $reserved_by;
+        $intent->reserved_dt = date('Y-m-d h:i:s');
+        $intent->serve = true;
+        $intent->request_no = NetworkIntent::generateNo($facility_cd);
+        $intent->save();
+
+        return $intent;
+    }
+
+    function getServeIntent($facility_cd){
+        return NetworkIntent::whereTo($facility_cd)
+                ->with('facilityFrom')->get();
+    }
+
+    function deletServeIntent($id){
+        $i = NetworkIntent::find($id);
+        $i->delete();
+    }
+
+    function lookUpUnits(Request $r){
+        $facility_cd = $r->get('facility_cd');
+        $blood_type = $r->get('blood_type');
+        $component_cd = $r->get('component_cd');
+
+        return Blood::select('donation_id','expiration_dt')
+        ->whereBloodType($blood_type)
+        ->whereComponentCd($component_cd)
+        ->whereLocation($facility_cd)
+        ->whereCompStat('AVA')
+        ->where('expiration_dt','>=',date('Y-m-d'))
+        ->get();
     }
 }

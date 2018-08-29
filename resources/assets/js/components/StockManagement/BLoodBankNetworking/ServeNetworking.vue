@@ -40,10 +40,10 @@
                 </div>
             </div>
             <div class="col-lg-9" v-if="intent && facility">
-                <Intent :intent="intent" />
+                <Intent :intent="intent" @proceed="proceed" />
             </div>
             <div class="col-lg-9" v-if="!loading && !facility">
-                <Requests />
+                <Requests :update="updateRequests" />
             </div>
         </div>
         <Loading v-if="loading" />
@@ -58,12 +58,18 @@ export default {
     components : {Intent,Requests},
     data(){
         return {
-            facilities : [], loading : false, facility : null, intents : [], intentLoading : false, intent : null, 
+            facilities : [], 
+            loading : false, 
+            facility : null, 
+            intents : [], 
+            intentLoading : false, 
+            intent : null, 
+            updateRequests : 0
         }
     },
     mounted(){
-        // this.facility = {"facility_name":"Cotabato Regional Medical Center - Blood Bank","facility_cd":"12002"}
-        // this.intent = {"id":4,"created_at":"2018-08-29 11:32:37","by":"12002","details":"[{\"blood_type\":\"A pos\",\"component_cd\":\"20\",\"quantity\":\"2\"},{\"blood_type\":\"A pos\",\"component_cd\":\"30\",\"quantity\":\"2\"},{\"blood_type\":\"A pos\",\"component_cd\":\"40\",\"quantity\":\"2\"}]"}
+        // this.facility = {"facility_name":"tmc","facility_cd":"13109"}
+        // this.intent = {"id":8,"created_at":"2018-08-29 22:18:41","by":"13109","details":"[{\"blood_type\":\"A pos\",\"component_cd\":10,\"quantity\":\"3\"},{\"blood_type\":\"A pos\",\"component_cd\":\"20\",\"quantity\":\"2\"}]"}
         this.loadFacilities()
     },
     methods : {
@@ -111,6 +117,24 @@ export default {
             })
             .then(({data})=>{
                 this.getIntents()
+                this.loading = false
+            })
+        },
+        proceed(details){
+            let user = this.$session.get('user')
+            
+            this.loading = true
+            this.$http.post(this,'networking/serveintent',{
+                reserved_by : user.user_id,
+                facility_cd : user.facility.facility_cd,
+                id : this.intent.id,
+                details : JSON.stringify(details)
+            })
+            .then(({data})=>{
+                this.getIntents()
+                this.intent = null
+                this.facility = null
+                this.updateRequests++
                 this.loading = false
             })
         }
