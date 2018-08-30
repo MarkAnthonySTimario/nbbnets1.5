@@ -70,6 +70,7 @@ class FacilityController extends Controller
             $f->res_hrs = $res_hrs;
             $f->no_days_expire_warning = $no_days_expire_warning;
             $f->standard_bu_duration = $standard_bu_duration ? 'Y' : 'N';
+            $f->supports_platelet_apheresis = $supports_platelet_apheresis;
             $f->disable_flg = $disable_flg ? 'Y' : 'N';
             $f->nat = $nat;
             $f->antibody = $antibody;
@@ -147,6 +148,7 @@ class FacilityController extends Controller
             $f->res_hrs = $res_hrs;
             $f->no_days_expire_warning = $no_days_expire_warning;
             $f->standard_bu_duration = $standard_bu_duration ? 'Y' : 'N';
+            $f->supports_platelet_apheresis = $supports_platelet_apheresis;
             $f->disable_flg = $disable_flg ? 'Y' : 'N';
             $f->nat = $nat;
             $f->antibody = $antibody;

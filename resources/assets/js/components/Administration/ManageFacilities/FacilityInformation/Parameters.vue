@@ -41,6 +41,10 @@
                     <td>{{facility.standard_bu_duration}}</td>
                 </tr>
                 <tr>
+                    <td>Supports Platelet Apheresis</td>
+                    <td>{{facility.supports_platelet_apheresis ? 'Yes' : 'No'}}</td>
+                </tr>
+                <tr>
                     <td colspan="2">Optional Tests</td>
                 </tr>
                 <tr>

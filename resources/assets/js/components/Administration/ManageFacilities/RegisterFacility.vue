@@ -100,6 +100,7 @@ export default {
                 nat : false,
                 antibody : false,
                 zika : false,
+                supports_platelet_apheresis : false,
 
                 enable_patient_ward_no : false,
                 enable_patient_room_no : false,

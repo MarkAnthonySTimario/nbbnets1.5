@@ -86,6 +86,7 @@ export default {
                 res_hrs : 8,
                 no_days_expire_warning : 2,
                 standard_bu_duration : true,
+                supports_platelet_apheresis : false,
 
                 nat : false,
                 antibody : false,
@@ -132,7 +133,7 @@ export default {
                 let {
                     disable_flg,bsf_av,max_donor_age,min_donor_age,no_months_to_nxt_don,res_hrs,no_days_expire_warning,standard_bu_duration,
 
-                    nat,antibody,zika,
+                    nat,antibody,zika,supports_platelet_apheresis,
 
                     transfusion_config,
 
@@ -150,6 +151,7 @@ export default {
                     nat,
                     antibody,
                     zika,
+                    supports_platelet_apheresis,
 
                     enable_patient_ward_no : typeof enable_patient_ward_no != 'undefined' ? enable_patient_ward_no : false,
                     enable_patient_room_no : typeof enable_patient_room_no != 'undefined' ? enable_patient_room_no : false,

@@ -64,7 +64,11 @@ export default {
 				
 				this.$http.get(this,"keyvalues")
 				.then(({data : {components,bloodtypes,civilstatus,bloodbags}}) => {
-					this.$session.set('components',components);
+					if(data.user.facility.supports_platelet_apheresis){
+						this.$session.set('components',components);
+					}else{
+						this.$session.set('components',_.filter(components,(c,i)=>i != '80'));
+					}
 					this.$session.set('blood_types',bloodtypes);
 					this.$session.set('civil_status',civilstatus);
 					this.$session.set('blood_bags',bloodbags);

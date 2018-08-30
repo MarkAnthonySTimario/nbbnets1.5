@@ -34,6 +34,10 @@
                 <label for="" class="control-label col-lg-6">Standard Blood Unit Duration</label>
                 <div class="col-lg-1"><input type="checkbox" class="form-control input-sm" v-model="config.standard_bu_duration" :value="true"></div>
             </div> 
+            <div class="form-group">
+                <label for="" class="control-label col-lg-6">Supports Platelet Apheresis</label>
+                <div class="col-lg-1"><input type="checkbox" class="form-control input-sm" v-model="config.supports_platelet_apheresis" :value="true"></div>
+            </div> 
             <h3 class="text-success" style="border-bottom:1px solid #c1c1c1;">Optional Tests</h3>
             <hr/>
             <div class="form-group">
