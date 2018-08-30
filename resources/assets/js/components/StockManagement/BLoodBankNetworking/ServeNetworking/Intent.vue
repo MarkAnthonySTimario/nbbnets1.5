@@ -49,7 +49,7 @@
                 </div>
             </div>
         </div>
-        <Reserve v-if="reserve" :details="details" @proceed="proceed" />
+        <Reserve v-if="reserve" :details="details" @proceed="proceed" :iid="intent.id" />
     </div>
 </template>
 

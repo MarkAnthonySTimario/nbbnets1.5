@@ -7,6 +7,11 @@ use App\Sticker;
 
 class StickerController extends Controller
 {
+
+    function list($facility_cd){
+        return Sticker::whereFacilityCd($facility_cd)->get();
+    }
+
     function register(Request $request){
         $facility_cd = $request->get('facility_cd');
         $series_start = $request->get('series_start');

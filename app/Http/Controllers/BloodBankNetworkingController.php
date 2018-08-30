@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Illuminate\Http\Request;
 use App\Facility;
 use App\Blood;
 use App\Donation;
 use App\EmergencyPool;
 use App\NetworkIntent;
+use App\NetworkIntentDetail;
 
 class BloodBankNetworkingController extends Controller
 {
@@ -207,6 +209,7 @@ class BloodBankNetworkingController extends Controller
 
     function getServeIntent($facility_cd){
         return NetworkIntent::whereTo($facility_cd)
+                ->whereServe(1)
                 ->with('facilityFrom')->get();
     }
 
@@ -227,5 +230,43 @@ class BloodBankNetworkingController extends Controller
         ->whereCompStat('AVA')
         ->where('expiration_dt','>=',date('Y-m-d'))
         ->get();
+    }
+
+    function reserveUnits(Request $r){
+        $units = $r->get('units');
+        $id = $r->get('id');
+        $reserved_by = $r->get('reserved_by');
+
+        $intent = NetworkIntent::find($id);
+        $intent->serve = 1;
+        $intent->reserved_by = $reserved_by;
+        $intent->reserved_dt = date('Y-m-d H:i:s');
+        $intent->save();
+
+        foreach($units as $i => $unit){
+            DB::statement(
+                DB::raw("UPDATE component SET comp_stat = 'RES' 
+                WHERE donation_id = '".$unit['donation_id']."' AND component_cd = '".$unit['component_cd']."'"));
+
+            $d = new NetworkIntentDetail;
+            $d->intent_id = $id;
+            $d->donation_id = $unit['donation_id'];
+            $d->component_cd = $unit['component_cd'];
+            $d->blood_type = $unit['blood_type'];
+            $d->save();
+        }
+    }
+
+    function getIntent($intent_id){
+        return NetworkIntent::with('details','facilityFrom')->find($intent_id);
+    }
+
+    function checkDonationId(Request $r){
+        $component_cd = $r->get('component_cd');
+        $blood_type = $r->get('blood_type');
+        $confirm = $r->get('confirm');
+
+        $unit = Blood::whereBloodType($blood_type)->whereComponentCd($component_cd)->whereDonationId($confirm)->first();
+        return ['status' => $unit ? true : false];
     }
 }

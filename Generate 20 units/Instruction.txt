@@ -1,0 +1,11 @@
+Sticker entry of BSF
+Donation IDS
+
+localhost/nbbnets_merge	-	IP/folder	if necessary
+11001_1	-	120021	verifier
+11001	-	12002	main
+DBC 1	-	CRMC2	mbd
+link=D	-	link=C		first letter
+2018-08-30	-	2018-08-30	if necessary
+
+create the Agency / MBD

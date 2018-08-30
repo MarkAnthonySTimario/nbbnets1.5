@@ -84,6 +84,9 @@ Route::middleware('client')->group(function(){
     Route::get('networking/getservedintent/{facility_cd}','BloodBankNetworkingController@getServeIntent');
     Route::get('networking/deleterequest/{facility_cd}','BloodBankNetworkingController@deletServeIntent');
     Route::post('networking/lookupunits','BloodBankNetworkingController@lookUpUnits');
+    Route::post('networking/reserveunits','BloodBankNetworkingController@reserveUnits');
+    Route::get('networking/intent/{intent_id}','BloodBankNetworkingController@getIntent');
+    Route::post('networking/checkDonationId','BloodBankNetworkingController@checkDonationId');
     
     Route::post('admin/registerfacility','FacilityController@register');
     Route::post('admin/updatefacility','FacilityController@update');
@@ -105,6 +108,7 @@ Route::middleware('client')->group(function(){
     Route::post('bsi/yesno','BSIController@yesno');
     Route::post('bsi/create','BSIController@create');
     Route::get('sticker/check/{facility_cd}/{donation_id}','StickerController@check');
+    Route::get('sticker/list/{facility_cd}','StickerController@list');
 
     Route::get('LabelReprint/Units/{donation_id}','LabelReprintController@units');
     Route::post('LabelReprint/ReprintFired','LabelReprintController@reprintFired');

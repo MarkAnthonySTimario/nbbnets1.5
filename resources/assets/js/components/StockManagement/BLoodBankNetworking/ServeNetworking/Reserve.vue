@@ -54,7 +54,7 @@
     import Lookup from './Lookup'
     export default{
         components : {Lookup},
-        props : ['details'],
+        props : ['details','iid'],
         data(){
             let ddetails = []
             this.details.map(d => {
@@ -103,8 +103,10 @@
             proceed(){
                 let units = this.ddetails
                 this.loading = true
-                this.post(this,'networking/reserveunits',{
-                    units
+                this.$http.post(this,'networking/reserveunits',{
+                    units,
+                    id : this.iid,
+                    reserved_by : this.$session.get('user').user_id
                 })
                 .then(({data})=>{
                     this.loading = false

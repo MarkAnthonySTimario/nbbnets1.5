@@ -26,6 +26,7 @@
                                     <span v-if="r.reserved_by && r.released_by" class="text-primary">Released</span>
                                 </td>
                                 <td>
+                                    <router-link :to="'/ServeNetworking/release/'+r.id" class="btn btn-success btn-xs" @click="deleteRequest(r)"><span class="glyphicon glyphicon-share-alt"></span></router-link>
                                     <button class="btn btn-warning btn-xs" @click="deleteRequest(r)"><span class="glyphicon glyphicon-minus"></span></button>
                                 </td>
                             </tr>
