@@ -2,7 +2,7 @@
   <div class="row">
       <loading v-if="loading"></loading>
       <div class="col-lg-6" v-if="!loading">
-          <div class="panel panel-warning">
+          <div class="panel panel-success">
               <div class="panel-heading">
                   New Walk-in Donation
                   <span class="pull-right">
@@ -64,7 +64,9 @@
                    </div>
                    <div class="form-group">
                        <div class="col-lg-9 col-lg-offset-3">
-                           <button class="btn btn-default btn-sm" @click="validateForm">Save Walk-in</button>
+                           <div class="alert alert-warning" style="font-size:12px;" v-if="donatedBefore">Donor previously donated less than {{ next_donation }} months ago</div>
+                           <button class="btn btn-default btn-sm" @click="validateForm" v-if="!donatedBefore && approvedBy">Save Walk-in</button>
+                           <button class="btn btn-default btn-sm" @click="mh_pe_remark = '[approved_by='+user.user_id+']'; validateForm()" v-if="donatedBefore && !approvedBy">Proceed Anyway</button>
                        </div>
                    </div>
                    <!-- div.form-group.required>label.control-label.col-lg-3+div.col-lg-9>input.form-control.input-sm -->
@@ -85,13 +87,17 @@ export default {
   components : {Questions},
   props : ['seqno'],
   data(){
+      let user = this.$session.get('user')
       return {
+          user,
           loading : true, donor : null, donation_type : 'V', donation_types : [], donor_statuses : [],
           mh_pe_stat : 'A', mh_pe_deferral : null, mh_pe_question : null, mh_pe_remark : null,
           collection_method : 'WB', collection_methods : [], collection_stat : 'COL', 
           collection_stats : [{ code : 'COL' , value : 'Successful'}, {code : 'UNS' , value : 'Unsuccessful'}],
           coluns_res : null, donation_id : null, facility_cd : this.$session.get('user').facility_cd,
-          user_id : this.$session.get('user').user_id
+          user_id : user.user_id, 
+          approvedBy : null,
+          next_donation : user.facility.no_months_to_nxt_don
       }
   },
   mounted(){
@@ -182,6 +188,20 @@ export default {
   computed : {
       collection_unsuccessful(){
           return this.collection_stat == 'U';
+      },
+      donatedBefore(){
+          let donations = _.orderBy(this.donor.donations,d=>{
+              return d.created_dt
+          },['desc'])
+          if(donations.length == 0){
+              return false
+          }
+          let recentDonation = donations[0]
+          let {created_dt} = recentDonation
+          created_dt = created_dt.replace(' ','T')+'Z'
+          created_dt = new Date(created_dt)
+          let monthsAgo = this.monthDiff(created_dt,new Date())
+          return monthsAgo <= this.next_donation
       }
   }
 }

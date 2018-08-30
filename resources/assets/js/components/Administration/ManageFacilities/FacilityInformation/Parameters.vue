@@ -105,7 +105,7 @@
                     <td>Auto-generate Patient ID</td>
                     <td>
                         <span v-if="facility.transfusion_config">
-                            {{facility.transfusion_config.auto_patient_id ? 'Yes' : 'No'}}
+                            {{facility.transfusion_config.auto_patient_id == 'Y' ? 'Yes' : 'No'}}
                         </span>
                     </td>
                 </tr>
@@ -113,7 +113,7 @@
                     <td>Require Ward No.</td>
                     <td>
                         <span v-if="facility.transfusion_config">
-                            {{facility.transfusion_config.enable_patient_ward_no ? 'Yes' : 'No'}}
+                            {{facility.transfusion_config.enable_patient_ward_no == 'Y' ? 'Yes' : 'No'}}
                         </span>
                     </td>
                 </tr>
@@ -121,7 +121,7 @@
                     <td>Require Room No.</td>
                     <td>
                         <span v-if="facility.transfusion_config">
-                            {{facility.transfusion_config.enable_patient_room_no ? 'Yes' : 'No'}}
+                            {{facility.transfusion_config.enable_patient_room_no == 'Y' ? 'Yes' : 'No'}}
                         </span>
                     </td>
                 </tr>
@@ -129,7 +129,7 @@
                     <td>Require Bed No.</td>
                     <td>
                         <span v-if="facility.transfusion_config">
-                            {{facility.transfusion_config.enable_patient_bed_no ? 'Yes' : 'No'}}
+                            {{facility.transfusion_config.enable_patient_bed_no == 'Y' ? 'Yes' : 'No'}}
                         </span>
                     </td>
                 </tr>

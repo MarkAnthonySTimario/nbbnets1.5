@@ -80,6 +80,13 @@ Vue.component('error',error);
             .then(({data}) => {
                 cb(data.status);
             });
+        },
+        monthDiff(d1, d2) {
+            let months;
+            months = (d2.getFullYear() - d1.getFullYear()) * 12;
+            months -= d1.getMonth() + 1;
+            months += d2.getMonth();
+            return months;
         }
      }
  })

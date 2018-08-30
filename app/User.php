@@ -12,7 +12,7 @@ class User extends Authenticatable
     use Notifiable;
     
     protected $table = 'r_user';
-    // protected $primaryKey = 'user_id';
+    protected $primaryKey = 'user_id';
     public $timestamps = false;
 
     /**

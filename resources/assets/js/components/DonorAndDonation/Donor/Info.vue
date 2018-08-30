@@ -190,8 +190,11 @@ export default {
       if(donation_id == null || donation_id == undefined || donation_id == 'null' || donation_id == 'undefined'){
           donation_id = null;
       }
+      let user = this.$session.get('user')
       return {
-          mbd : null, donor : null,loading : true, donation_id
+          user,
+          mbd : null, donor : null,loading : true, donation_id,
+          nextDonation : user.facility.no_months_to_nxt_don
       }
   },
   mounted(){
@@ -244,6 +247,23 @@ export default {
             });
         }
         c();
+      },
+      computed : {
+        donatedBefore(){
+            let donations = _.orderBy(this.donor.donations,d=>{
+                return d.created_dt
+            },['desc'])
+            alert(donations.length)
+            if(donations.length == 0){
+                return false
+            }
+            let recentDonation = donations[0]
+            let {created_dt} = recentDonation
+            created_dt = created_dt.replace(' ','T')+'Z'
+            created_dt = new Date(created_dt)
+            let monthsAgo = this.monthDiff(created_dt,new Date())
+            return monthsAgo <= this.next_donation
+        }
       }
   }
 }

@@ -132,7 +132,7 @@ export default {
       return { 
           donation_id : null,
           mbd: null,loading : true, donor_photo : null, nations : [],
-          fname : null, mname : null, lname : null, name_suffix : null, gender : null, bdate : null, civil_stat : null, 
+          fname : null, mname : null, lname : null, name_suffix : null, gender : null, bdate : '2000-01-01', civil_stat : null, 
           tel_no : null, mobile_no : null, email : null, 
           home : null, office : null,
           nationality : 137

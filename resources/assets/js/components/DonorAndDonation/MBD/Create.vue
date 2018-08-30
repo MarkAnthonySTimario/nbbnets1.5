@@ -71,7 +71,7 @@ export default {
     components : {agencySelector},
     data(){
         return {
-            agency : null, donation_dt : null, remarks : null, error : null, loading : false
+            agency : null, donation_dt : '2018-08-30', remarks : null, error : null, loading : false
         }
     },
     methods : {

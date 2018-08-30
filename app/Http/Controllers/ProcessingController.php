@@ -109,6 +109,6 @@ class ProcessingController extends Controller
 
         $query = "SELECT DATE_ADD('".$collection_dt."',INTERVAL ".self::$components[$component_cd]['exp_interval']." ".$interval.") as `expiration_dt`";
 
-        return \DB::select(\DB::raw($query))[0]->expiration_dt;
+        return str_replace('00:00:00','23:59:00',\DB::select(\DB::raw($query))[0]->expiration_dt);
     }
 }

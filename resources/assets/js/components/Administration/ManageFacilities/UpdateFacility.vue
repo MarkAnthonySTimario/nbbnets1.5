@@ -134,10 +134,14 @@ export default {
 
                     nat,antibody,zika,
 
-                    enable_patient_ward_no,enable_patient_room_no,enable_patient_bed_no,
+                    transfusion_config,
 
-                    access_flg,report_email,admin_decide_flg,user_access_flg,user_request_flg,
+                    r3config : {access_flg,report_email,admin_decide_flg,user_access_flg,user_request_flg,}
                 } = data
+                
+                if(transfusion_config){
+                    let {enable_patient_ward_no,enable_patient_room_no,enable_patient_bed_no,} = transfusion_config
+                }
                 this.config = {
                     disable_flg : disable_flg == 'Y',
                     bsf_av,max_donor_age,min_donor_age,no_months_to_nxt_don,res_hrs,no_days_expire_warning,
@@ -147,9 +151,12 @@ export default {
                     antibody,
                     zika,
 
-                    enable_patient_ward_no,enable_patient_room_no,enable_patient_bed_no,
+                    enable_patient_ward_no : typeof enable_patient_ward_no != 'undefined' ? enable_patient_ward_no : false,
+                    enable_patient_room_no : typeof enable_patient_room_no != 'undefined' ? enable_patient_room_no : false,
+                    enable_patient_bed_no : typeof enable_patient_bed_no != 'undefined' ? enable_patient_bed_no : false,
 
-                    access_flg,report_email,admin_decide_flg,user_access_flg,user_request_flg
+                    access_flg,
+                    report_email,admin_decide_flg,user_access_flg,user_request_flg
                 }
                 this.facility = data
                 this.loading = false
@@ -165,7 +172,7 @@ export default {
             let {facility,config,label} = this.$data;
             let {users} = facility;
             this.loading = true;
-            this.$http.post(this,'admin/registerfacility',{
+            this.$http.post(this,'admin/updatefacility',{
                 facility, users, config, template : label, user_id
             })
             .then(({data}) => {
@@ -197,17 +204,17 @@ export default {
 
             let validConfig = bsf_av && max_donor_age && min_donor_age && no_months_to_nxt_don && res_hrs && no_days_expire_warning && report_email;
             
-            let validUsers = _.filter(users,({user_id,ulevel,fname,mname,lname}) => {
-                if(user_id && ulevel && fname && mname && lname){
-                    return true;
-                }
-            });
+            // let validUsers = _.filter(users,({user_id,ulevel,fname,mname,lname}) => {
+            //     if(user_id && ulevel && fname && mname && lname){
+            //         return true;
+            //     }
+            // });
 
-            let usersHasNoDuplication = !this.hasDuplicates(validUsers,'user_id');
+            // let usersHasNoDuplication = !this.hasDuplicates(validUsers,'user_id');
 
             // console.log(validUsers);
 
-            if(validFacilityInfo && validConfig && validUsers.length >= 2 && usersHasNoDuplication){
+            if(validFacilityInfo && validConfig){
                 return false;
             }
 

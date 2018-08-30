@@ -86,6 +86,7 @@ Route::middleware('client')->group(function(){
     Route::post('networking/lookupunits','BloodBankNetworkingController@lookUpUnits');
     
     Route::post('admin/registerfacility','FacilityController@register');
+    Route::post('admin/updatefacility','FacilityController@update');
     Route::post('admin/facility','FacilityController@info');
     Route::get('admin/facilityusers/{facility_cd}','FacilityController@users');
     Route::get('admin/templates','TemplateController@lists');

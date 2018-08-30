@@ -197,8 +197,12 @@
 export default {
   props : ['sched_id','seqno'],
   data(){
+      let user = this.$session.get('user')
+
       return {
-          donation_id : null, mbd : null, donor : null,loading : true
+          user,
+          donation_id : null, mbd : null, donor : null,loading : true,
+          nextDonation : user.facility.no_months_to_nxt_don
       }
   },
   mounted(){
@@ -268,6 +272,20 @@ export default {
               return false;
           }
           return _.filter(this.mbd.donations,{'donor_sn' : this.donor.seqno}).length > 0;
+      },
+      donatedBefore(){
+          let donations = _.orderBy(this.donor.donations,d=>{
+              return d.created_dt
+          },['desc'])
+          if(donations.length == 0){
+              return false
+          }
+          let recentDonation = donations[0]
+          let {created_dt} = recentDonation
+          created_dt = created_dt.replace(' ','T')+'Z'
+          created_dt = new Date(created_dt)
+          let monthsAgo = this.monthDiff(created_dt,new Date())
+          return monthsAgo <= this.next_donation
       }
   }
 }
