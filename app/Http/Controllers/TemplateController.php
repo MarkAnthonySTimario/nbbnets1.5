@@ -80,7 +80,7 @@ class TemplateController extends Controller
     private function prepareTemplate($facility_cd,$donation_id,$component_cd){
         
         $facility = Facility::whereFacilityCd($facility_cd)->firstOrFail();
-        $unit = Blood::with('component','donation_min.mbd_min')
+        $unit = Blood::with('component','donation_min.mbd_min','donation.additionaltest')
                     ->whereLocation($facility_cd)
                     ->whereDonationId($donation_id)
                     ->whereComponentCd($component_cd)
@@ -103,6 +103,22 @@ class TemplateController extends Controller
         $template = str_replace('{{COLLECTION_DATE}}',$collection_dt,$template);
         $template = str_replace('{{EXPIRATION_DATE}}',date('M d, Y',strtotime($unit->expiration_dt)).' 23:59:00',$template);
         $template = str_replace('{{STORE}}','Store at '.$unit->component->min_storage.' to '.$unit->component->max_storage.' &deg;C',$template);
+        if($unit->donation){
+            if($unit->additionaltest){
+                $template = str_replace('{{ANTIBODY}}','ANTIBODY SCREENING : NEGATIVE',$template);
+                $template = str_replace('{{NAT}}','NUCLIEC ACID TESTING : NEGATIVE',$template);
+                $template = str_replace('{{ZIKA}}','ZIKA : NEGATIVE',$template);
+            }else{
+                $template = str_replace('{{ANTIBODY}}','',$template);
+                $template = str_replace('{{NAT}}','',$template);
+                $template = str_replace('{{ZIKA}}','',$template);
+            }
+        }else{
+            $template = str_replace('{{ANTIBODY}}','',$template);
+            $template = str_replace('{{NAT}}','',$template);
+            $template = str_replace('{{ZIKA}}','',$template);
+
+        }
 
          return $template;
     }
