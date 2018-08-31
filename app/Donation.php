@@ -31,6 +31,10 @@ class Donation extends Model
         return $this->belongsTo('App\TestResult','donation_id','donation_id');
     }
 
+    function additionaltest(){
+        return $this->belongsTo('App\AdditionalTest','donation_id','donation_id');
+    }
+
     function type(){
         return $this->belongsTo('App\TypingResult','donation_id','donation_id');
     }

@@ -64,6 +64,12 @@ Route::middleware('client')->group(function(){
     Route::post('processing/save','ProcessingController@save');
     Route::post('testing/list','TestingController@lists');
     Route::post('testing/save','TestingController@save');
+    Route::post('testing/listantibody','AdditionalTestController@listsAntibody');
+    Route::post('testing/saveantibody','AdditionalTestController@saveAntibody');
+    Route::post('testing/listnat','AdditionalTestController@listsNat');
+    Route::post('testing/savenat','AdditionalTestController@saveNat');
+    Route::post('testing/listzika','AdditionalTestController@listsZika');
+    Route::post('testing/savezika','AdditionalTestController@saveZika');
     Route::post('forconfirmatory/list','TestingController@forconfirmatory');
     Route::post('forconfirmatory/discard','TestingController@discard');
     Route::post('discard/list','DiscardController@lists');

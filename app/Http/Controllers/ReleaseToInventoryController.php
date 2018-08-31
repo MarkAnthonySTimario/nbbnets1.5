@@ -19,16 +19,23 @@ class ReleaseToInventoryController extends Controller
         if($sched_id == 'Walk-in'){
             $from = $sched['from'];
             $to = $sched['to'];
-            $donations = Donation::with('type','labels','processing','test','units','donor_min','labels')->whereNotNull('donation_id')->whereFacilityCd($facility_cd)->whereNotNull('blood_bag')->whereSchedId($sched_id)->whereBetween('created_dt',[$from,$to])->get();
+            $donations = Donation::with('type','labels','processing','test','additionaltest','units','donor_min','labels')->whereNotNull('donation_id')->whereFacilityCd($facility_cd)->whereNotNull('blood_bag')->whereSchedId($sched_id)->whereBetween('created_dt',[$from,$to])->get();
         }else{
-            $donations = Donation::with('type','labels','processing','test','units','donor_min','labels')->whereNotNull('donation_id')->whereFacilityCd($facility_cd)->whereNotNull('blood_bag')->whereSchedId($sched_id)->get();
+            $donations = Donation::with('type','labels','processing','test','additionaltest','units','donor_min','labels')->whereNotNull('donation_id')->whereFacilityCd($facility_cd)->whereNotNull('blood_bag')->whereSchedId($sched_id)->get();
         }
 
         $response = [];
         foreach($donations as $donation){
             if($donation->test){
                 if($donation->test->result != 'R'){
-                    $response[] = $donation;
+                    if($donation->additionaltest){
+                        $ad = $donation->additionaltest;
+                        if($ad->antibody != 'R' && $ad->nat != 'R' && $ad->zika != 'R'){
+                            $response[] = $donation;
+                        }
+                    }else{
+                        $response[] = $donation;
+                    }
                 }
             }
         }

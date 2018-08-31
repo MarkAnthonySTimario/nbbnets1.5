@@ -36,6 +36,15 @@
                 <li><router-link to="/Typing">Blood Typing</router-link></li>
                 <li><router-link to="/Processing">Blood Processing</router-link></li>
                 <li><router-link to="/Testing">Blood Testing</router-link></li>
+                <li><router-link to="/Testing">{{guest}}</router-link></li>
+                <li class="dropdown-submenu" v-if="user">
+                  <a  v-show="user.facility.nat || user.facility.antibody ||user.facility.zika" href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Additional Testing</a>
+                  <ul class="dropdown-menu">
+                      <li><router-link to="/Testing/DonorAntibodyScreening">Donor Antibody Screening</router-link></li>
+                      <li><router-link to="/Testing/NucliecAcidTesting">Nucliec Acid Testing</router-link></li>
+                      <li><router-link to="/Testing/Zika">Zika</router-link></li>
+                  </ul>
+                </li>
                 <li><router-link to="/ForConfirmatory">For Confirmatory Reactive Units</router-link></li>
                 <li><router-link to="/Discard">Blood Discard</router-link></li>
                 <li><router-link to="/Label">Blood Label</router-link></li>
@@ -116,7 +125,7 @@ export default {
   components : {NotificationToggle,ChatBox,MonthlyReportGroupLinks},
   data(){
     return {
-      user : null
+      user : this.$session.get('user')
     }
   },
   methods : {
@@ -134,7 +143,8 @@ export default {
   },
   watch : {
     guest(){
-      let user = !this.guest ? this.$store.state.user : this.$session.get('user');
+      this.user = !this.guest ? this.$session.get('user') : null;
+      // let user = this.$session.get('user');
     }
   }
 }
@@ -176,6 +186,54 @@ export default {
     .collapse.in{
         display:block !important;
     }
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+    border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;
 }
 </style>
 
