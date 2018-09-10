@@ -42,8 +42,8 @@
                                 <td>{{unit.component_min.comp_name | abbrev}}</td>
                                 <td>{{unit.donation_id.toUpperCase()}}</td>
                                 <td>{{unit.component_vol}} ml</td>
-                                <td>{{getCollectedDate(unit).substr(0,10)}}</td>
-                                <td>{{unit.expiration_dt.substr(0,10)}}</td>
+                                <td>{{getCollectedDate(unit) ? getCollectedDate(unit).substr(0,10) : null}}</td>
+                                <td>{{unit.expiration_dt ? unit.expiration_dt.substr(0,10) : null}}</td>
                                 <td>{{getDaysOld(unit)}}</td>
                             </tr>
                         </tbody>
@@ -109,6 +109,9 @@
             },
             getDaysOld(unit){
                 let collected_dt = this.getCollectedDate(unit);
+                if(typeof collected_dt == 'undefined'){
+                    return 0
+                }
                 // let cd = collected_dt.substr(0,10).split('-');
                 
                 let oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
