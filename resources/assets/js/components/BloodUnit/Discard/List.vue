@@ -25,7 +25,7 @@
                         <div class="form-group">
                             <label for="" class="control-label col-lg-5">Donation ID</label>
                             <div class="col-lg-7">
-                                <input type="text" maxlength="16" step="font-size:10px;" class="form-control input-sm" placeholder="Donation ID" v-model="donation_id" @keyup="donation_id = donation_id ? donation_id.toUpperCase() : null" >
+                                <input :disabled="!sched.sched_id" type="text" maxlength="16" step="font-size:10px;" class="form-control input-sm" placeholder="Donation ID" v-model="donation_id" @keyup="donation_id = donation_id ? donation_id.toUpperCase() : null" >
                             </div>
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                         <div class="form-group">
                             <label for="" class="control-label col-lg-4">Component</label>
                             <div class="col-lg-8">
-                                <select class="form-control input-sm" v-model="component_cd">
+                                <select class="form-control input-sm" v-model="component_cd" :disabled="!sched.sched_id">
                                     <option value=""></option>
                                     <option v-for="(cn,cd) in all_components" :value="cd" :key="cd">{{cn}}</option>
                                 </select>
