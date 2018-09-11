@@ -67,7 +67,12 @@ export default {
 					if(data.user.facility.supports_platelet_apheresis){
 						this.$session.set('components',components);
 					}else{
-						this.$session.set('components',_.filter(components,(c,i)=>i != '80'));
+						// this.$session.set('components',_.filter(components,(c,i)=>i != '80'));
+						let remains = {
+							'10' : null, '20' : null, '30' : null, '40' : null, '50' : null, '60' : null, '70' : null
+						}
+						let clean = _.pick(components,_.keys(remains))
+						this.$session.set('components',clean);
 					}
 					this.$session.set('blood_types',bloodtypes);
 					this.$session.set('civil_status',civilstatus);
