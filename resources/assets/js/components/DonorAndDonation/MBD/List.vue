@@ -39,7 +39,7 @@
                               <td>{{mbd.agency_name}}</td>
                               <td>{{mbd.donation_dt.substr(0,10)}}</td>
                               <td>
-                                  <router-link :to="('/MBD/' + mbd.sched_id)" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-th-list"></span></router-link>
+                                  <router-link :to="('/MBD/' + mbd.sched_id)" class="btn btn-xs btn-primary" title="Show MBD Donors"><span class="glyphicon glyphicon-th-list"></span></router-link>
                                   <!-- <router-link :to="('/MBD/update/' + mbd.sched_id)" class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-pencil"></span></router-link> -->
                               </td>
                           </tr>

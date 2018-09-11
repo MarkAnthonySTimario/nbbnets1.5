@@ -18,6 +18,7 @@ class DonationController extends Controller
         $donation = new Donation;
         $donation->seqno = Donation::generateSeqno($facility_cd);
         $donation->donation_id = $donation_id;
+        $donation->approved_by = $request->get('approvedBy');
         $donation->donor_sn = $request->get('donor')['seqno'];
         $donation->sched_id = 'Walk-in';
         $donation->pre_registered = 'N';

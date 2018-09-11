@@ -28,7 +28,6 @@
     "npm": "^5.8.0",
     "socketio": "^1.0.0",
     "vee-validate": "^2.0.6",
-    "vue-froala-wysiwyg": "^2.8.1",
     "vue-timeago": "^4.0.1",
     "vue-webcam": "^2.0.4",
     "vue2-datatable-component": "^2.2.2"

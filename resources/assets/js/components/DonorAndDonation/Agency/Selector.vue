@@ -13,6 +13,12 @@
                           <abc123 @hasClicked="selectLetter"></abc123>
                       </div>
                   </div>
+                  <div class="row" v-show="letter">
+                      <div class="col-lg-4 col-lg-offset-8">
+                          <br/>
+                          <input type="text" class="form-control input-sm" placeholder="Search Agency Name" v-model="agency_name">
+                      </div>
+                  </div>
               </div>
             <div class="table-responsive">
                 <table class="table table-bordered table-condensed table-hover" style="font-size:12px;">
@@ -56,7 +62,7 @@
 
 export default {
   data(){
-      return { loading: true, loaded: false, agencies : [], letter: null }
+      return { loading: true, loaded: false, agencies : [], letter: null, agency_name : null }
   },
   mounted(){
       this.$http.post(this,"agencies",{
@@ -77,23 +83,28 @@ export default {
               return [];
           }
           if(this.letter == '#'){
-            return _.filter(this.agencies,((r) => {
-                if(!isNaN(r.agency_name.substr(0,1))){
-                    return r;
-                }
+            return _.filter(this.agencies,(r => {
+                return !isNaN(r.agency_name.substr(0,1))
             }));    
           }
-          return _.orderBy(_.filter(this.agencies,((r) => {
-              if(r.agency_name.substr(0,1).toUpperCase() == this.letter.toUpperCase()){
-                  return r;
-              }
+          let out =  _.orderBy(_.filter(this.agencies,(r => {
+              return r.agency_name.substr(0,1).toUpperCase() == this.letter.toUpperCase()
           })),a=>{
               return a.agency_name.toUpperCase()
           });
+          const that = this
+          if(this.agency_name){
+              out = _.filter(out, agency => {
+                return _.startsWith(agency.agency_name.toUpperCase(), this.agency_name.toUpperCase());
+              });
+          }
+
+          return out;
       }
   },
   methods : {
       selectLetter(l){
+          this.agency_name = null;
           this.letter = l;
       },
       selectAgency(agency){

@@ -58,8 +58,8 @@
                               <td>{{(d.barangay ? d.barangay.bgyname : '')}}</td>
                               <td>{{d.home_no_st_blk}}</td>
                               <td nowrap>
-                                  <router-link :to="('./donor/'+d.seqno+'?donation_id='+donation_id)" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-search"></span></router-link>
-                                  <router-link :to="('./donor/'+d.seqno+'/update?donation_id='+donation_id)" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-pencil"></span></router-link>
+                                  <router-link :to="('./donor/'+d.seqno+'?donation_id='+donation_id)" class="btn btn-xs btn-success" title="View Donor Profile"><span class="glyphicon glyphicon-search"></span></router-link>
+                                  <router-link :to="('./donor/'+d.seqno+'/update?donation_id='+donation_id)" class="btn btn-xs btn-danger" title="Update Donor Profile"><span class="glyphicon glyphicon-pencil"></span></router-link>
                               </td>
                           </tr>
                       </tbody>
@@ -96,6 +96,8 @@ export default {
       doSearch(){
           if(!this.fname && !this.mname && !this.lname){
               return false;
+          }else{
+              this.donors = [];
           }
           let {fname,mname,lname} = this;
           this.resultloading = true;

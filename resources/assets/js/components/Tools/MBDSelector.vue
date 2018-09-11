@@ -21,7 +21,10 @@
                           <table class="table table-condensed table-hover" style="font-size:14px;">
                               <thead>
                                   <tr>
-                                      <th>Agency</th>
+                                      <th>
+                                          Agency
+                                          <div class="pull-right"><input type="text" class="form-control input-sm" placeholder="Search Agency Name" v-model="agency_name"></div>
+                                    </th>
                                   </tr>
                               </thead>
                               <tbody>
@@ -43,7 +46,7 @@
                           <table class="table table-condensed table-hover" style="font-size:14px;">
                               <thead>
                                   <tr>
-                                      <th id="dates">Date of MBD</th>
+                                      <th id="dates" style="padding-top:1em;">Date of MBD</th>
                                   </tr>
                               </thead>
                               <tbody>
@@ -110,7 +113,8 @@ export default {
           letter : null, current_agency : null, 
           loading : false, loading2 : false, 
           agencies : [], mbds : [],
-          walkin : false, walkin_dates : walkinDates, s_date : null, e_date : null
+          walkin : false, walkin_dates : walkinDates, s_date : null, e_date : null,
+          agency_name : null
       }
   },
   mounted(){
@@ -131,6 +135,13 @@ export default {
               this.agencies = _.orderBy(data,[agency=>agency.agency_name.toLowerCase()],['asc']);
               this.loading = false;
           });
+      },
+      agency_name(){
+          if(this.agency_name){
+              this.agencies = _.filter(this.agencies, agency=>{
+                  return _.startsWith(agency.agency_name.toUpperCase() , this.agency_name.toUpperCase())
+              })
+          }
       },
       current_agency(){
           this.mbds = [];
