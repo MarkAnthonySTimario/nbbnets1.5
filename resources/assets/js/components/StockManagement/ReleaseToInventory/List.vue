@@ -4,7 +4,7 @@
         <mbdSelector @selected="selectedMBDAgency" :walkinDates="true"></mbdSelector>
         <div class="row">
             <div class="col-lg-12">
-                <div class="panel panel-warning">
+                <div class="panel panel-default">
                     <div class="panel-heading">Release Blood to Inventory</div>
                     <div class="panel-body">
                         <div class="form-horizontal col-lg-6">
@@ -110,98 +110,98 @@
 <script>
 
 export default {
-  components : {},
-  props : ['refresh'],
-  data(){
-      let {sched} = this.$store.state;
+    components : {},
+    props : ['refresh'],
+    data(){
+        let {sched} = this.$store.state;
     //   sched = {"sched_id":"1300620180000920","agency_cd":"1300602358","agency_name":"Tag 2018","donation_dt":"2018-08-27 00:00:00"};
-      let components = this.$session.get('components');
-      let all_components = _.clone(components);
-      return {
-          sched, selected : [], donations : [], loading : false, component_cd : null, components, all_components,
-          preview :  null, verify : false, pageLoad : false
-      };
-  },
-  mounted(){
-      this.fetchDonations();
-  },
-  methods : {
-      selectMBDAgency(){
-          $("#MBDSelector").modal("show");
-      },
-      selectedMBDAgency(sched){
-          this.sched = sched;
-          this.$store.state.sched = sched;
-          $("#MBDSelector").modal("hide");
-      },
-      fetchDonations(){
-          let {sched,donation_id,component_cd} = this;
-          if(!this.sched.sched_id && !this.donation_id && !this.componetn_cd){
-              return;
-          }
-          this.loading = true;
-          this.$http.post(this,"releasetoinventory/list",{
-              sched, component_cd, facility_cd : this.$session.get('user').facility_cd 
-          })
-          .then(({data}) => {
-              this.donations = _.sortBy(data,['donation_id'],['asc']);
-              this.loading = false;
-          });
-      },
-      hasUnit(units,cd){
+        let components = this.$session.get('components');
+        let all_components = _.clone(components);
+        return {
+            sched, selected : [], donations : [], loading : false, component_cd : null, components, all_components,
+            preview :  null, verify : false, pageLoad : false
+        };
+    },
+    mounted(){
+        this.fetchDonations();
+    },
+    methods : {
+        selectMBDAgency(){
+            $("#MBDSelector").modal("show");
+        },
+        selectedMBDAgency(sched){
+            this.sched = sched;
+            this.$store.state.sched = sched;
+            $("#MBDSelector").modal("hide");
+        },
+        fetchDonations(){
+            let {sched,donation_id,component_cd} = this;
+            if(!this.sched.sched_id && !this.donation_id && !this.componetn_cd){
+                return;
+            }
+            this.loading = true;
+            this.$http.post(this,"releasetoinventory/list",{
+                sched, component_cd, facility_cd : this.$session.get('user').facility_cd 
+            })
+            .then(({data}) => {
+                this.donations = _.sortBy(data,['donation_id'],['asc']);
+                this.loading = false;
+            });
+        },
+        hasUnit(units,cd){
         //   console.log(_.filter(units,{component_cd : 10}));
-          return _.filter(units,{component_cd : cd*1}).length > 0;
-      },
-      getUnit(units,cd){
-          return _.findLast(units,{component_cd : cd*1})
-      },
-      forRelease(units,cd){
-          let unit = _.findLast(units,{component_cd : cd*1})
-          if(unit){
-              let {comp_stat} = unit
-              if(comp_stat == '' || comp_stat == 'FR' || comp_stat == 'FRL' || comp_stat == 'FPR' || comp_stat == 'FBT'){
-                  return true;
-              }
-          }
-          return false;
-      },
-      isAlreadyLabeled(labels,cd){
-          return _.filter(labels,{component_cd : cd}).length > 0;
-      },
-      submitReleaseToInventory(verifier){
-          this.pageLoad = true;
-          let {user_id,facility_cd} = this.$session.get('user');
-          let {selected} = this;
-          this.$http.post(this,'releasetoinventory/save',{
-              facility_cd, selected, user_id, verifier
-          })
-          .then(({data}) => {
-              this.selected = [];
-              this.pageLoad = false;
-              this.$store.state.msg = {
-                  content : 'Blood Units has been released to Inventory.'
-              };
-              this.selected = [];
+            return _.filter(units,{component_cd : cd*1}).length > 0;
+        },
+        getUnit(units,cd){
+            return _.findLast(units,{component_cd : cd*1})
+        },
+        forRelease(units,cd){
+            let unit = _.findLast(units,{component_cd : cd*1})
+            if(unit){
+                let {comp_stat} = unit
+                if(comp_stat == '' || comp_stat == 'FR' || comp_stat == 'FRL' || comp_stat == 'FPR' || comp_stat == 'FBT'){
+                    return true;
+                }
+            }
+            return false;
+        },
+        isAlreadyLabeled(labels,cd){
+            return _.filter(labels,{component_cd : cd}).length > 0;
+        },
+        submitReleaseToInventory(verifier){
+            this.pageLoad = true;
+            let {user_id,facility_cd} = this.$session.get('user');
+            let {selected} = this;
+            this.$http.post(this,'releasetoinventory/save',{
+                facility_cd, selected, user_id, verifier
+            })
+            .then(({data}) => {
+                this.selected = [];
+                this.pageLoad = false;
+                this.$store.state.msg = {
+                    content : 'Blood Units has been released to Inventory.'
+                };
+                this.selected = [];
             this.donations = [];
             this.loading = false;
             this.fetchDonations();
-          })
-      },
-      clone(obj){
-          return _.clone(obj);
-      }
-  },
-  watch : {
-      sched(){
-          this.$store.state.sched = this.sched;
-      },
-      refresh(){
-          this.selected = [];
-          this.donations = [];
-          this.loading = false;
-          this.fetchDonations();
-      },
-      component_cd(){
+            })
+        },
+        clone(obj){
+            return _.clone(obj);
+        }
+    },
+    watch : {
+        sched(){
+            this.$store.state.sched = this.sched;
+        },
+        refresh(){
+            this.selected = [];
+            this.donations = [];
+            this.loading = false;
+            this.fetchDonations();
+        },
+        component_cd(){
         let {component_cd} = this;
         if(component_cd){
             this.components = _.pickBy(this.all_components, function(value, key){
@@ -210,15 +210,15 @@ export default {
         }else{
             this.components = _.clone(this.all_components);
         }
-      },
-      preview(){
-          if(this.preview.donation_id){
+        },
+        preview(){
+            if(this.preview.donation_id){
             let {facility_cd} = this.$session.get('user');
             let {donation_id,component_cd} = this.preview;
             this.printBloodBagLabel(facility_cd,donation_id,component_cd);
-          }
-      }
-  }
+            }
+        }
+    }
 }
 </script>
 

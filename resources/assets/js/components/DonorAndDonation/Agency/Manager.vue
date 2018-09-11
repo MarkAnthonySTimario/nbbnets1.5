@@ -2,7 +2,7 @@
   <div>
       <div class="row">
         <div class="col-lg-12">
-          <div class="panel panel-warning">
+          <div class="panel panel-success">
             <div class="panel-heading">
               Manage Agency
             </div>
@@ -48,8 +48,8 @@
                     <td><span v-if="a.city">{{a.city.cityname}}</span></td>
                     <td><span v-if="a.barangay">{{a.barangay.bgyname}}</span></td>
                     <td>
-                      <router-link :to="('/Agency/' + a.agency_cd)" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-search"></span></router-link>
-                      <router-link :to="('/Agency/update/'+a.agency_cd)" class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-pencil"></span></router-link>
+                      <router-link :to="('/Agency/' + a.agency_cd)" class="btn btn-xs btn-success" title="View Agency"><span class="glyphicon glyphicon-search"></span></router-link>
+                      <router-link :to="('/Agency/update/'+a.agency_cd)" class="btn btn-xs btn-warning" title="Update Agency Details"><span class="glyphicon glyphicon-pencil"></span></router-link>
                     </td>
                   </tr>
                 </tbody>
@@ -80,6 +80,9 @@ export default {
       if(this.search){
         this.loading = true;
         this.doSearch(this);
+      }else{
+        this.$store.state.AgencyManager.search = null;
+        this.result = [];
       }
     }
   },
@@ -108,7 +111,7 @@ export default {
       .catch(error => {
         that.$store.state.error = error;
       });
-    },1000)
+    },1500)
   }
 }
 </script>

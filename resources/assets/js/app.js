@@ -31,10 +31,6 @@ require('./bootstrap');
 window.Vue = require('vue');
 import './filters';
 
-// Import and use Vue Froala lib.
-import VueFroala from 'vue-froala-wysiwyg'
-Vue.use(VueFroala);
-
 Vue.use(VueSession);
 Vue.use(VeeValidate);
 Vue.prototype.$http = http;

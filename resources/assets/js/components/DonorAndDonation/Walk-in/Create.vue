@@ -65,8 +65,25 @@
                    <div class="form-group">
                        <div class="col-lg-9 col-lg-offset-3">
                            <div class="alert alert-warning" style="font-size:12px;" v-if="donatedBefore">Donor previously donated less than {{ next_donation }} months ago</div>
-                           <button class="btn btn-default btn-sm" @click="validateForm" v-if="!donatedBefore && approvedBy">Save Walk-in</button>
-                           <button class="btn btn-default btn-sm" @click="mh_pe_remark = '[approved_by='+user.user_id+']'; validateForm()" v-if="donatedBefore && !approvedBy">Proceed Anyway</button>
+                           <div class="alert alert-danger" style="font-size:12px;" v-if="v_error">
+                               {{v_error}}
+                           </div>
+                           <div v-if="donatedBefore" class="row">
+                               <div class="col-lg-6">
+                                   <input type="text" class="form-control input-sm" placeholder="Verifier User ID" v-model="v_user_id">
+                               </div>
+                               <div class="col-lg-6">
+                                   <input type="password" class="form-control input-sm" placeholder="Password" v-model="v_password">
+                               </div>
+                           </div>
+                           <div class="row">
+                               <div class="col-lg-4">
+                                   <br/>
+                                    <button class="btn btn-default btn-sm" @click="checkVerifier" v-if="donatedBefore" :disabled="!(v_user_id && v_password)">Verify and Proceed</button>
+                               </div>
+                           </div>
+                           <button class="btn btn-default btn-sm" @click="validateForm" v-if="!donatedBefore">Save Walk-in</button>
+                           <!-- <button class="btn btn-default btn-sm" @click="validateForm" v-if="donatedBefore" v-show="approvedBy">Save Walk-in</button> -->
                        </div>
                    </div>
                    <!-- div.form-group.required>label.control-label.col-lg-3+div.col-lg-9>input.form-control.input-sm -->
@@ -97,6 +114,7 @@ export default {
           coluns_res : null, donation_id : null, facility_cd : this.$session.get('user').facility_cd,
           user_id : user.user_id, 
           approvedBy : null,
+          v_user_id : null, v_password : null, v_error : null,
           next_donation : user.facility.no_months_to_nxt_don
       }
   },
@@ -139,15 +157,31 @@ export default {
           this.mh_pe_question = res.questions;
           this.mh_pe_deferral = res.pe;
       },
+      checkVerifier(){
+          let username = this.v_user_id
+          let password = this.v_password
+          let {facility_cd,user_id} = this.user
+          this.$http.post(this,"verify",{
+              username, password, facility_cd, current_user_id : user_id
+          })
+          .then(({data}) => {
+              if(!data){
+                  this.v_error = "Verifier Username/Password is invalid";
+              }else{
+                  this.approvedBy = this.v_user_id
+                  this.validateForm()
+              }
+          })
+      },
       validateForm(){
+          this.v_error = null
           this.errors.clear();
           if(this.collection_stat == 'U' && !this.coluns_res){
               this.errors.add('Reason','Provide reason for unsuccessful collection');
           }
           if(!this.donation_id){
               this.errors.add('Donation ID','Scan / Enter Donation ID');
-          }
-          if(this.donation_id.length != 16){
+          }else if(this.donation_id.length != 16){
               this.errors.add('Donation ID','Invalid Format for Donaion ID');
           }else if(!this.donation_id.startsWith('NVBSP')){
               this.errors.add('Donation ID','Invalid Format for Donaion ID');
