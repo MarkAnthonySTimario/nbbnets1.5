@@ -106,6 +106,8 @@ Route::middleware('client')->group(function(){
     // Route::post('labeltemplate/createdummy','TemplateController@createdummy');
     Route::post('BSI/item','BSIController@fetch');
     Route::get('chart/statusofinventory/{facility_cd}','ChartDataController@getStatusOfInventory');
+    Route::get('chart/reservedtable/{facility_cd}','ChartDataController@getReservedTable');
+    Route::get('chart/reservedchart/{facility_cd}','ChartDataController@getReservedChart');
     Route::post('available/list','BloodController@lists');
     Route::post('facility/search','FacilityController@search');
     
