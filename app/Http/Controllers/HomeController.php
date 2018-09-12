@@ -41,7 +41,7 @@ class HomeController extends Controller
     function verify(Request $request){
         $current = $request->get('current_user_id');
         $username = $request->get('username');
-        if($current == $username){
+        if($current === $username){
             return null;
         }
         return User::whereUserId($username)->wherePassword(md5($request->get('password')))->whereFacilityCd($request->get('facility_cd'))->first();
