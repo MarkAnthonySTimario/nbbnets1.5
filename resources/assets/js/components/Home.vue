@@ -5,13 +5,11 @@
         <div class="col-lg-7">
           <div class="row">
             <div class="col-lg-12">
-              <div class="panel panel-warning">
+              <div class="panel panel-success">
                 <div class="panel-heading">Blood Stocks</div>
                 <inventory></inventory>
+                <chart :height="200" />
               </div>
-            </div>
-            <div class="col-lg-12">
-              <div class="jumbotron"></div>
             </div>
           </div>
         </div>
@@ -28,9 +26,10 @@
 
 <script>
 import inventory from './Home/InventoryTable.vue';
+import chart from './StockManagement/StatusOfInventory/Available.vue';
 import user from './Home/User.vue';
 
 export default {
-  components : {inventory,user}  
+  components : {inventory,chart,user}  
 }
 </script>

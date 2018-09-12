@@ -31,14 +31,12 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Account</th>
                                     <th>Access Level</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="u in facility.users" :key="u.user_id">
                                     <td>{{u.user_fname}} {{u.user_mname}} {{u.user_lname}}</td>
-                                    <td>{{u.user_id}}</td>
                                     <td>{{u.level.userlevelname}}</td>
                                 </tr>
                             </tbody>

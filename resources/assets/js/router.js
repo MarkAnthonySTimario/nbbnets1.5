@@ -56,6 +56,7 @@ import AucList from './components/Auc/List.vue';
 import AucReport1 from './components/Auc/Report1.vue';
 import LabelReprint from './components/BloodUnit/LabelReprint.vue';
 
+import StatusOfInventory from './components/StockManagement/StatusOfInventory.vue';
 import ReleaseToInventory from './components/StockManagement/ReleaseToInventory.vue';
 import BloodBankNetworking from './components/StockManagement/BloodBankNetworking.vue';
 import ServeNetworking from './components/StockManagement/BLoodBankNetworking/ServeNetworking.vue';
@@ -121,6 +122,7 @@ export default new VueRouter({
         { path : '/Auc/Report1', component : AucReport1 },
         { path : '/Reprint', component : LabelReprint },
         
+        { path : '/StatusOfInventory', component : StatusOfInventory },
         { path : '/ReleaseToInventory', component : ReleaseToInventory },
         { path : '/BloodBankNetworking', component : BloodBankNetworking },
         { path : '/ServeNetworking', component : ServeNetworking },

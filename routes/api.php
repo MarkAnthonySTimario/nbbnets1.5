@@ -105,20 +105,21 @@ Route::middleware('client')->group(function(){
     // Route::post('labeltemplate/checkunit','TemplateController@checkunit');
     // Route::post('labeltemplate/createdummy','TemplateController@createdummy');
     Route::post('BSI/item','BSIController@fetch');
+    Route::get('chart/statusofinventory/{facility_cd}','ChartDataController@getStatusOfInventory');
     Route::post('available/list','BloodController@lists');
     Route::post('facility/search','FacilityController@search');
     
     Route::post('emergencypool/create', 'EmergencyPoolController@create');
     Route::get('emergencypool/get/{facility_cd}', 'EmergencyPoolController@get');
-
+    
     Route::post('bsi/yesno','BSIController@yesno');
     Route::post('bsi/create','BSIController@create');
     Route::get('sticker/check/{facility_cd}/{donation_id}','StickerController@check');
     Route::get('sticker/list/{facility_cd}','StickerController@list');
-
+    
     Route::get('LabelReprint/Units/{donation_id}','LabelReprintController@units');
     Route::post('LabelReprint/ReprintFired','LabelReprintController@reprintFired');
-
+    
 });
 Route::post('bsi/exist','BSIController@exist');
 Route::post('bsi/item','BSIController@fetch');

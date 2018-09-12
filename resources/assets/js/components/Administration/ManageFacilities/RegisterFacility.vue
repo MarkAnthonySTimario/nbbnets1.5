@@ -147,7 +147,6 @@ export default {
                 facility, users, config, template : label, user_id
             })
             .then(({data}) => {
-                
                 this.loading = false;
                 this.$store.state.msg = {
                     content : 'Facility Registration Complete!'
