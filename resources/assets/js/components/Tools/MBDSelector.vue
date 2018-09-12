@@ -23,7 +23,7 @@
                                   <tr>
                                       <th>
                                           Agency
-                                          <div class="pull-right"><input type="text" class="form-control input-sm" placeholder="Search Agency Name" v-model="agency_name"></div>
+                                          <div class="pull-right" v-if="letter"><input type="text" class="form-control input-sm" placeholder="Search Agency Name" v-model="agency_name"></div>
                                     </th>
                                   </tr>
                               </thead>

@@ -1,5 +1,5 @@
 <template>
-  <div class="panel panel-primary table-responsive">
+  <div class="panel panel-danger table-responsive">
       <div class="panel-heading">User Details
           <router-link to="/changepassword" class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-lock"></span> Change Password</router-link>
       </div>

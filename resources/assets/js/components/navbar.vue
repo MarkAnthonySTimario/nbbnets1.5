@@ -36,7 +36,6 @@
                 <li><router-link to="/Typing">Blood Typing</router-link></li>
                 <li><router-link to="/Processing">Blood Processing</router-link></li>
                 <li><router-link to="/Testing">Blood Testing</router-link></li>
-                <li><router-link to="/Testing">{{guest}}</router-link></li>
                 <li class="dropdown-submenu" v-if="user">
                   <a  v-show="user.facility.nat || user.facility.antibody ||user.facility.zika" href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Additional Testing</a>
                   <ul class="dropdown-menu">

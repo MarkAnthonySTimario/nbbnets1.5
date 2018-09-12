@@ -22,6 +22,7 @@ class FacilityController extends Controller
         $user_id = $request->get('user_id');
         $config = $request->get('config');
         $users = $request->get('users');
+        // return $users;
         $template = $request->get('template');
         
         extract($facility);
@@ -108,6 +109,21 @@ class FacilityController extends Controller
             $t->enable_patient_bed_no = $enable_patient_bed_no ? 'Y' : 'N';
             $t->save();
         // End Transfusion Config
+
+        // Users
+            foreach($users as $user){
+                $u = new User;
+                $u->facility_cd = $facility_cd;
+                $u->user_id = $facility_cd.'_'.$user['user_id'];
+                $u->ulevel = $user['ulevel'];
+                $u->password = md5($facility_cd);
+                $u->user_lname = $user['lname'];
+                $u->user_mname = $user['mname'];
+                $u->user_fname = $user['fname'];
+                $u->disable_flag = 'N';
+                $u->save();
+            }
+        // End Users
 
         return $f;
     }

@@ -11,8 +11,8 @@ String.prototype.replaceAll = function(search, replacement) {
 
 import VueSession from 'vue-session';
 import VeeValidate from 'vee-validate';
+import VueGoogleCharts from 'vue-google-charts'
 import _ from 'lodash';
-import $ from 'jquery';
 import ioClient from 'socket.io-client';
 
 
@@ -33,6 +33,7 @@ import './filters';
 
 Vue.use(VueSession);
 Vue.use(VeeValidate);
+Vue.use(VueGoogleCharts);
 Vue.prototype.$http = http;
 
 Vue.component('start', require('./components/Start.vue'));
