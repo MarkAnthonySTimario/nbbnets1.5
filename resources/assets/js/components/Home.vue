@@ -8,7 +8,7 @@
               <div class="panel panel-success">
                 <div class="panel-heading">Blood Stocks</div>
                 <inventory></inventory>
-                <chart :height="200" />
+                <chart :height="300" />
               </div>
             </div>
           </div>

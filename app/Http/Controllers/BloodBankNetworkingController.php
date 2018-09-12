@@ -51,6 +51,9 @@ class BloodBankNetworkingController extends Controller
     function distance($from,$to){
         $from = urlencode($from);
         $to = urlencode($to);
+
+        // While we don't have api key
+        return ['time' => '0', 'distance' => '0'];
         
         $data = file_get_contents("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=".$from."&destinations=".$to);
         $data = json_decode($data);
