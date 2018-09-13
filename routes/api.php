@@ -93,6 +93,9 @@ Route::middleware('client')->group(function(){
     Route::post('networking/reserveunits','BloodBankNetworkingController@reserveUnits');
     Route::get('networking/intent/{intent_id}','BloodBankNetworkingController@getIntent');
     Route::post('networking/checkDonationId','BloodBankNetworkingController@checkDonationId');
+    Route::get('aliqoutes/{donation_id}/{component_cd}','BloodController@getAliqoutes');
+    Route::get('unit/{donation_id}/{component_cd}','BloodController@getUnitDetails');
+    Route::post('aliqoute/make','BloodController@makeAliqoute');
     
     Route::post('admin/registerfacility','FacilityController@register');
     Route::post('admin/updatefacility','FacilityController@update');

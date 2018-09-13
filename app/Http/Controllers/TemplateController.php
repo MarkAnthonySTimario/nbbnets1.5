@@ -80,7 +80,7 @@ class TemplateController extends Controller
     private function prepareTemplate($facility_cd,$donation_id,$component_cd){
         
         $facility = Facility::whereFacilityCd($facility_cd)->firstOrFail();
-        $unit = Blood::with('component','donation_min.mbd_min','donation.additionaltest')
+        $unit = Blood::with('component','donation_min.mbd_min','donation.additionaltest','aliqoute_donation')
                     ->whereLocation($facility_cd)
                     ->whereDonationId($donation_id)
                     ->whereComponentCd($component_cd)
@@ -90,8 +90,13 @@ class TemplateController extends Controller
             return '<div style="text-align:center;font-family:calibri;">Opps! Sorry, Blood Unit no longer available!</div>';
         }
         $bt = explode(' ',$unit->blood_type);
-        $collection_dt = $unit->donation_min->sched_id == 'Walk-in' ? $unit->donation_min->created_dt : $unit->donation_min->mbd_min->donation_dt;
-        $collection_dt = date('M d, Y',strtotime($collection_dt));
+        if($unit->source_donation_id){
+            $collection_dt = $unit->aliqoute_donation->sched_id == 'Walk-in' ? $unit->aliqoute_donation->created_dt : $unit->aliqoute_donation->mbd_min->donation_dt;
+            $collection_dt = date('M d, Y',strtotime($collection_dt));
+        }else{
+            $collection_dt = $unit->donation_min->sched_id == 'Walk-in' ? $unit->donation_min->created_dt : $unit->donation_min->mbd_min->donation_dt;
+            $collection_dt = date('M d, Y',strtotime($collection_dt));
+        }
         $template = $this->getTemplate($facility_cd);
         
         $template = str_replace('{{FACILITY_NAME}}',$facility->facility_name,$template);

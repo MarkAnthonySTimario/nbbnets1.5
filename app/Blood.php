@@ -18,11 +18,15 @@ class Blood extends Model
     function discard(){
         return $this->belongsTo('App\Discard','donation_id','donation_id')->whereComponentCd($this->component_cd);
     }
-
+    
     function donation(){
         return $this->belongsTo('App\Donation','donation_id','donation_id');
     }
 
+    function aliqoute_donation(){
+        return $this->belongsTo('App\Donation','source_donation_id','donation_id');
+    }
+    
     function donation_min(){
         return $this->belongsTo('App\Donation','donation_id','donation_id')->select('donation_id','sched_id','created_dt');
     }

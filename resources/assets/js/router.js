@@ -64,6 +64,8 @@ import ReleaseNetworking from './components/StockManagement/BLoodBankNetworking/
 
 import RegisteredStickers from './components/Administration/RegisteredStickers.vue'
 
+import Unit from './components/StockManagement/Unit.vue'
+
 Vue.use(VueRouter);
 
 export default new VueRouter({
@@ -129,5 +131,6 @@ export default new VueRouter({
         { path : '/ServeNetworking/release/:intent_id', component : ReleaseNetworking, props : true },
 
         { path : '/RegisteredStickers', component : RegisteredStickers },
+        { path : '/Unit/:donation_id/:component_cd', component : Unit, props : true },
     ]
 })

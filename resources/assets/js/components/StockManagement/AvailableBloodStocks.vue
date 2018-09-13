@@ -26,16 +26,17 @@
                                 <th class="text-center">Date Collected</th>
                                 <th class="text-center">Expiration Date</th>
                                 <th class="text-center">Days Old</th>
+                                <th width="20"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-if="loading">
-                                <td colspan="8" class="text-center">
+                                <td colspan="9" class="text-center">
                                     <loadingInline label="Please wait, loading.."></loadingInline>
                                 </td>
                             </tr>
                             <tr v-if="!result.length && !loading">
-                                <td colspan="8" class="text-center">No Available Blood Units Yet</td>
+                                <td colspan="9" class="text-center">No Available Blood Units Yet</td>
                             </tr>
                             <tr v-if="result.length && !loading" v-for="(unit,i) in currentVisibleUnits" :key="i" class="text-center">
                                 <td>{{unit.blood_type}}</td>
@@ -45,6 +46,11 @@
                                 <td>{{getCollectedDate(unit) ? getCollectedDate(unit).substr(0,10) : null}}</td>
                                 <td>{{unit.expiration_dt ? unit.expiration_dt.substr(0,10) : null}}</td>
                                 <td>{{getDaysOld(unit)}}</td>
+                                <td>
+                                    <router-link :to="'/Unit/'+unit.donation_id+'/'+unit.component_cd" class="btn btn-success btn-xs" title="View Blood Unit Details">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </router-link>
+                                </td>
                             </tr>
                         </tbody>
                         <tfoot>
