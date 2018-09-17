@@ -93,7 +93,6 @@ Route::middleware('client')->group(function(){
     Route::post('networking/reserveunits','BloodBankNetworkingController@reserveUnits');
     Route::get('networking/intent/{intent_id}','BloodBankNetworkingController@getIntent');
     Route::post('networking/checkDonationId','BloodBankNetworkingController@checkDonationId');
-    Route::post('networking/proceedrelease','BloodBankNetworkingController@proceedRelease');
     Route::get('aliqoutes/{donation_id}/{component_cd}','BloodController@getAliqoutes');
     Route::get('unit/{donation_id}/{component_cd}','BloodController@getUnitDetails');
     Route::post('aliqoute/make','BloodController@makeAliqoute');
@@ -125,10 +124,6 @@ Route::middleware('client')->group(function(){
     
     Route::get('LabelReprint/Units/{donation_id}','LabelReprintController@units');
     Route::post('LabelReprint/ReprintFired','LabelReprintController@reprintFired');
-
-    Route::post('shareunscreenedunits/share','ShareUnscreenedUnitController@share');
-    Route::get('shareunscreenedunits/facilities','ShareUnscreenedUnitController@facilities');
-    Route::get('shareunscreenedunits/unscreenedlist/{facility_cd}','ShareUnscreenedUnitController@unscreenedList');
     
 });
 Route::post('bsi/exist','BSIController@exist');

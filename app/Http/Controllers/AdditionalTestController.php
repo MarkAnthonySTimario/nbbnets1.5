@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\AdditionalTest;
 use App\Donation;
+use App\SharedUnscreenedUnit;
 
 class AdditionalTestController extends Controller
 {
@@ -15,12 +16,26 @@ class AdditionalTestController extends Controller
         $facility_cd = $request->get('facility_cd');
         $donations = [];
 
-        if($sched_id == 'Walk-in'){
+        if($sched_id == 'Shared'){
+            $donations = SharedUnscreenedUnit::with('donation','donation.type','donation.additionaltest')
+                ->select('donation_id')
+                ->whereSharedFacilityCd($facility_cd)
+                ->whereNotNull('registered_by')
+                ->groupBy('donation_id')->get();
+        }else if($sched_id == 'Walk-in'){
             $from = $sched['from'];
             $to = $sched['to'];
             $donations = Donation::with('type','additionaltest')->whereNotNull('donation_id')->whereFacilityCd($facility_cd)->whereSchedId($sched_id)->whereBetween('created_dt',[$from,$to])->get();
         }else{
             $donations = Donation::with('type','additionaltest')->whereNotNull('donation_id')->whereFacilityCd($facility_cd)->whereSchedId($sched_id)->get();
+        }
+
+        if($sched_id == 'Shared'){
+            $old = $donations;
+            $donations = [];
+            foreach($old as $r){
+                $donations[] = $r->donation;
+            }
         }
 
         $response = [];
@@ -69,12 +84,26 @@ class AdditionalTestController extends Controller
         $sched_id = $sched['sched_id'];
         $facility_cd = $request->get('facility_cd');
         $donations = [];
-        if($sched_id == 'Walk-in'){
+        if($sched_id == 'Shared'){
+            $donations = SharedUnscreenedUnit::with('donation','donation.type','donation.additionaltest')
+                ->select('donation_id')
+                ->whereSharedFacilityCd($facility_cd)
+                ->whereNotNull('registered_by')
+                ->groupBy('donation_id')->get();
+        }else if($sched_id == 'Walk-in'){
             $from = $sched['from'];
             $to = $sched['to'];
             $donations = Donation::with('type','additionaltest')->whereNotNull('donation_id')->whereFacilityCd($facility_cd)->whereSchedId($sched_id)->whereBetween('created_dt',[$from,$to])->get();
         }else{
             $donations = Donation::with('type','additionaltest')->whereNotNull('donation_id')->whereFacilityCd($facility_cd)->whereSchedId($sched_id)->get();
+        }
+
+        if($sched_id == 'Shared'){
+            $old = $donations;
+            $donations = [];
+            foreach($old as $r){
+                $donations[] = $r->donation;
+            }
         }
 
         $response = [];
@@ -122,12 +151,26 @@ class AdditionalTestController extends Controller
         $facility_cd = $request->get('facility_cd');
         $donations = [];
 
-        if($sched_id == 'Walk-in'){
+        if($sched_id == 'Shared'){
+            $donations = SharedUnscreenedUnit::with('donation','donation.type','donation.additionaltest')
+                ->select('donation_id')
+                ->whereSharedFacilityCd($facility_cd)
+                ->whereNotNull('registered_by')
+                ->groupBy('donation_id')->get();
+        }else if($sched_id == 'Walk-in'){
             $from = $sched['from'];
             $to = $sched['to'];
             $donations = Donation::with('type','additionaltest')->whereNotNull('donation_id')->whereFacilityCd($facility_cd)->whereSchedId($sched_id)->whereBetween('created_dt',[$from,$to])->get();
         }else{
             $donations = Donation::with('type','additionaltest')->whereNotNull('donation_id')->whereFacilityCd($facility_cd)->whereSchedId($sched_id)->get();
+        }
+
+        if($sched_id == 'Shared'){
+            $old = $donations;
+            $donations = [];
+            foreach($old as $r){
+                $donations[] = $r->donation;
+            }
         }
 
         $response = [];

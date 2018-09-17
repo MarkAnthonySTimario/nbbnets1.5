@@ -56,6 +56,17 @@ Vue.component('error',error);
                 w.close();
             };
          },
+
+         printReleaseForm(intent_id){
+            let url =  'http://'+window.location.host+window.location.pathname+'releaseform/'+intent_id;
+            
+            let w = window.open(url,'_blank');
+            w.onload = () => {
+                    w.print();
+                w.close();
+            };
+         },
+
          prepareTemplate(template){
             template = template.replaceAll("{{FACILITY_NAME}}",'Department of Health');
             template = template.replaceAll("{{BARCODE}}",'<div style="background:#fff;width:100%;height:50px;text-align:center;vertical-align:middle;"><img src="images/sample-barcode.jpg" width="320" height="45" /></div>');

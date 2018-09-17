@@ -12,8 +12,9 @@
                             <div class="col-lg-7 input-group">
                                 <input @click.prevent="selectMBDAgency" type="text" class="form-control input-sm" placeholder="Click here to select MBD/Walk-in" readonly v-if="!sched.agency_cd" style="background-color:#fff;">
                                 <div class="form-control input-sm" v-if="sched.agency_cd" @click.prevent="selectMBDAgency">
+                                    <span v-if="sched.agency_cd == 'Shared'">{{sched.agency_name}}</span>
                                     <span v-if="sched.agency_name == 'Walk-in'">{{sched.agency_name}} - FROM {{sched.from}} TO {{sched.to}}</span>
-                                    <span v-if="sched.agency_name != 'Walk-in'">{{sched.agency_name}} - {{sched.donation_dt.substr(0,10)}}</span>
+                                    <span v-if="sched.agency_name != 'Walk-in' && sched.agency_cd != 'Shared'">{{sched.agency_name}} - {{sched.donation_dt.substr(0,10)}}</span>
                                 </div>
                                 <div class="input-group-btn">
                                     <button class="btn btn-default btn-sm" @click.prevent="selectMBDAgency"><span class="glyphicon glyphicon-search"></span></button>

@@ -67,24 +67,18 @@ export default {
 					if(data.user.facility.supports_platelet_apheresis){
 						this.$session.set('components',components);
 					}else{
-						let allow = {
-							'10': null,
-							'20': null,
-							'30': null,
-							'40': null,
-							'50': null,
-							'60': null,
-							'70': null,
+						// this.$session.set('components',_.filter(components,(c,i)=>i != '80'));
+						let remains = {
+							'10' : null, '20' : null, '30' : null, '40' : null, '50' : null, '60' : null, '70' : null
 						}
-						let comps = _.pick(components,_.keys(allow));
-						this.$session.set('components',comps);
+						let clean = _.pick(components,_.keys(remains))
+						this.$session.set('components',clean);
 					}
 					this.$session.set('blood_types',bloodtypes);
 					this.$session.set('civil_status',civilstatus);
 					this.$session.set('blood_bags',bloodbags);
 					this.$session.set("user",data.user);
 					this.$store.commit('USER',data.user);
-					this.$router.push('/')
 				})
 				.catch(error => {
 					this.$store.state.error = error;

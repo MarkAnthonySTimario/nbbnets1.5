@@ -57,9 +57,6 @@ class BloodBankNetworkingController extends Controller
         
         $data = file_get_contents("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=".$from."&destinations=".$to);
         $data = json_decode($data);
-        // if($data->error_message != ''){
-        //     return ['distance' => 0, 'time' => 0];
-        // }
         $time = 0;
         $distance = 0;
         foreach($data->rows[0]->elements as $road) {
@@ -274,47 +271,5 @@ class BloodBankNetworkingController extends Controller
 
         $unit = Blood::whereBloodType($blood_type)->whereComponentCd($component_cd)->whereDonationId($confirm)->first();
         return ['status' => $unit ? true : false];
-    }
-
-    function proceedRelease(Request $r){
-        $verifier = $r->get('verifier');
-        $user = $r->get('user');
-        $units = $r->get('units');
-        $intent_id = $r->get('intent_id');
-
-        $intent = NetworkIntent::find($intent_id);
-        $intent->released_by = $user;
-        $intent->released_dt = date('Y-m-d H:i:s');
-        $intent->verified_by = $verifier['username'];
-        $intent->save();
-
-        foreach($units as $u){
-            if($u['cancel']){
-                DB::statement(
-                    DB::raw("UPDATE component 
-                    SET comp_stat = 'AVA', 
-                    location = '".$intent->from."' 
-                    WHERE donation_id = '".$u['donation_id']."' 
-                    AND component_cd = '".$u['component_cd']."'"));
-            }else{
-
-                if($u['forChange']){
-                    DB::statement(
-                        DB::raw("UPDATE component 
-                        SET comp_stat = 'AVA', 
-                        location = '".$intent->from."' 
-                        WHERE donation_id = '".$u['donation_id']."' 
-                        AND component_cd = '".$u['component_cd']."'"));
-                }
-                DB::statement(
-                    DB::raw("UPDATE component 
-                    SET comp_stat = 'AVA', 
-                    location = '".$intent->from."' 
-                    WHERE donation_id = '".$u['confirm']."' 
-                    AND component_cd = '".$u['component_cd']."'"));
-            }
-        }
-
-
     }
 }

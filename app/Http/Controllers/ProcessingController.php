@@ -63,6 +63,11 @@ class ProcessingController extends Controller
             foreach($d['units'] as $component_cd => $unit){
                 if($unit){
                     $c = new Blood;
+                    if($d['mbd']){
+                        $c->collection_dt = $d['mbd']['donation_dt'];
+                    }else{
+                        $c->collection_dt = $d['created_dt'];
+                    }
                     $c->donation_id = $d['donation_id'];
                     $c->component_cd = $component_cd;
                     if($d['type']){

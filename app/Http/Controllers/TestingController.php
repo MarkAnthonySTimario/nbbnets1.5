@@ -12,6 +12,7 @@ use App\Component;
 use App\Blood;
 use App\Discard;
 use App\Http\Controllers\FlagReactiveController;
+use App\SharedUnscreenedUnit;
 
 class TestingController extends Controller
 {
@@ -24,11 +25,32 @@ class TestingController extends Controller
             $from = $sched['from'];
             $to = $sched['to'];
             $donations = Donation::with('type','test')->whereNotNull('donation_id')->whereFacilityCd($facility_cd)->whereSchedId($sched_id)->whereBetween('created_dt',[$from,$to])->get();
+        }else if($sched_id == 'Shared'){
+            $donations = SharedUnscreenedUnit::with('test')
+                ->whereSharedFacilityCd($facility_cd)
+                ->whereNotNull('registered_by')
+                ->get();
         }else{
             $donations = Donation::with('type','test')->whereNotNull('donation_id')->whereFacilityCd($facility_cd)->whereSchedId($sched_id)->get();
         }
 
+
         $response = [];
+
+        if($sched_id == 'Shared'){
+            foreach($donations as $donation){
+                if(!$donation->test){
+                    $response[] = $donation->donation_id;
+                }
+            }
+            $response = array_unique($response);
+            $out = [];
+            foreach($response as $row){
+                $out[] = $row;
+            }
+            return $out;
+        }
+
         foreach($donations as $donation){
             if(!$donation->blood_bag){
 

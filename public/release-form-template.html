@@ -1,0 +1,98 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Release Form</title>
+	<link rel="stylesheet" href="bootstrap/css/font-awesome.min.css">
+	<style type="text/css">
+	body {
+		font-size: 11pt;
+	}
+	.fill {
+		font-weight: bold;
+		text-transform: uppercase;
+		border-bottom: 1px solid #000;
+	}
+	.subs {
+		text-indent: 5px;
+	}
+	.text-centered {
+		text-align: center;
+	}
+	h3 {
+		margin-top: 5px;
+		line-height: 1;
+	}
+	h4 {
+		line-height: 1;
+		margin-top: -15px;
+	}
+	</style>
+
+</head>
+<body>
+
+	<table width="800" height="100" align="center">
+		<tr>
+			<td width="25%" align="center"></td>
+			<td align="center" width="50%"><br>
+			<h3>{{FACILITY_NAME}}</h3>
+			<h4>BLOOD RELEASE FORM</h4>
+			</td>
+			<td width="25%"></td>
+		</tr>
+	</table>
+	<br><br>
+	<table width="800" align="center" border="0" cellpadding="2" cellspacing="0" style="text-align: bottom;">
+		<tr>
+			<td width="15%">Released to: </td>
+			<td class="fill">{{RELEASED_TO}}</td>
+			<td width="18%" class="subs">Date/Time Issued: </td>
+			<td class="fill">{{RELEASED_DT}}</td>
+		</tr>
+	</table>
+
+
+	<table width="600" align="center" cellspacing="5" cellpadding="2">
+		<tr>
+			<th>Serial Number</th>
+			<th>Blood Type</th>
+			<th>Expiration Date</th>
+		</tr>
+		{{UNITS}}
+    </table>
+	<br><br>
+
+	<table width="800" align="center" border="0">
+		<tr>
+			<td colspan="4">RESULT OF TEST DONE: 	<b>NON-REACTIVE to HBsAg, Syphilis, HIV, HCV, Malaria</b>
+			</td>	
+		</tr>
+    <tr>
+      <td colspan="4"><br/><br/></td>
+    </tr>
+		<tr>
+      <td class="fill"><center>{{RELEASED_BY}}</center></td>
+			<td width="10%"></td>
+			<td width="15%" valign="bottom">Received by:</td>
+			<td class="fill" width="30%"></td>
+
+		</tr>		
+		<tr>
+			<td align="center" valign="top">Medical Technologist</td>
+			<td></td>
+			<td><br>Date & Time: </td>
+			<td class="fill"></td>
+		</tr>
+    <tr>
+      <td class="fill"><center>{{VERIFIED_BY}}</center></td>
+			<td width="10%"></td>
+			<td width="15%" valign="bottom"></td>
+			<td width="30%"></td>
+
+		</tr>		
+	</table>
+  
+</body>
+</html>

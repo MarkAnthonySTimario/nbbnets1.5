@@ -1,6 +1,7 @@
 <template>
   <div>
-      <navbar></navbar>
+      <navbar v-if="!isFacility"></navbar>
+      <navbarfacility v-if="isFacility" :current="user"></navbarfacility>
       <div class="container">
           <div class="content" style="padding-top:80px;" v-if="!$store.state.error">
               <flushAlert></flushAlert>
@@ -16,16 +17,27 @@
 
 <script>
 import navbar from './navbar.vue';
+import navbarfacility from './navbarFacility.vue';
 import login from './login.vue';
 
 export default {
     components: {
-        navbar, login
+        navbar, navbarfacility, login
+    },
+    data(){
+        return {
+            isFacility : true, user : {ulevel : 0}
+        }
     },
     mounted(){
         if(this.$session.has('user')){
-            this.$store.commit('USER',this.$session.get('user'));
+            let user = this.$session.get('user')
+            this.user = user
+            this.$store.commit('USER',user);
             this.$store.commit('TOKEN',this.$session.get('token'));
+            if(user.ulevel == -1){
+                this.isFacility = false
+            }
         }
         
     },

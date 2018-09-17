@@ -39,14 +39,6 @@ class NetworkIntent extends Model
         return $this->belongsTo('App\Facility','from','facility_cd')->select('facility_cd','facility_name');
     }
 
-	function facilityTo(){
-        return $this->belongsTo('App\Facility','to','facility_cd');
-    }
-
-    function units(){
-        return $this->hasMany('App\NetworkIntentDetail','intent_id','id');
-    }
-
     function details(){
         return $this->hasMany('App\NetworkIntentDetail','intent_id','id');
     }

@@ -7,7 +7,6 @@ use App\Template;
 use App\Facility;
 use App\Blood;
 use App\Donation;
-use App\NetworkIntent;
 
 use Milon\Barcode\Facades\DNS1DFacade;
 use Response;
@@ -175,54 +174,6 @@ class TemplateController extends Controller
         $t = Template::firstOrNew(['facility_cd' => $facility_cd]);
         $t->template = $template;
         $t->save();
-    }
-
-    function getReleaseForm($facility_cd = null){
-        $file = base_path('public').'/release-form-template.html';
-        return file_get_contents($file);
-    }
-
-    function release($intent_id){
-        $intent = NetworkIntent::with('facilityFrom','facilityTo','units')->whereId($intent_id)->first();
-        if($intent->released_dt == null){
-            // return "Can't find record";
-        }
-        $template = $this->getReleaseForm();
-        
-        $releaseForm = $this->prepareRelease($template,$intent);
-        return view('layout.label')->withContent($releaseForm);
-    }
-
-    function prepareRelease($template,$intent){
-        $to = $intent->facilityTo;
-        $from = $intent->facilityFrom;
-        
-        $template = str_replace("{{FACILITY_NAME}}",$to->facility_name,$template);
-        $template = str_replace("{{FACILITY_ADDRESS}}",$to->address_no_st_blk,$template);
-        $template = str_replace("{{RELEASED_TO}}",$from->facility_name,$template);
-        $template = str_replace("{{RELEASED_DT}}",$intent->released_dt,$template);
-        $template = str_replace("{{RELEASED_BY}}",$intent->released_by,$template);
-        $template = str_replace("{{VERIFIERD_BY}}",$intent->verified_by,$template);
-
-
-        $units = [];
-        // dd($intent->details);
-        foreach($intent->units as $u){
-            $b = Blood::select('expiration_dt')->whereDonationId($u->donation_id)->whereComponentCd($u->component_cd)->first();
-
-            $units[] = "
-                <tr>
-                    <td style='border-bottom:1px solid #000;'>".$u->blood_type."</td>
-                    <td style='border-bottom:1px solid #000;'>".$u->component_cd."</td>
-                    <td style='border-bottom:1px solid #000;'>".$b->expiration_dt."</td>
-                </tr>
-            ";
-        }
-
-        $units = implode("",$units);
-        $template = str_replace("{{UNITS}}",$units,$template);
-
-        return $template;
     }
     
 }
