@@ -8,6 +8,8 @@ use App\Facility;
 use App\Blood;
 use App\Donation;
 use App\NetworkIntent;
+use App\User;
+use App\Component;
 
 use Milon\Barcode\Facades\DNS1DFacade;
 use Response;
@@ -194,6 +196,7 @@ class TemplateController extends Controller
     }
 
     function prepareRelease($template,$intent){
+        $components = Component::pluck('comp_name','component_cd');
         $to = $intent->facilityTo;
         $from = $intent->facilityFrom;
         
@@ -201,8 +204,10 @@ class TemplateController extends Controller
         $template = str_replace("{{FACILITY_ADDRESS}}",$to->address_no_st_blk,$template);
         $template = str_replace("{{RELEASED_TO}}",$from->facility_name,$template);
         $template = str_replace("{{RELEASED_DT}}",$intent->released_dt,$template);
-        $template = str_replace("{{RELEASED_BY}}",$intent->released_by,$template);
-        $template = str_replace("{{VERIFIERD_BY}}",$intent->verified_by,$template);
+        $release = User::find($intent->released_by);
+        $template = str_replace("{{RELEASED_BY}}",$release->user_fname.' '.$release->user_mname.' '.$release->user_lname,$template);
+        $verifier = User::find($intent->verified_by);
+        $template = str_replace("{{VERIFIED_BY}}",$verifier->user_fname.' '.$verifier->user_mname.' '.$verifier->user_lname,$template);
 
 
         $units = [];
@@ -212,9 +217,10 @@ class TemplateController extends Controller
 
             $units[] = "
                 <tr>
-                    <td style='border-bottom:1px solid #000;'>".$u->blood_type."</td>
-                    <td style='border-bottom:1px solid #000;'>".$u->component_cd."</td>
-                    <td style='border-bottom:1px solid #000;'>".$b->expiration_dt."</td>
+                    <td style='border-bottom:1px solid #000; text-align:center;'>".$u->donation_id."</td>
+                    <td style='border-bottom:1px solid #000; text-align:center;'>".$u->blood_type."</td>
+                    <td style='border-bottom:1px solid #000; text-align:center;'>".$components[$u->component_cd]."</td>
+                    <td style='border-bottom:1px solid #000; text-align:center;'>".$b->expiration_dt."</td>
                 </tr>
             ";
         }

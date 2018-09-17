@@ -264,7 +264,7 @@ class BloodBankNetworkingController extends Controller
     }
 
     function getIntent($intent_id){
-        return NetworkIntent::with('details','facilityFrom')->find($intent_id);
+        return NetworkIntent::with('details','units','facilityFrom')->find($intent_id);
     }
 
     function checkDonationId(Request $r){

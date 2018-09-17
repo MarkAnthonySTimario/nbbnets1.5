@@ -158,12 +158,23 @@ class AppController extends Controller
     }
 
     function upload(Request $request){
+        $fname = $request->get('fname');
+        $mname = $request->get('mname');
+        $lname = $request->get('lname');
+        $bdate = $request->get('bdate');
+
+        $existing = Donor::whereFname($fname)->whereMname($mname)->whereLname($lname)->whereBdate($bdate)->first();
+
+        if($existing){
+            return;
+        }
+        
         $d = new Donor();
         $path = public_path() . '/uploads/';
         $id = $request->get('id');
-        $d->fname = $request->get('fname');
-        $d->mname = $request->get('mname');
-        $d->lname = $request->get('lname');
+        $d->fname = $fname;
+        $d->mname = $mname;
+        $d->lname = $lname;
         $seqno = $request->get('seqno');
         $d->seqno = $seqno != 'null' && $seqno != null ? $seqno : $this->generateSeqno('00001');
         // return ['data'=> $d->seqno];
@@ -176,7 +187,7 @@ class AppController extends Controller
             $d->donor_photo = $photo;
             // return var_dump($photo);
         }
-        $d->bdate = $request->get('bdate');
+        $d->bdate = $bdate;
         $d->gender = $request->get('gender') != 'null' ? $request->get('gender') : null;
         $d->home_no_st_blk = $request->get('nsb') != 'null' ? $request->get('nsb') : null;
         $d->home_brgy = $request->get('barangay') != 'null' ? $request->get('barangay') : null;

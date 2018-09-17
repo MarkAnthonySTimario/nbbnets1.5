@@ -30,6 +30,8 @@ class HomeController extends Controller
             $error = "Login failed! Please check username/password.";
         }
 
+        $user->username = $request->get('username');
+
         return [
             'status' => $status,
             'error' => $error,

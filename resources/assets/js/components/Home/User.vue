@@ -6,20 +6,31 @@
       <table class="table table-condensed" style="font-size:12px;">
           <tbody>
             <tr>
-                <th nowrap>User Name</th><td>{{$store.state.user.user_id}}</td>
+                <th nowrap>User Name</th><td>{{user.username}}</td>
             </tr>
             <tr>
                 <th>Name</th><td style="font-size:14px;" nowrap>
-                    {{$store.state.user.user_fname}} 
-                    {{$store.state.user.user_mname}} 
-                    {{$store.state.user.user_lname}} 
+                    {{user.user_fname}} 
+                    {{user.user_mname}} 
+                    {{user.user_lname}} 
                 </td>
             </tr>
             <tr>
                 <th>User Level</th>
-                <td>{{$store.state.user.level.userlevelname}}</td>
+                <td>{{user.level.userlevelname}}</td>
             </tr>
           </tbody>
       </table>
   </div>
 </template>
+
+<script>
+    export default{
+        data(){
+            let user = this.$session.get('user')
+            return {
+                user
+            }
+        }
+    }
+</script>
