@@ -54,7 +54,7 @@
 
 <script>
 export default {
-  props : ['donationids'],
+  props : ['donationids','schedId'],
   data(){
       let donations = [];
       this.donationids.forEach(donation_id => {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Donation;
 use App\Http\Controllers\FlagReactiveController;
+use App\SharedUnscreenedUnit;
 
 class DonationController extends Controller
 {
@@ -167,31 +168,45 @@ class DonationController extends Controller
         $verifier = $request->get('verifier');
         $rows = $request->get('rows');
 
-        foreach($rows as $row){
-            $donation = Donation::whereDonationId($row['donation_id'])->first();
-            if(!$donation){
-                $d = new Donation;
-                $d->seqno = Donation::generateSeqno($facility_cd);
-                $d->donation_id = $row['donation_id'];
-                $d->sched_id = $sched_id;
-                $d->donation_type = 'V';
-                $d->collection_method = 'WB';
-                $d->donation_stat = 'A';
-                $d->mh_pe_stat = 'A';
-                $d->collection_stat = 'COL';
-                $d->blood_bag = $row['bag'];
-                $d->created_by = $user_id;
-                $d->created_dt = date('Y-m-d h:i:s');
-                $d->facility_cd = $facility_cd;
-                $d->pre_registered = 'Y';
-                $d->save();
-            }else{
-                $donation->blood_bag = $row['bag'];
-                $donation->updated_by = $user_id;
-                $donation->updated_dt = date('Y-m-d H:i:s');
-                $donation->save();
+        if($sched_id == 'Shared'){
+            foreach($rows as $row){
+                $s = SharedUnscreenedUnit::whereDonationId($row['donation_id'])
+                    ->whereComponentCd($row['component_cd'])->first();
+                $s->registered_by = $user_id;
+                $s->registered_approved_by = $verifier['username'];
+                $s->registered_dt = date('Y-m-d H:i:s');
+                $s->save();
+
+            }
+        }else{
+            
+            foreach($rows as $row){
+                $donation = Donation::whereDonationId($row['donation_id'])->first();
+                if(!$donation){
+                    $d = new Donation;
+                    $d->seqno = Donation::generateSeqno($facility_cd);
+                    $d->donation_id = $row['donation_id'];
+                    $d->sched_id = $sched_id;
+                    $d->donation_type = 'V';
+                    $d->collection_method = 'WB';
+                    $d->donation_stat = 'A';
+                    $d->mh_pe_stat = 'A';
+                    $d->collection_stat = 'COL';
+                    $d->blood_bag = $row['bag'];
+                    $d->created_by = $user_id;
+                    $d->created_dt = date('Y-m-d h:i:s');
+                    $d->facility_cd = $facility_cd;
+                    $d->pre_registered = 'Y';
+                    $d->save();
+                }else{
+                    $donation->blood_bag = $row['bag'];
+                    $donation->updated_by = $user_id;
+                    $donation->updated_dt = date('Y-m-d H:i:s');
+                    $donation->save();
+                }
             }
         }
+
     }
 
     function updateChildRecords($donation){

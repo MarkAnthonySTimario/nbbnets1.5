@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Donation;
 use App\TypingResult;
 use App\Blood;
+use App\SharedUnscreenedUnit;
 
 class TypingController extends Controller
 {
@@ -18,11 +19,30 @@ class TypingController extends Controller
             $from = $sched['from'];
             $to = $sched['to'];
             $donations = Donation::with('type','test')->whereNotNull('donation_id')->whereFacilityCd($facility_cd)->whereSchedId($sched_id)->whereBetween('created_dt',[$from,$to])->get();
+        }else if($sched_id == 'Shared'){
+            $donations = SharedUnscreenedUnit::with('type')
+                ->whereSharedFacilityCd($facility_cd)
+                ->whereNotNull('registered_by')
+                ->get();
         }else{
             $donations = Donation::with('type','test')->whereNotNull('donation_id')->whereFacilityCd($facility_cd)->whereSchedId($sched_id)->get();
         }
 
         $response = [];
+
+        if($sched_id == 'Shared'){
+            foreach($donations as $donation){
+                if(!$donation->type){
+                    $response[] = $donation->donation_id;
+                }
+            }
+            $response = array_unique($response);
+            $out = [];
+            foreach($response as $row){
+                $out[] = $row;
+            }
+            return $out;
+        }
         foreach($donations as $donation){
             if(!$donation->blood_bag){
 

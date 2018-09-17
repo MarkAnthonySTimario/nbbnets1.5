@@ -11,8 +11,9 @@
                         <div class="col-lg-7 input-group">
                             <input @click.prevent="selectMBDAgency" type="text" class="form-control input-sm" placeholder="Click here to select MBD/Walk-in" readonly v-if="!sched.agency_cd" style="background-color:#fff;">
                             <div class="form-control input-sm" v-if="sched.agency_cd" @click.prevent="selectMBDAgency">
+                                <span v-if="sched.agency_cd == 'Shared'">{{sched.agency_name}}</span>
                                 <span v-if="sched.agency_name == 'Walk-in'">{{sched.agency_name}}</span>
-                                <span v-if="sched.agency_name != 'Walk-in'">{{sched.agency_name}} - {{sched.donation_dt.substr(0,10)}}</span>
+                                <span v-if="sched.agency_name != 'Walk-in' && sched.agency_cd != 'Shared'">{{sched.agency_name}} - {{sched.donation_dt.substr(0,10)}}</span>
                             </div>
                             <div class="input-group-btn">
                                 <button class="btn btn-default btn-sm" @click.prevent="selectMBDAgency"><span class="glyphicon glyphicon-search"></span></button>
@@ -26,15 +27,16 @@
                       <tr>
                           <th width="30" class="text-center">#</th>
                           <th width="300">Donation ID</th>
-                          <th colspan="4" class="text-center">Blood Bag</th>
+                          <th colspan="4" class="text-center" v-if="sched.agency_cd != 'Shared'">Blood Bag</th>
+                          <th v-if="sched.agency_cd == 'Shared'">Component</th>
                           <th width="30"></th>
                       </tr>
                       <tr>
                           <th colspan="2"></th>
-                          <th class="text-center">S</th>
-                          <th class="text-center">D</th>
-                          <th class="text-center">T</th>
-                          <th class="text-center">Q</th>
+                          <th class="text-center"  v-if="sched.agency_cd != 'Shared'">S</th>
+                          <th class="text-center"  v-if="sched.agency_cd != 'Shared'">D</th>
+                          <th class="text-center"  v-if="sched.agency_cd != 'Shared'">T</th>
+                          <th class="text-center"  v-if="sched.agency_cd != 'Shared'">Q</th>
                           <th></th>
                       </tr>
                   </thead>
@@ -44,10 +46,15 @@
                           <td>
                               <input type="text" class="form-control input-sm" maxlength="16" v-model="r.donation_id" @keyup="r.donation_id = r.donation_id ? r.donation_id.toUpperCase() : null; checkDonationID(r);">
                           </td>
-                          <td class="text-center"  @click="r.bag = 'S'"><input type="radio" v-model="r.bag" value="S"></td>
-                          <td class="text-center"  @click="r.bag = 'D'"><input type="radio" v-model="r.bag" value="D"></td>
-                          <td class="text-center"  @click="r.bag = 'T'"><input type="radio" v-model="r.bag" value="T"></td>
-                          <td class="text-center"  @click="r.bag = 'Q'"><input type="radio" v-model="r.bag" value="Q"></td>
+                          <td  v-if="sched.agency_cd != 'Shared'" class="text-center"  @click="r.bag = 'S'"><input type="radio" v-model="r.bag" value="S"></td>
+                          <td  v-if="sched.agency_cd != 'Shared'" class="text-center"  @click="r.bag = 'D'"><input type="radio" v-model="r.bag" value="D"></td>
+                          <td  v-if="sched.agency_cd != 'Shared'" class="text-center"  @click="r.bag = 'T'"><input type="radio" v-model="r.bag" value="T"></td>
+                          <td  v-if="sched.agency_cd != 'Shared'" class="text-center"  @click="r.bag = 'Q'"><input type="radio" v-model="r.bag" value="Q"></td>
+                          <td  v-if="sched.agency_cd == 'Shared'">
+                              <select v-model="r.component_cd" class="form-control input-sm">
+                                  <option v-for="(cn,cd) in components" :key="cd" :value="cd">{{cn}}</option>
+                              </select>
+                          </td>
                           <td>
                               <button class="btn btn-danger btn-xs" @click="rows.splice(i,1)"><span class="glyphicon glyphicon-remove"></span></button>
                           </td>
@@ -100,8 +107,10 @@ export default {
           rows.push(this.blankRow());
       }
       let {sched} = this.$store.state;
+      let components = this.$session.get('components')
       return {
-          rows, err : [], loading : false, verify : false, sched, not_your_donation_id : false
+          rows, err : [], loading : false, verify : false, sched, not_your_donation_id : false,
+          components
       }
   },
   mounted(){
@@ -109,7 +118,7 @@ export default {
   },
   methods : {
       checkDonationID(r){
-        if(!r.donation_id){
+        if(!r.donation_id || this.sched.sched_id == 'Shared'){
                    return
         }
           if(r.donation_id.length >= 16){
@@ -154,15 +163,19 @@ export default {
           this.loading = true;
           let donation_ids = _.map(this.rows,'donation_id');
           let that = this;
-          this.$http.post(this,"register/checkDonationIDs",{donation_ids,verifier})
-          .then(({data}) => {
-              if(data.length > 0){
-                  this.loading = false;
-                  this.err.push(data.join("<br/>"));
-              }else{
-                  that.saveChanges(verifier);
-              }
-          })
+          if(this.sched.sched_id == 'Shared'){
+              that.saveChanges(verifier);
+          }else{
+              this.$http.post(this,"register/checkDonationIDs",{donation_ids,verifier})
+              .then(({data}) => {
+                  if(data.length > 0){
+                      this.loading = false;
+                      this.err.push(data.join("<br/>"));
+                  }else{
+                      that.saveChanges(verifier);
+                  }
+              })
+          }
       },
       saveChanges(verifier){
           let {rows} = this;
@@ -191,7 +204,8 @@ export default {
       blankRow(){
           return {
               donation_id : null,
-              bag : 'S'
+              bag : 'S',
+              component_cd : null
           };
       },
       selectMBDAgency(){

@@ -96,6 +96,7 @@
                   </div>
               </div>
               <div class="modal-footer" v-if="!walkin">
+                <button class="btn btn-default pull-left" @click.prevent="$emit('selected',{sched_id : 'Shared', agency_cd : 'Shared',agency_name : 'Unscreened Shared Units', donation_dt : ''})">Unscreened Shared Units</button>
                 <button id="select_walkin" class="btn btn-warning" v-if="walkin_dates" @click.prevent="walkin = true">Select Walk-in</button>
                 <button id="select_walkin" class="btn btn-warning" v-if="!walkin_dates" @click.prevent="$emit('selected',{sched_id : 'Walk-in', agency_cd : 'Walk-in',agency_name : 'Walk-in'})">Select Walk-in</button>
               </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Donation;
 use App\Label;
+use App\SharedUnscreenedUnit;
 
 class LabelController extends Controller
 {
@@ -15,12 +16,26 @@ class LabelController extends Controller
         $component_cd = $request->get('component_cd');
 
         $donations = [];
-        if($sched_id == 'Walk-in'){
+        if($sched_id == 'Shared'){
+            $donations = SharedUnscreenedUnit::with('donation','donation.type','donation.test','donation.mbd','donation.units','donation.discards','donation.labels','donation.processing','donation.donor_min')
+                ->select('donation_id')
+                ->whereSharedFacilityCd($facility_cd)
+                ->whereNotNull('registered_by')
+                ->groupBy('donation_id')->get();
+        }else if($sched_id == 'Walk-in'){
             $from = $sched['from'];
             $to = $sched['to'];
             $donations = Donation::with('type','labels','processing','test','additionaltest','units','donor_min')->whereNotNull('donation_id')->whereFacilityCd($facility_cd)->whereNotNull('blood_bag')->whereSchedId($sched_id)->whereBetween('created_dt',[$from,$to])->get();
         }else{
             $donations = Donation::with('type','labels','processing','test','additionaltest','units','donor_min')->whereNotNull('donation_id')->whereFacilityCd($facility_cd)->whereNotNull('blood_bag')->whereSchedId($sched_id)->get();
+        }
+
+        if($sched_id == 'Shared'){
+            $old = $donations;
+            $donations = [];
+            foreach($old as $r){
+                $donations[] = $r->donation;
+            }
         }
 
         $response = [];
