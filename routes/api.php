@@ -97,6 +97,8 @@ Route::get('aliqoutes/{donation_id}/{component_cd}','BloodController@getAliqoute
 Route::get('unit/{donation_id}/{component_cd}','BloodController@getUnitDetails');
 Route::post('aliqoute/make','BloodController@makeAliqoute');
 
+Route::get('home/expiry/{facility_cd}','HomeController@getExpiry');
+
 Route::post('admin/registerfacility','FacilityController@register');
 Route::post('admin/updatefacility','FacilityController@update');
 Route::post('admin/facility','FacilityController@info');
