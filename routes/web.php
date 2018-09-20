@@ -23,6 +23,7 @@ Route::get('/login', function () {
 
 Route::get('/barcode/{donation_id}','TemplateController@barcode');
 Route::get('/releaseform/{intent_id}','TemplateController@release');
+Route::get('/form/release/{sched_id}','TemplateController@releasingForm');
 Route::get('/label','TemplateController@preview');
 Route::get('/labelpreview','TemplateController@facilitypreview');
 Route::get('/sn',function(){

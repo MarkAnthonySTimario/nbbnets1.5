@@ -52,9 +52,18 @@
                        </div>
                         <i class="text-danger error col-lg-9 col-lg-offset-3" v-show="errors.has('Collection Status')">{{ errors.first('Collection Status') }}</i>
                    </div>
-                   <div class="form-group" v-if="collection_unsuccessful">
+                   <div class="form-group" v-if="collection_stat == 'UNS'">
                        <label for="" class="control-label col-lg-3">Reason for Unsuccessful Collection</label>
-                       <div class="col-lg-9"><textarea v-model="coluns_res" class="form-control input-sm"></textarea></div>
+                       <div class="col-lg-9">
+                           <!-- <textarea v-model="coluns_res" class="form-control input-sm"></textarea> -->
+                           <select class="form-control input-sm"  v-model="coluns_res">
+                                <option :value="null"></option>
+                                <option>Buldge</option>
+                                <option>Faint</option>
+                                <option>Clot</option>
+                                <option>Others</option>
+                            </select>
+                        </div>
                        <i class="text-danger error col-lg-9 col-lg-offset-3" v-show="errors.has('Reason')">{{ errors.first('Reason') }}</i>
                    </div>
                    <div class="form-group required">

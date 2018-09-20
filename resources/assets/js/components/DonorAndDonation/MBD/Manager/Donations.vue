@@ -13,10 +13,10 @@
                 </th>
                 <!-- <th style="width:30px;"></th> -->
                 <th style="width:30px;"></th>
-                <th>Donor Name</th>
+                <th><a href="javascript:void(0)" @click="sortBy('lname')">Donor Name <span class="glyphicon glyphicon-sort"></span></a></th>
                 <th>Gender</th>
                 <th>Birthdate</th>
-                <th>Donation ID</th>
+                <th><a href="javascript:void(0)" @click="sortBy('donation_id')">Donation ID <span class="glyphicon glyphicon-sort"></span></a></th>
                 <th>MH/PE Result</th>
                 <th>Collection Status</th>
             </tr>
@@ -35,7 +35,7 @@
                 <!-- <td><button class="btn btn-danger btn-xs" v-if="!d.processing" @click.prevent="confirmRemove(d.seqno)"><span class="glyphicon glyphicon-remove"></span></button></td> -->
                 <td><router-link :to="('/MBD/'+schedid+'/SearchDonor?donation_id='+d.donation_id)" class="btn btn-info btn-xs" v-if="!d.donor"><span class="glyphicon glyphicon-user"></span></router-link></td>
                 <td v-if="!d.donor" colspan="3"></td>
-                <td v-if="d.donor">{{d.donor.fname}} {{d.donor.mname}} {{d.donor.lname}}</td>
+                <td v-if="d.donor">{{d.donor.lname}}, {{d.donor.fname}} {{d.donor.mname}}</td>
                 <td v-if="d.donor">{{d.donor.gender | gender}}</td>
                 <td v-if="d.donor">{{d.donor.bdate}}</td>
                 <td>{{d.donation_id}}</td>
@@ -132,6 +132,13 @@ export default {
       },
       assignDonor(donation_id){
           this.$router.replace("/MBD/"+this.schedid+"/AddDonor/"+donation_id);
+      },
+      sortBy(field){
+          if(field == 'lname'){
+            this.donations = _.orderBy(this.donations,d=>d.donor ? d.donor.lname.toUpperCase() : d.seqno)
+          }else{
+            this.donations = _.orderBy(this.donations,['donation_id'])
+          }
       }
   }
 }

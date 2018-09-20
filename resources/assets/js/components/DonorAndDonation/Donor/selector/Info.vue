@@ -95,6 +95,10 @@
                               <td class="col-lg-8">{{donor.civil_stat | civilStatus}}</td>
                           </tr>
                           <tr>
+                              <th class="col-lg-4">Occupation</th>
+                              <td class="col-lg-8">{{donor.occupation}}</td>
+                          </tr>
+                          <tr>
                               <th class="col-lg-4">Nationality</th>
                               <td class="col-lg-8">{{donor.nation ? donor.nation.nationality : null}}</td>
                           </tr>

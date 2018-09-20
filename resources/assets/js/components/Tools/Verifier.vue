@@ -48,7 +48,7 @@
 export default {
   props : ['full'],
   data(){
-      return { username : null, password : null, loading : false, error : null };
+      return { username : null, password : null, loading : false, error : null};
   },
   methods : {
       cancel(){
@@ -59,6 +59,11 @@ export default {
       verify(){
           let {username,password} = this;
           let {user_id,facility_cd} = this.$session.get('user');
+          
+          if(username == user_id){
+              this.error = "Verifier must not be currently logged in to the system"
+              return
+          }
           
           this.loading = true;
           this.$http.post(this,"verify",{
