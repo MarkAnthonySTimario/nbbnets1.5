@@ -28,7 +28,7 @@ let opts = {
     fname : {value : true, label : "First Name"},  mname : {value: true, label : "Middle Name"},  lname : {value: true, label : "Last Name"},
     blood_type : {value : true, label : "ABO/Rh"},  bdate : {value: true, label : "Birthdate"},  gender : {value: true, label : "Gender"},
     address : {value: true, label : "Address"},  donation_id : {value: true, label : "Donation ID"},  mhpe : {value: true, label : "MH/PE Result"},
-    collection_stat : {value: true, label : "Collection Status"},  donor_type : {value: true, label : "Type of Donor"}, tti : {value: true, label : "TTIs"},  
+    collection_stat : {value: true, label : "Collection Status"},  donor_type : {value: true, label : "Type of Donor"},  
 };
 export default {
     components : {Options,Result},

@@ -61,6 +61,7 @@ import ReleaseToInventory from './components/StockManagement/ReleaseToInventory.
 import BloodBankNetworking from './components/StockManagement/BloodBankNetworking.vue';
 import ServeNetworking from './components/StockManagement/BLoodBankNetworking/ServeNetworking.vue';
 import ReleaseNetworking from './components/StockManagement/BLoodBankNetworking/NetworkingRelease.vue';
+import ManageUsers from './components/Administration/ManageUsers.vue';
 
 import RegisteredStickers from './components/Administration/RegisteredStickers.vue'
 
@@ -120,6 +121,7 @@ export default new VueRouter({
         { path : '/ManageFacilities/UpdateFacility/:facility_cd', component : UpdateFacility, props : true },
         { path : '/ManageFacilities/info/:facility_cd', component : FacilityInformation, props : true },
         { path : '/ManageFacilities/users/:facility_cd', component : FacilityUsers, props : true },
+        { path : '/ManageUsers', component : ManageUsers},
         
         { path : '/Auc', component : AucList },
         { path : '/Auc/Report1', component : AucReport1 },
