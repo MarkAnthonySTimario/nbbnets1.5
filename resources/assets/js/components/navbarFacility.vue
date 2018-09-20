@@ -63,6 +63,7 @@
                 <li><router-link to="/StatusOfInventory">Inventory Status</router-link></li>
                 <li><router-link to="/BloodBankNetworking">Blood Bank Networking</router-link></li>
                 <li><router-link to="/ServeNetworking">Serve Blood Request</router-link></li>
+                <li><router-link to="/EmergencyPool">Emergency Pool</router-link></li>
                 <!-- <li><router-link to="/Transfusion">Transfusion</router-link></li>
                 <li><router-link to="/BRM">Releasing</router-link></li> -->
               </ul>
@@ -94,7 +95,6 @@
               <ul class="dropdown-menu">
                 <li><router-link to="/ManageUsers">Manage Users</router-link></li>
                 <li><router-link to="/FacilityLabelTemplate">Blood Bag Template</router-link></li>
-                <li><router-link to="/EmergencyPool">Emergency Pool</router-link></li>
                 <li><router-link to="/RegisteredStickers">Registered Stickers</router-link></li>
               </ul>
             

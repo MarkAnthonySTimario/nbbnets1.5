@@ -135,6 +135,6 @@ export default new VueRouter({
 
         { path : '/RegisteredStickers', component : RegisteredStickers },
         { path : '/Unit/:donation_id/:component_cd', component : Unit, props : true },
-        { path : '/ShareUnscreenedUnits', component : ShareUnscreenedUnits },
+        { path : '/ShareUnscreenedUnits', component : ShareUnscreenedUnits }
     ]
 })

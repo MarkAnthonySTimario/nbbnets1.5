@@ -61,8 +61,8 @@
                     <div class="form-group required">
                         <label for="" class="control-label col-lg-3">Birth Date</label>
                         <div class="col-lg-6">
-                            <!-- <input v-validate="'required'" name="Birth Date" type="date" class="form-control input-sm" v-model="bdate"> -->
-                            <datepicker format="MM/dd/yyyy" typeable="true" v-model="bdate" />
+                            <input v-validate="'required'" name="Birth Date" type="date" class="form-control input-sm" v-model="bdate">
+                            <!-- <datepicker format="MM/dd/yyyy" typeable="true" v-model="bdate" /> -->
                         </div>
                         <div class="col-lg-3" style="margin-top:0.5em;">{{bdate | age}} years old</div>
                         <i class="text-danger error col-lg-9 col-lg-offset-3" v-show="errors.has('Birth Date')">{{ errors.first('Birth Date') }}</i>
