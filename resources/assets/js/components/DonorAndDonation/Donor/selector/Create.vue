@@ -32,21 +32,21 @@
                     <donor-pic-capture @oncomplete="setPhoto"></donor-pic-capture>
                     <div class="form-group required">
                         <label for="" class="control-label col-lg-3">First Name</label>
-                        <div class="col-lg-9"><input v-validate="'required'" type="text" class="form-control input-sm" v-model="fname" name="First Name"></div>
+                        <div class="col-lg-9"><input placeholder="First Name" v-validate="'required'" type="text" class="form-control input-sm" v-model="fname" name="First Name"></div>
                         <i class="text-danger error col-lg-9 col-lg-offset-3" v-show="errors.has('First Name')">{{ errors.first('First Name') }}</i>
                     </div>
                     <div class="form-group">
                         <label for="" class="control-label col-lg-3">Middle Name</label>
-                        <div class="col-lg-9"><input type="text" class="form-control input-sm" v-model="mname"></div>
+                        <div class="col-lg-9"><input placeholder="Middle Name" type="text" class="form-control input-sm" v-model="mname"></div>
                     </div>
                     <div class="form-group required">
                         <label for="" class="control-label col-lg-3">Last Name</label>
-                        <div class="col-lg-9"><input v-validate="'required'" type="text" class="form-control input-sm" v-model="lname" name="Last Name"></div>
+                        <div class="col-lg-9"><input placeholder="Last Name" v-validate="'required'" type="text" class="form-control input-sm" v-model="lname" name="Last Name"></div>
                         <i class="text-danger error col-lg-9 col-lg-offset-3" v-show="errors.has('Last Name')">{{ errors.first('Last Name') }}</i>
                     </div>
                     <div class="form-group">
                         <label for="" class="control-label col-lg-3">Name Suffix</label>
-                        <div class="col-lg-9"><input type="text" class="form-control input-sm" v-model="name_suffix"></div>
+                        <div class="col-lg-9"><input placeholder="Name Suffix" type="text" class="form-control input-sm" v-model="name_suffix"></div>
                     </div>
                     <div class="form-group required">
                         <label for="" class="control-label col-lg-3">Gender</label>
@@ -60,7 +60,10 @@
                     </div>
                     <div class="form-group required">
                         <label for="" class="control-label col-lg-3">Birth Date</label>
-                        <div class="col-lg-6"><input v-validate="'required'" name="Birth Date" type="date" class="form-control input-sm" v-model="bdate"></div>
+                        <div class="col-lg-6">
+                            <!-- <input v-validate="'required'" name="Birth Date" type="date" class="form-control input-sm" v-model="bdate"> -->
+                            <datepicker format="MM/dd/yyyy" typeable="true" v-model="bdate" />
+                        </div>
                         <div class="col-lg-3" style="margin-top:0.5em;">{{bdate | age}} years old</div>
                         <i class="text-danger error col-lg-9 col-lg-offset-3" v-show="errors.has('Birth Date')">{{ errors.first('Birth Date') }}</i>
                     </div>
@@ -73,6 +76,10 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="" class="control-label col-lg-3">Occupation</label>
+                        <div class="col-lg-9"><input placeholder="Occupation" type="text" class="form-control input-sm" v-model="occupation"></div>
+                    </div>
+                    <div class="form-group">
                         <label for="" class="control-label col-lg-3">Nationality</label>
                         <div class="col-lg-9">
                             <select class="form-control input-sm" v-model="nationality">
@@ -82,15 +89,15 @@
                     </div>
                     <div class="form-group">
                         <label for="" class="control-label col-lg-3">Telephone</label>
-                        <div class="col-lg-9"><input type="text" class="form-control input-sm" v-model="tel_no"></div>
+                        <div class="col-lg-9"><input placeholder="Telephone" type="text" class="form-control input-sm" v-model="tel_no"></div>
                     </div>
                     <div class="form-group">
                         <label for="" class="control-label col-lg-3">Mobile Phone</label>
-                        <div class="col-lg-9"><input type="text" class="form-control input-sm" v-model="mobile_no"></div>
+                        <div class="col-lg-9"><input placeholder="Mobile Phone" type="text" class="form-control input-sm" v-model="mobile_no"></div>
                     </div>
                     <div class="form-group">
                         <label for="" class="control-label col-lg-3">Email</label>
-                        <div class="col-lg-9"><input type="email" class="form-control input-sm" v-model="email"></div>
+                        <div class="col-lg-9"><input placeholder="Email" type="email" class="form-control input-sm" v-model="email"></div>
                     </div>
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home Address</a></li>
@@ -117,6 +124,7 @@
 import { Validator } from 'vee-validate';
 import DonorPicCapture from './create/DonorPhoto.vue';
 import DonorAddresses from './create/DonorAddresses.vue';
+import Datepicker from 'vuejs-datepicker';
 
 const validator = new Validator({
                     fname: 'required',
@@ -126,13 +134,14 @@ const validator = new Validator({
                 });
 
 export default {
-  components : {DonorPicCapture,DonorAddresses},
+  components : {DonorPicCapture,DonorAddresses,Datepicker},
   props : ['sched_id'],
   data(){
       return { 
           donation_id : null,
           mbd: null,loading : true, donor_photo : null, nations : [],
           fname : null, mname : null, lname : null, name_suffix : null, gender : null, bdate : '2000-01-01', civil_stat : null, 
+          occupation : null,
           tel_no : null, mobile_no : null, email : null, 
           home : null, office : null,
           nationality : 137
@@ -197,11 +206,11 @@ export default {
             this.loading = true;
             
             let {donor_photo, seqno, donor_id, name_suffix, lname, fname, mname, bdate, gender, 
-            civil_stat, tel_no, mobile_no, email, nationality, home, office} = this;
+            civil_stat, occupation, tel_no, mobile_no, email, nationality, home, office} = this;
             let {facility_cd,user_id} = this.$session.get("user");
             this.$http.post(this,"donor/create",{
                 donor_photo, seqno, donor_id, name_suffix, lname, fname, mname, bdate, gender, 
-                civil_stat, tel_no, mobile_no, email, nationality, home, office, 
+                civil_stat, occupation, tel_no, mobile_no, email, nationality, home, office, 
                 facility_cd, user_id
             })
             .then(({data}) => {

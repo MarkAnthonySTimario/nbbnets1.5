@@ -83,7 +83,7 @@ class DonorController extends Controller
 
     function create(Request $request){
         $fields = [
-            'donor_photo','donor_id', 'name_suffix', 'lname', 'fname', 'mname', 'bdate', 'gender', 'civil_stat', 
+            'donor_photo','donor_id', 'name_suffix', 'lname', 'fname', 'mname', 'bdate', 'gender', 'civil_stat', 'occupation', 
             'tel_no', 'mobile_no', 'email', 'nationality'];
         $donor = new Donor;
         foreach($fields as $field){
@@ -122,7 +122,7 @@ class DonorController extends Controller
 
     function update(Request $request){
         $fields = [
-            'donor_photo','donor_id', 'name_suffix', 'lname', 'fname', 'mname', 'bdate', 'gender', 'civil_stat', 
+            'donor_photo','donor_id', 'name_suffix', 'lname', 'fname', 'mname', 'bdate', 'gender', 'civil_stat', 'occupation',
             'tel_no', 'mobile_no', 'email', 'nationality'];
         $donor = Donor::whereSeqno($request->get('seqno'))->firstOrFail();
         

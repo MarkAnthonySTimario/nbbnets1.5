@@ -55,7 +55,10 @@
                     </div>
                     <div class="form-group required">
                         <label for="" class="control-label col-lg-3">Birth Date</label>
-                        <div class="col-lg-6"><input v-validate="'required'" name="Birth Date" type="date" class="form-control input-sm" v-model="bdate"></div>
+                        <div class="col-lg-6">
+                            <!-- <input v-validate="'required'" name="Birth Date" type="date" class="form-control input-sm" v-model="bdate"> -->
+                            <datepicker format="MM/dd/yyyy" typeable="true" v-model="bdate" />
+                        </div>
                         <div class="col-lg-3" style="margin-top:0.5em;">{{bdate | age}} years old</div>
                         <i class="text-danger error col-lg-9 col-lg-offset-3" v-show="errors.has('Birth Date')">{{ errors.first('Birth Date') }}</i>
                     </div>
@@ -66,6 +69,10 @@
                                 <option v-for="(val,code) in $session.get('civil_status')" :key="code" :value="code">{{val}}</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label col-lg-3">Occupation</label>
+                        <div class="col-lg-9"><input type="text" class="form-control input-sm" v-model="occupation"></div>
                     </div>
                     <div class="form-group">
                         <label for="" class="control-label col-lg-3">Nationality</label>
@@ -112,6 +119,7 @@
 import { Validator } from 'vee-validate';
 import DonorPicCapture from './selector/create/DonorPhoto.vue';
 import DonorAddresses from './selector/create/DonorAddresses.vue';
+import Datepicker from 'vuejs-datepicker';
 
 const validator = new Validator({
                     fname: 'required',
@@ -121,7 +129,7 @@ const validator = new Validator({
                 });
 
 export default {
-  components : {DonorPicCapture,DonorAddresses},
+  components : {DonorPicCapture,DonorAddresses,Datepicker},
   props : ['sched_id','seqno'],
   data(){
       let {currentRoute:{query:{donation_id}}} = this.$router;
@@ -132,6 +140,7 @@ export default {
           donation_id ,
           loading : true, donor_photo : null, nations : [],
           fname : null, mname : null, lname : null, name_suffix : null, gender : null, bdate : null, civil_stat : null, 
+          occupation : null,
           tel_no : null, mobile_no : null, email : null, 
           home : null, office : null, donor : {},
           nationality : 137
@@ -142,7 +151,7 @@ export default {
       this.$http.get(this,'donor/'+this.seqno)
       .then(({data}) => {
           let {
-              fname,mname,lname,name_suffix,gender,bdate,civil_stat,
+              fname,mname,lname,name_suffix,gender,bdate,civil_stat,occupation,
               nationality,tel_no,mobile_no,email,
               home_region,home_prov,home_citymun,home_brgy,home_no_st_blk,home_zip,
               office_region,office_prov,office_citymun,office_brgy,office_no_st_blk,office_zip,
@@ -154,6 +163,7 @@ export default {
           this.gender = gender;
           this.bdate = bdate;
           this.civil_stat = civil_stat;
+          this.occupation = occupation;
           this.nationality = nationality;
           this.tel_no = tel_no;
           this.mobile_no = mobile_no;
@@ -226,12 +236,12 @@ export default {
             this.loading = true;
             
             let {donor_photo, seqno, donor_id, name_suffix, lname, fname, mname, bdate, gender, 
-            civil_stat, tel_no, mobile_no, email, nationality, home, office} = this;
+            civil_stat, occupation, tel_no, mobile_no, email, nationality, home, office} = this;
             
             let {facility_cd,user_id} = this.$session.get("user");
             this.$http.post(this,"donor/update",{
                 donor_photo, seqno, donor_id, name_suffix, lname, fname, mname, bdate, gender, 
-                civil_stat, tel_no, mobile_no, email, nationality, home, office, 
+                civil_stat, occupation, tel_no, mobile_no, email, nationality, home, office, 
                 facility_cd, user_id
             })
             .then(({data}) => {

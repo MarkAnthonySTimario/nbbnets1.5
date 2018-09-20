@@ -12,7 +12,7 @@
         <div class="navbar-collapse collapse" id="navbar-main">
           <ul class="nav navbar-nav" v-if="!guest">
             <li><router-link to="/">Home</router-link></li>
-            <li class="dropdown">
+            <li class="dropdown" v-if="user.ulevel == -1 ||  user.ulevel == 1 || user.ulevel == 3 || user.ulevel == 7">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                 Donor & Donation
                 <span class="caret"></span>
@@ -26,7 +26,7 @@
               </ul>
             </li>
 
-            <li class="dropdown">
+            <li class="dropdown" v-if="user.ulevel == -1 ||  user.ulevel == 1 || user.ulevel == 4 || user.ulevel == 7">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                 Blood Unit
                 <span class="caret"></span>
@@ -52,7 +52,7 @@
               </ul>
             </li>
 
-            <li class="dropdown">
+            <li class="dropdown" v-if="user.ulevel == -1 ||  user.ulevel == 1 || user.ulevel == 4 || user.ulevel == 5 || user.ulevel == 6 || user.ulevel == 7">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                 Blood Stocks
                 <span class="caret"></span>
@@ -85,20 +85,20 @@
 
             </li>
 
-             <li class="dropdown" v-if="current.ulevel == 1 ||current.ulevel == -1">
+             <li class="dropdown" v-if="user.ulevel == -1 ||  user.ulevel == 1 || user.ulevel == 1 ||user.ulevel == -1">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                 Admistrations
                 <span class="caret"></span>
               </a>
 
               <ul class="dropdown-menu">
+                <li><router-link to="/ManageUsers">Manage Users</router-link></li>
                 <li><router-link to="/FacilityLabelTemplate">Blood Bag Template</router-link></li>
                 <li><router-link to="/EmergencyPool">Emergency Pool</router-link></li>
                 <li><router-link to="/RegisteredStickers">Registered Stickers</router-link></li>
               </ul>
             
             </li>
-            
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li v-if="!guest">

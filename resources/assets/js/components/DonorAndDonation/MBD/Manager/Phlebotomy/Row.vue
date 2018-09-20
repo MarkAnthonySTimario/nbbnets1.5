@@ -44,7 +44,14 @@
             <input type="text" class="form-control input-sm" v-model="donation.donation_id"  :disabled="!donation.donation_stat || donation.donation_stat != 'A'" maxlength="16">
         </td>
         <td>
-            <input type="text" class="form-control input-sm" v-model="donation.coluns_res" :disabled="!donation.donation_stat || (!donation.collection_stat || donation.collection_stat != 'UNS')">
+            <!-- <input type="text" class="form-control input-sm" v-model="donation.coluns_res" :disabled="!donation.donation_stat || (!donation.collection_stat || donation.collection_stat != 'UNS')"> -->
+            <select class="form-control input-sm"  v-model="donation.coluns_res" :disabled="!donation.donation_stat || (!donation.collection_stat || donation.collection_stat != 'UNS')">
+                <option :value="null"></option>
+                <option>Buldge</option>
+                <option>Faint</option>
+                <option>Clot</option>
+                <option>Others</option>
+            </select>
         </td>
     </tr>
 </template>

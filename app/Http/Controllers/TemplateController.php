@@ -10,6 +10,7 @@ use App\Donation;
 use App\NetworkIntent;
 use App\User;
 use App\Component;
+use App\MBD;
 
 use Milon\Barcode\Facades\DNS1DFacade;
 use Response;
@@ -193,6 +194,59 @@ class TemplateController extends Controller
         
         $releaseForm = $this->prepareRelease($template,$intent);
         return view('layout.label')->withContent($releaseForm);
+    }
+
+    function releasingForm($sched_id){
+        $file = base_path('public').'/blood-releasing-form-template.html';
+        $template = file_get_contents($file);
+        
+        $mbd = MBD::with('donations','donations.units')->find($sched_id);
+        
+        $donations = $this->prepareDonationsForReleasingForm($mbd);
+
+        $mbd = str_replace("{{DONATIONS}}",$donations,$template);
+        
+        return view('layout.label')->withContent($mbd);
+    }
+
+    function prepareDonationsForReleasingForm($mbd){
+        
+        $components = Component::pluck('comp_name','component_cd');
+        // foreach($components as $cd => $cn){
+        //     if(){
+                
+        //     }
+        // }
+        $out = "";
+        foreach($mbd->donations as $donation){
+            foreach($donation->units as $unit){
+                if($unit->comp_stat == 'FBT'){
+                    $out .= "
+                    <tr >
+                        <td>".$unit->blood_type."</td>
+                        <td>".$components[$unit->component_cd]."</td>
+                        <td>".$unit->donation_id."</td>
+                        <td>".$unit->collection_dt."</td>
+                        <td>".$unit->expiration_dt."</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>";
+                }
+            }
+        }
+        
+        return $out;
     }
 
     function prepareRelease($template,$intent){

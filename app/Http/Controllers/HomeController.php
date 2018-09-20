@@ -20,6 +20,7 @@ class HomeController extends Controller
         $user = User::with('facility','level')
         ->whereUserId($request->get('username'))
         ->wherePassword(md5($request->get('password')))
+        ->whereDisableFlag('N')
         ->first();
 
         $status = true;
@@ -28,9 +29,11 @@ class HomeController extends Controller
         if(!$user){
             $status = false;
             $error = "Login failed! Please check username/password.";
+        }else{
+
+            $user->username = $request->get('username');
         }
 
-        $user->username = $request->get('username');
 
         return [
             'status' => $status,
@@ -46,10 +49,7 @@ class HomeController extends Controller
         if($current === $username){
             return null;
         }
-        return User::whereUserId($username)
-                ->wherePassword(md5($request->get('password')))
-                ->whereFacilityCd($request->get('facility_cd'))
-                ->first();
+        return User::whereUserId($username)->wherePassword(md5($request->get('password')))->whereFacilityCd($request->get('facility_cd'))->whereDisableFlag('N')->first();
     }
 
     function token(){
