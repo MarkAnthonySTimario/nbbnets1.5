@@ -69,7 +69,7 @@ export default {
             this.loading = true;
             let {oldpassword,newpassword} = this;
             this.$http.post(this,"changepassword",{
-                oldpassword, newpassword, user_id : this.$store.state.user.user_id
+                oldpassword, newpassword, user_id : this.$store.state.user.username
             })
             .then(({data}) => {
                 this.loading = false;
