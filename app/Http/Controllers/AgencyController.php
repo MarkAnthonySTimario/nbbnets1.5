@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Agency;
+use App\MBD;
 
 class AgencyController extends Controller
 {
@@ -53,9 +54,15 @@ class AgencyController extends Controller
 
         $agency = Agency::whereAgencyCd($agency_cd)->firstOrFail();
 
+        if($agency->agency_name != $request->get('agency_name')){
+            MBD::whereAgencyCd($agency_cd)->update(['agency_name' => $request->get('agency_name')]);
+        }
+
         foreach($agency->toArray() as $key => $val){
             $agency->$key = $request->get($key);
         }
+
+
         $agency->updated_dt = date('Y-m-d H:i:s');
         $agency->save();
 
