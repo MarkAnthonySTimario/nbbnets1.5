@@ -12,7 +12,7 @@
                               <th>#</th>
                               <th>Donation ID</th>
                               <th>ABO</th>
-                              <th>Rh Type</th>
+                              <th colspan="2">Rh Type</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -33,11 +33,14 @@
                                       <option value="neg">Negative</option>
                                   </select>
                               </td>
+                              <td width="50">
+                                  <button @click="removeFromSelection(donation)" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
+                              </td>
                           </tr>
                       </tbody>
                       <tfoot>
                           <tr>
-                              <td colspan="4" class="text-right">
+                              <td colspan="5" class="text-right">
                                   <loadingInline v-if="loading" label="Please wait, loading.."></loadingInline>
                                 <button class="btn btn-default" :disabled="checkData || loading" @click="validateForm">Save Changes</button>
                                 <button class="btn btn-danger" :disabled="loading" @click.prevent="donations = []; $emit('cancel',null)">Cancel</button>
@@ -99,6 +102,9 @@ export default {
               };
               this.$emit("cancel");
           });
+      },
+      removeFromSelection(donation){
+          this.donations = _.filter(this.donations,d=>{return d.donation_id != donation.donation_id})
       }
   }
 }

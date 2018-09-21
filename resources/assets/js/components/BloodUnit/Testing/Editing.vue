@@ -12,6 +12,7 @@
                               <th>#</th>
                               <th>Donation ID</th>
                               <th v-for="(exam_name,exam_cd) in exams" :key="exam_cd">{{exam_name}}</th>
+                              <td width="50"></td>
                           </tr>
                       </thead>
                       <tbody>
@@ -20,15 +21,18 @@
                               <td>{{donation.donation_id}}</td>
                               <td v-for="(exam_name,exam_cd) in exams" :key="exam_cd">
                                 <select class="form-control input-sm" v-model="donation[exam_cd]" @change="checkData">
-                                    <option value="N">{{ exam_cd != 'HIV' ? 'NR' : 'Negative'}}</option>
-                                    <option value="R">{{ exam_cd != 'HIV' ? 'R' : 'Positive'}}</option>
+                                    <option value="N">{{ exam_cd != 'MALA' ? 'NR' : 'Negative'}}</option>
+                                    <option value="R">{{ exam_cd != 'MALA' ? 'R' : 'Positive'}}</option>
                                 </select>                                  
+                              </td>
+                              <td>
+                                  <button @click="removeFromSelection(donation)" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
                               </td>
                           </tr>
                       </tbody>
                       <tfoot>
                           <tr>
-                              <td :colspan="(4 + Object.keys(exams).length)" class="text-right">
+                              <td :colspan="(5 + Object.keys(exams).length)" class="text-right">
                                 <loadingInline v-if="loading" label="Please wait, loading.."></loadingInline>
                                 <button class="btn btn-default" :disabled="!valid || loading" @click="validateForm">Save Changes</button>
                                 <button class="btn btn-danger" :disabled="loading" @click.prevent="donations = []; $emit('cancel',null)">Cancel</button>
@@ -105,6 +109,10 @@ export default {
               };
               this.$emit("cancel");
           });
+      },
+      removeFromSelection(donation){
+          this.donations = _.filter(this.donations,d=>{return d.donation_id != donation.donation_id})
+          this.checkData()
       }
   }
 }

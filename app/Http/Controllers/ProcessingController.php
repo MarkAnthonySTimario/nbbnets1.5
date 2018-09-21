@@ -48,44 +48,55 @@ class ProcessingController extends Controller
         $facility_cd = $request->get('facility_cd');
 
         foreach($donations as $d){
-            $p = new Processing;
-            $p->bloodproc_no = Processing::generateNo($facility_cd);
-            $p->facility_cd = $facility_cd;
-            $p->bloodproc_dt = date('Y-m-d H:i:s');
-            $p->donation_id = $d['donation_id'];
-            $p->blood_bag = $d['blood_bag'];
-            $p->created_by = $user_id;
-            $p->created_dt = date('Y-m-d H:i:s');
-            $p->save();
-
-            $test = TestResult::select('donation_id','result')->whereDonationId($d['donation_id'])->first();
+            $hasData = false;
 
             foreach($d['units'] as $component_cd => $unit){
-                if($unit){
-                    $c = new Blood;
-                    if($d['mbd']){
-                        $c->collection_dt = $d['mbd']['donation_dt'];
-                    }else{
-                        $c->collection_dt = $d['created_dt'];
-                    }
-                    $c->donation_id = $d['donation_id'];
-                    $c->component_cd = $component_cd;
-                    if($d['type']){
-                        $c->blood_type = $d['type']['blood_type'];
-                    }
-                    $c->location = $facility_cd;
-                    $collection_dt = $d['sched_id'] == 'Walk-in' ? $d['created_dt'] : $d['mbd']['donation_dt'];
-                    $c->expiration_dt = self::computeExpiration($component_cd,$collection_dt);
-                    $c->component_vol = $unit;
-                    if($test){
-                        $c->comp_stat = $test->result == 'R' ? 'REA' :'FBT';
-                    }else{
-                        $c->comp_stat = 'FBT';
-                    }
-                    $c->created_by = $user_id;
-                    $c->created_dt = date('Y-m-d H:i:s');
-                    $c->save();
+                if($unit && $unit > 0){
+                    $hasData = true;
                 }
+            }
+
+            if($hasData){
+                $p = new Processing;
+                $p->bloodproc_no = Processing::generateNo($facility_cd);
+                $p->facility_cd = $facility_cd;
+                $p->bloodproc_dt = date('Y-m-d H:i:s');
+                $p->donation_id = $d['donation_id'];
+                $p->blood_bag = $d['blood_bag'];
+                $p->created_by = $user_id;
+                $p->created_dt = date('Y-m-d H:i:s');
+                $p->save();
+    
+                $test = TestResult::select('donation_id','result')->whereDonationId($d['donation_id'])->first();
+    
+                foreach($d['units'] as $component_cd => $unit){
+                    if($unit){
+                        $c = new Blood;
+                        if($d['mbd']){
+                            $c->collection_dt = $d['mbd']['donation_dt'];
+                        }else{
+                            $c->collection_dt = $d['created_dt'];
+                        }
+                        $c->donation_id = $d['donation_id'];
+                        $c->component_cd = $component_cd;
+                        if($d['type']){
+                            $c->blood_type = $d['type']['blood_type'];
+                        }
+                        $c->location = $facility_cd;
+                        $collection_dt = $d['sched_id'] == 'Walk-in' ? $d['created_dt'] : $d['mbd']['donation_dt'];
+                        $c->expiration_dt = self::computeExpiration($component_cd,$collection_dt);
+                        $c->component_vol = $unit;
+                        if($test){
+                            $c->comp_stat = $test->result == 'R' ? 'REA' :'FBT';
+                        }else{
+                            $c->comp_stat = 'FBT';
+                        }
+                        $c->created_by = $user_id;
+                        $c->created_dt = date('Y-m-d H:i:s');
+                        $c->save();
+                    }
+                }
+                
             }
         }
     }
