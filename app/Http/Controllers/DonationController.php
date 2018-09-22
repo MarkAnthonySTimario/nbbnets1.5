@@ -34,7 +34,8 @@ class DonationController extends Controller
         $donation->collection_stat = $request->get('collection_stat');
         $donation->coluns_res = $request->get('coluns_res');
         $donation->created_by = $request->get('user_id');
-        $donation->created_dt = date('Y-m-d H:i:s');
+        // $donation->created_dt = date('Y-m-d H:i:s');
+        $donation->created_dt = $request->get('donation_dt');
         $donation->save();
         return $donation;
     }

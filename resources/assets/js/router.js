@@ -54,6 +54,7 @@ import FacilityInformation from './components/Administration/ManageFacilities/Fa
 import FacilityUsers from './components/Administration/ManageFacilities/Users.vue';
 import AucList from './components/Auc/List.vue';
 import AucReport1 from './components/Auc/Report1.vue';
+import MonthlyCollectionRetention from './components/Reports/Monthly/CollectionRetention.vue';
 import LabelReprint from './components/BloodUnit/LabelReprint.vue';
 
 import StatusOfInventory from './components/StockManagement/StatusOfInventory.vue';
@@ -125,6 +126,7 @@ export default new VueRouter({
         
         { path : '/Auc', component : AucList },
         { path : '/Auc/Report1', component : AucReport1 },
+        { path : '/Reports/Monthly/CollectionRetention', component : MonthlyCollectionRetention },
         { path : '/Reprint', component : LabelReprint },
         
         { path : '/StatusOfInventory', component : StatusOfInventory },

@@ -11,50 +11,54 @@
                </div>
                <div class="panel-body form-horizontal">
                    <div class="form-group required">
-                       <label for="" class="control-label col-lg-3">Donor</label>
-                       <div class="col-lg-9"><div class="form-control input-sm">{{donor.fname}} {{donor.mname}} {{donor.lname}}</div></div>
+                       <label for="" class="control-label col-lg-4">Date Collected</label>
+                       <div class="col-lg-8"><input type="date" class="form-control input-sm" v-model="donation_dt" :max="dateToday()" ></div>
                    </div>
                    <div class="form-group required">
-                       <label for="" class="control-label col-lg-3">Type of Donor</label>
-                       <div class="col-lg-9">
+                       <label for="" class="control-label col-lg-4">Donor</label>
+                       <div class="col-lg-8"><div class="form-control input-sm">{{donor.fname}} {{donor.mname}} {{donor.lname}}</div></div>
+                   </div>
+                   <div class="form-group required">
+                       <label for="" class="control-label col-lg-4">Type of Donor</label>
+                       <div class="col-lg-8">
                            <select v-model="donation_type" class="form-control input-sm">
                                <option :value="code" v-for="(val,code) in donation_types" :key="code">{{val}}</option>
                            </select>
                        </div>
                    </div>
                    <div class="form-group required">
-                       <label for="" class="control-label col-lg-3">MH / PE Result</label>
-                       <div class="col-lg-9">
+                       <label for="" class="control-label col-lg-4">MH / PE Result</label>
+                       <div class="col-lg-8">
                            <select v-model="mh_pe_stat" class="form-control input-sm">
                                <option :value="code" v-for="(val,code) in donor_statuses" :key="code">{{val}}</option>
                            </select>
                        </div>
                    </div>
                    <div class="form-group" v-if="(mh_pe_stat != 'A')">
-                       <label for="" class="control-label col-lg-3">MH / PE Remarks</label>
-                       <div class="col-lg-9"><textarea type="text" class="form-control input-sm" v-model="mh_pe_remark"></textarea></div>
+                       <label for="" class="control-label col-lg-4">MH / PE Remarks</label>
+                       <div class="col-lg-8"><textarea type="text" class="form-control input-sm" v-model="mh_pe_remark"></textarea></div>
                        <i class="text-danger error col-lg-9 col-lg-offset-3" v-show="errors.has('Remarks')">{{ errors.first('Remarks') }}</i>
                    </div>
                    <div class="form-group required">
-                       <label for="" class="control-label col-lg-3">Method of Blood Collection</label>
-                       <div class="col-lg-9">
+                       <label for="" class="control-label col-lg-4">Method of Blood Collection</label>
+                       <div class="col-lg-8">
                            <select v-model="collection_method" class="form-control input-sm">
                                <option :value="code" v-for="(val,code) in collection_methods" :key="code">{{val}}</option>
                            </select>
                        </div>
                    </div>
                    <div class="form-group required">
-                       <label for="" class="control-label col-lg-3">Status of Collection</label>
-                       <div class="col-lg-9">
+                       <label for="" class="control-label col-lg-4">Status of Collection</label>
+                       <div class="col-lg-8">
                            <select v-model="collection_stat" class="form-control input-sm" name="Collection Status">
                                <option :value="stat.code" v-for="stat in collection_stats" :key="stat.code">{{stat.value}}</option>
                            </select>
                        </div>
-                        <i class="text-danger error col-lg-9 col-lg-offset-3" v-show="errors.has('Collection Status')">{{ errors.first('Collection Status') }}</i>
+                        <i class="text-danger error col-lg-8 col-lg-offset-4" v-show="errors.has('Collection Status')">{{ errors.first('Collection Status') }}</i>
                    </div>
                    <div class="form-group" v-if="collection_stat == 'UNS'">
-                       <label for="" class="control-label col-lg-3">Reason for Unsuccessful Collection</label>
-                       <div class="col-lg-9">
+                       <label for="" class="control-label col-lg-4">Reason for Unsuccessful Collection</label>
+                       <div class="col-lg-8">
                            <!-- <textarea v-model="coluns_res" class="form-control input-sm"></textarea> -->
                            <select class="form-control input-sm"  v-model="coluns_res">
                                 <option :value="null"></option>
@@ -64,15 +68,15 @@
                                 <option>Others</option>
                             </select>
                         </div>
-                       <i class="text-danger error col-lg-9 col-lg-offset-3" v-show="errors.has('Reason')">{{ errors.first('Reason') }}</i>
+                       <i class="text-danger error col-lg-8 col-lg-offset-4" v-show="errors.has('Reason')">{{ errors.first('Reason') }}</i>
                    </div>
                    <div class="form-group required">
-                       <label for="" class="control-label col-lg-3">Donation ID</label>
-                       <div class="col-lg-9"><input type="text" class="form-control input-sm" v-model="donation_id" name="Donation ID" maxlength="16"></div>
-                       <i class="text-danger error col-lg-9 col-lg-offset-3" v-show="errors.has('Donation ID')">{{ errors.first('Donation ID') }}</i>
+                       <label for="" class="control-label col-lg-4">Donation ID</label>
+                       <div class="col-lg-8"><input type="text" class="form-control input-sm" v-model="donation_id" name="Donation ID" maxlength="16"></div>
+                       <i class="text-danger error col-lg-8 col-lg-offset-4" v-show="errors.has('Donation ID')">{{ errors.first('Donation ID') }}</i>
                    </div>
                    <div class="form-group">
-                       <div class="col-lg-9 col-lg-offset-3">
+                       <div class="col-lg-8 col-lg-offset-4">
                            <div class="alert alert-warning" style="font-size:12px;" v-if="donatedBefore">Donor previously donated less than {{ next_donation }} months ago</div>
                            <div class="alert alert-danger" style="font-size:12px;" v-if="v_error">
                                {{v_error}}
@@ -114,7 +118,9 @@ export default {
   props : ['seqno'],
   data(){
       let user = this.$session.get('user')
+      let donation_dt = this.dateToday()
       return {
+          donation_dt,
           user,
           loading : true, donor : null, donation_type : 'V', donation_types : [], donor_statuses : [],
           mh_pe_stat : 'A', mh_pe_deferral : null, mh_pe_question : null, mh_pe_remark : null,
