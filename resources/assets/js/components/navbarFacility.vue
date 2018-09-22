@@ -78,9 +78,9 @@
                 <!-- <li><router-link to="/Auc">Auc Report</router-link></li>
                 <li><router-link to="/Auc/Report1">Auc Report 1</router-link></li> -->
                 <li><router-link to="/BSI">BSI Report</router-link></li>
-                <!-- <monthly-report-group-links></monthly-report-group-links>
-                <li><router-link to="/Census">Census</router-link></li> -->
                 <li><router-link to="/MBDReport">Agency Report</router-link></li>
+                <monthly-report-group-links></monthly-report-group-links>
+                <!-- <li><router-link to="/Census">Census</router-link></li> -->
                 <!-- <li><router-link to="/TransfusionReport">Transfusion Report</router-link></li> -->
               </ul>
 

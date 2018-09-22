@@ -2,7 +2,12 @@
     <li class="dropdown-submenu">
         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Monthly Reports</a>
         <ul class="dropdown-menu">
-            <li><router-link to="/Reports/Monthly/DonationTypesReport">Type of Donations</router-link></li>
+            <!-- <li><router-link to="/Reports/Monthly/DonationTypesReport">Type of Donations</router-link></li> -->
+            <li>
+                <router-link to="/Reports/Monthly/CollectionRetention">
+                    Collection and Retention
+                </router-link>
+            </li>
         </ul>
     </li>
 </template>
