@@ -44,8 +44,8 @@
                         </tr>
                         <tr v-if="loaded && letter" v-for="a in filteredAgencies" :key="a.agency_cd">
                             <td>{{a.agency_name}}</td>
-                            <td>{{a.contact_person.substr(0,20)}}..</td>
-                            <td>{{a.owner.substr(0,20)}}..</td>
+                            <td>{{a.contact_person ? a.contact_person.substr(0,20) : null}}..</td>
+                            <td>{{a.owner ? a.owner.substr(0,20) : null}}..</td>
                             <td>
                                 <button class="btn btn-success btn-xs" data-dismiss="modal" @click.prevent="selectAgency(a)"><span class="glyphicon glyphicon-search"></span></button>
                             </td>
