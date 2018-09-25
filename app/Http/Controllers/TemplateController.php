@@ -85,7 +85,7 @@ class TemplateController extends Controller
         
         $facility = Facility::whereFacilityCd($facility_cd)->firstOrFail();
         $unit = Blood::with('component','donation_min.mbd_min','donation.additionaltest','aliqoute_donation')
-                    ->whereLocation($facility_cd)
+                    // ->whereLocation($facility_cd)
                     ->whereDonationId($donation_id)
                     ->whereComponentCd($component_cd)
                     ->whereNotIn('comp_stat',['EXP','DIS','ISS'])
