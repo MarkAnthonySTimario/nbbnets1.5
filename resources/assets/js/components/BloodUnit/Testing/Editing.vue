@@ -68,7 +68,7 @@ export default {
       this.$http.get(this,"keyvalues/exams")
       .then(({data}) => {
           this.loadingPage = false;
-          this.exams = data;
+          this.exams = data
             for(let exam_cd in this.exams){
                 this.donations.forEach(d => {
                     d[exam_cd] = null
