@@ -102,6 +102,9 @@
             </li>
             
           </ul>
+          <p class="navbar-text" v-if="!guest">
+            
+          </p>
           <ul class="nav navbar-nav navbar-right">
             <li v-if="!guest">
               <notification-toggle></notification-toggle>
