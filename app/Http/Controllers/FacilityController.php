@@ -220,9 +220,12 @@ class FacilityController extends Controller
     function info(Request $request){
         $facility_cd = $request->get('facility_cd');
 
-        $f = Facility::with('lead','region','province','city','barangay','r3config','transfusion_config','users','users.level')
+        $f = Facility::with('lead','region','province','city','barangay','r3config','transfusion_config')
                 ->whereFacilityCd($facility_cd)
                 ->first();
+        $users = User::with('level')->select('user_id','ulevel','user_fname','user_lname')->selectRaw("user_id as 'username'")->with('level')->whereFacilityCd($facility_cd)->get();
+
+    $f->users = $users;
 
         return $f;
     }
@@ -232,6 +235,6 @@ class FacilityController extends Controller
     }
 
     function users($facility_cd){
-        return User::select('user_id','user_fname','user_lname')->with('level')->whereFacilityCd($facility_cd)->get();
+        return User::select('user_id','user_fname','user_lname')->selectRaw("user_id as 'username'")->with('level')->whereFacilityCd($facility_cd)->get();
     }
 }

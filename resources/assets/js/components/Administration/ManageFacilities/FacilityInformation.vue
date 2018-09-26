@@ -30,14 +30,16 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th>User ID</th>
                                     <th>Name</th>
                                     <th>Access Level</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="u in facility.users" :key="u.user_id">
+                                <tr v-for="u in facility.users" :key="u.username">
+                                    <td>{{u.username}}</td>
                                     <td>{{u.user_fname}} {{u.user_mname}} {{u.user_lname}}</td>
-                                    <td>{{u.level.userlevelname}}</td>
+                                    <td>{{u.level ? u.level.userlevelname : null}}</td>
                                 </tr>
                             </tbody>
                         </table>
