@@ -112,7 +112,7 @@ methods : {
 </script>
 
 
-<style>
+<style scoped>
 body {
     font-size: 12px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
