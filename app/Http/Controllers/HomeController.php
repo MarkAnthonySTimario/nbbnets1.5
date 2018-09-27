@@ -102,7 +102,7 @@ class HomeController extends Controller
         return Blood::whereLocation($facility_cd)->whereCompStat('AVA')
         ->select('donation_id','collection_dt','component_cd','blood_type','expiration_dt')
         ->selectRaw("DATEDIFF(expiration_dt,CurDate()) as daysold")
-        ->get();
+        ->take(20)->get();
     }
 
 }
