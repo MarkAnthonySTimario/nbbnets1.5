@@ -68,10 +68,10 @@ export default {
             facility : {facility_name : 'NVBSP - IMU'} 
         };
 
-        let {user_id} = this.$session.get('user');
+        let {username} = this.$session.get('user');
 
         return {
-            search : null, contact : null, contact_all, contact_support ,user_id, loading : false
+            search : null, contact : null, contact_all, contact_support ,user_id : username, loading : false
         };
 
     },
