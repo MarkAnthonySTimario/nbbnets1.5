@@ -102,7 +102,7 @@
             </li>
           </ul>
           
-          <p class="navbar-text" v-if="!guest" style="font-size:11px;color:#fff;padding-left:2em;">
+          <p class="navbar-text" v-if="!guest" style="font-size:10px;color:#fff;padding-left:2em;">
             Logged in as : {{(user.user_fname + " " +user.user_mname + " " + user.user_lname).substr(0,25)}} 
             {{(user.user_fname + " " +user.user_mname + " " + user.user_lname).length > 25 ? '..' : ''}}<br/>{{user.level.userlevelname}}
           </p>
