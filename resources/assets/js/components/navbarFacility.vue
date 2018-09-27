@@ -103,7 +103,7 @@
           </ul>
           
           <p class="navbar-text" v-if="!guest" style="font-size:10px;color:#fff;padding-left:2em;">
-            Logged in as : {{(user.user_fname + " " +user.user_mname + " " + user.user_lname).substr(0,25)}} 
+            Logged in as : {{(user.user_fname + " " +user.user_mname + " " + user.user_lname).substr(0,20)}} 
             {{(user.user_fname + " " +user.user_mname + " " + user.user_lname).length > 25 ? '..' : ''}}<br/>{{user.level.userlevelname}}
           </p>
           <ul class="nav navbar-nav navbar-right">
