@@ -64,6 +64,7 @@ export default {
 				
 				this.$http.get(this,"keyvalues")
 				.then(({data : {components,bloodtypes,civilstatus,bloodbags}}) => {
+					data.user.user_id = data.user.username
 					if(data.user.facility.supports_platelet_apheresis){
 						this.$session.set('components',components);
 					}else{
