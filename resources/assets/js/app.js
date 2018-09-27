@@ -135,7 +135,8 @@ const app = new Vue({
     }
 });
 
-let socket = ioClient('http://'+window.location.hostname+':3000');
+// let socket = ioClient('http://'+window.location.hostname+':3000');
+let socket = ioClient('http://v2.nbbnets.net:3000');
 Window.socket = socket;
 
 if(app.$session.get('user')){
