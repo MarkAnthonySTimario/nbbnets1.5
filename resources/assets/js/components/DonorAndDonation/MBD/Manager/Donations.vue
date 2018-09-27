@@ -33,7 +33,10 @@
                     <input type="checkbox" :value="d.seqno" v-model="selected" v-if="!d.donation_id">
                 </td>
                 <!-- <td><button class="btn btn-danger btn-xs" v-if="!d.processing" @click.prevent="confirmRemove(d.seqno)"><span class="glyphicon glyphicon-remove"></span></button></td> -->
-                <td><router-link :to="('/MBD/'+schedid+'/SearchDonor?donation_id='+d.donation_id)" class="btn btn-info btn-xs" v-if="!d.donor"><span class="glyphicon glyphicon-user"></span></router-link></td>
+                <td>
+                    <router-link :to="('/MBD/'+schedid+'/SearchDonor?donation_id='+d.donation_id)" class="btn btn-info btn-xs" v-if="!d.donor"><span class="glyphicon glyphicon-user"></span></router-link>
+                    <!-- <button :to="('/MBD/'+schedid+'/SearchDonor?donation_id='+d.donation_id)" class="btn btn-info btn-xs" v-if="!d.donation_id"><span class="glyphicon glyphicon-user"></span></button> -->
+                </td>
                 <td v-if="!d.donor" colspan="3"></td>
                 <td v-if="d.donor">{{d.donor.lname}}, {{d.donor.fname}} {{d.donor.mname}}</td>
                 <td v-if="d.donor">{{d.donor.gender | gender}}</td>
