@@ -39,7 +39,7 @@
                             <th v-if="opts.mhpe.value">MH/PE Result</th>
                             <th v-if="opts.collection_stat.value">Collection Status</th>
                             <th v-if="opts.donor_type.value">Type of Donor</th>
-                            <th v-if="opts.tti.value" v-for="(tti,cd) in exams" :key="cd">{{tti}}</th>
+                            <!-- <th v-if="opts.tti.value" v-for="(tti,cd) in exams" :key="cd">{{tti}}</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -69,7 +69,7 @@
                             <th v-if="opts.mhpe.value">{{row.mh_pe_stat | mhpe}}</th>
                             <th v-if="opts.collection_stat.value">{{row.collection_stat | collection}}</th>
                             <th v-if="opts.donor_type.value">{{row.donation_type | donationType}}</th>
-                            <td v-for="(exam,cd) in exams" :key="cd" v-if="opts.tti.value">{{getTest(row.test,cd) | testResult}}</td>
+                            <!-- <td v-for="(exam,cd) in exams" :key="cd" v-if="opts.tti.value">{{getTest(row.test,cd) | testResult}}</td> -->
                         </tr>
                         <tr v-if="fetching">
                             <td :colspan="opts.tti.value ? (Object.keys(activeOpts).length)+Object.keys(exams).length : Object.keys(activeOpts).length"><loadingInline label="Please wait, retrieving records.."></loadingInline></td>
