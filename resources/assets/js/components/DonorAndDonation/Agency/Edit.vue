@@ -110,7 +110,7 @@ export default {
       update(){
           this.loading = true;
           let data = this.$data;
-          data.updated_by = this.$store.state.user.user_id;
+          data.updated_by = this.$store.state.user.username;
           this.$http.post(this,'agency/update/'+this.agency_cd,data)
           .then(({data}) => {
               this.$router.replace('/Agency/'+this.agency_cd);

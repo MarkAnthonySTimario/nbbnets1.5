@@ -94,7 +94,7 @@ export default {
             this.$http.post(this,'networking/sendintent',{
                 from : facility.facility_cd,
                 to : this.facilitycd,
-                by : user.user_id,
+                by : user.username,
                 details : this.details
             }).then(({data})=>console.log(data))
         }

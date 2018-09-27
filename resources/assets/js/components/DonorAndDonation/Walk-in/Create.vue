@@ -127,7 +127,7 @@ export default {
           collection_method : 'WB', collection_methods : [], collection_stat : 'COL', 
           collection_stats : [{ code : 'COL' , value : 'Successful'}, {code : 'UNS' , value : 'Unsuccessful'}],
           coluns_res : null, donation_id : null, facility_cd : this.$session.get('user').facility_cd,
-          user_id : user.user_id, 
+          user_id : user.username, 
           approvedBy : null,
           v_user_id : null, v_password : null, v_error : null,
           next_donation : user.facility.no_months_to_nxt_don

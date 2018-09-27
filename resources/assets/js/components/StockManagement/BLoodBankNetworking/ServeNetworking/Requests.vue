@@ -12,6 +12,7 @@
                             <tr>
                                 <th>Request No.</th>
                                 <th>From</th>
+                                <th>Date</th>
                                 <th>Status</th>
                                 <th></th>
                             </tr>
@@ -20,14 +21,16 @@
                             <tr v-for="r in requests" :key="r.id">
                                 <td>{{r.request_no}}</td>
                                 <td>{{r.facility_from.facility_name}}</td>
+                                <td>{{r.created_at ? r.created_at.substr(0,10) : null }}</td>
                                 <td>
                                     <span v-if="!r.reserved_by && !r.released_by" class="text-info">For Look Up</span>
                                     <span v-if="r.reserved_by && !r.released_by" class="text-primary">Reserved</span>
                                     <span v-if="r.reserved_by && r.released_by" class="text-primary">Released</span>
                                 </td>
                                 <td>
-                                    <router-link :to="'/ServeNetworking/release/'+r.id" class="btn btn-success btn-xs" @click="deleteRequest(r)"><span class="glyphicon glyphicon-share-alt"></span></router-link>
-                                    <button class="btn btn-warning btn-xs" @click="deleteRequest(r)"><span class="glyphicon glyphicon-minus"></span></button>
+                                    <a title="Print Release Form" v-if="r.released_by" :href="'releaseform/'+r.id" class="btn btn-info btn-xs" target="_blank"><span class="glyphicon glyphicon-print"></span></a>
+                                    <router-link title="Release Reserved Units" v-if="r.reserved_by && !r.released_by" :to="'/ServeNetworking/release/'+r.id" class="btn btn-success btn-xs" @click="deleteRequest(r)"><span class="glyphicon glyphicon-share-alt"></span></router-link>
+                                    <button title="Remove from List" class="btn btn-warning btn-xs" @click="deleteRequest(r)"><span class="glyphicon glyphicon-minus"></span></button>
                                 </td>
                             </tr>
                             <tr v-if="requests.length == 0">
@@ -61,7 +64,7 @@
                 this.$http.get(this,'networking/getservedintent/'+facility.facility_cd)
                 .then(({data})=>{
                     this.loading = false
-                    this.requests = data
+                    this.requests = _.orderBy(data,['request_no'],['desc'])
                 })
             },
             deleteRequest(r){
