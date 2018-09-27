@@ -115,7 +115,7 @@
 
                 this.loading = true;
                 this.$http.post(this,'networking/proceedrelease',{
-                    verifier, user : user.user_id, units : this.intent.units, intent_id : this.intent.id
+                    verifier, user : user.username, units : this.intent.units, intent_id : this.intent.id
                 })
                 .then(({data}) => {
                     this.printReleaseForm(this.intent.id)

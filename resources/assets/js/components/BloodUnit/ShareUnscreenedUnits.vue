@@ -80,7 +80,7 @@
             let user = this.$session.get('user')
             let components = this.$session.get('components')
             return {
-                shared_facility_cd : null, facilities : [], loading : false, user_id: user.user_id, facility_cd : user.facility_cd, components, units : [],
+                shared_facility_cd : null, facilities : [], loading : false, user_id: user.username, facility_cd : user.facility_cd, components, units : [],
                 showVerifier : false
             }
         },

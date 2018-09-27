@@ -38,6 +38,15 @@
                         </tfoot>
                     </table>
                 </div>
+                <div class="panel panel-primary" style="font-size:12px;">
+                    <div class="panel-body text-primary">
+                        <span class="glyphicon glyphicon-info-sign"></span> If you wan't, you may remove the requests that had been released already.<br/><br/>
+                        This will make the list more easy to manage.<br/><br/>
+                        You can do this by clicking the <button class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-minus"></span></button> button.<br/><br/>
+                        The request will not be visible from the list, but the record will still be in our system.
+                        
+                    </div>
+                </div>
             </div>
             <div class="col-lg-9" v-if="intent && facility">
                 <Intent :intent="intent" @proceed="proceed" />
@@ -125,7 +134,7 @@ export default {
             
             this.loading = true
             this.$http.post(this,'networking/serveintent',{
-                reserved_by : user.user_id,
+                reserved_by : user.username,
                 facility_cd : user.facility.facility_cd,
                 id : this.intent.id,
                 details : JSON.stringify(details)

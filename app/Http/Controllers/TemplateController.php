@@ -259,7 +259,11 @@ class TemplateController extends Controller
         $template = str_replace("{{RELEASED_TO}}",$from->facility_name,$template);
         $template = str_replace("{{RELEASED_DT}}",$intent->released_dt,$template);
         $release = User::find($intent->released_by);
-        $template = str_replace("{{RELEASED_BY}}",$release->user_fname.' '.$release->user_mname.' '.$release->user_lname,$template);
+        if($release){
+            $template = str_replace("{{RELEASED_BY}}",$release->user_fname.' '.$release->user_mname.' '.$release->user_lname,$template);
+        }else{
+            $template = str_replace("{{RELEASED_BY}}","",$template);
+        }
         $verifier = User::find($intent->verified_by);
         $template = str_replace("{{VERIFIED_BY}}",$verifier->user_fname.' '.$verifier->user_mname.' '.$verifier->user_lname,$template);
 

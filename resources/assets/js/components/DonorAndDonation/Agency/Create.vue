@@ -102,7 +102,7 @@ export default {
       create(){
           this.loading = true;
           let data = this.$data;
-          data.created_by = this.$store.state.user.user_id;
+          data.created_by = this.$store.state.user.username;
           data.facility_cd = this.$store.state.user.facility_cd;
 
           this.$http.post(this,'agency/create',data)
