@@ -68,6 +68,7 @@ import RegisteredStickers from './components/Administration/RegisteredStickers.v
 
 import Unit from './components/StockManagement/Unit.vue'
 import ShareUnscreenedUnits from './components/BloodUnit/ShareUnscreenedUnits.vue'
+import PrintableForms from './components/Reports/PrintableForms.vue'
 
 Vue.use(VueRouter);
 
@@ -137,6 +138,7 @@ export default new VueRouter({
 
         { path : '/RegisteredStickers', component : RegisteredStickers },
         { path : '/Unit/:donation_id/:component_cd', component : Unit, props : true },
-        { path : '/ShareUnscreenedUnits', component : ShareUnscreenedUnits }
+        { path : '/ShareUnscreenedUnits', component : ShareUnscreenedUnits },
+        { path : '/PrintableForms', component : PrintableForms },
     ]
 })
