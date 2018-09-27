@@ -27,9 +27,9 @@ export default {
     props : ['contact'],
     data(){
         let {messages} = this.$store.state;
-        let {user_id} = this.$session.get('user');
+        let {username} = this.$session.get('user');
         return {
-            allMessages : messages, messages : [], msg : '', buffer_size : 50, user_id
+            allMessages : messages, messages : [], msg : '', buffer_size : 50, user_id : username
         }
     },
     methods : {

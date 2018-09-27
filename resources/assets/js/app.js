@@ -112,6 +112,9 @@ Vue.component('error',error);
 
             today = yyyy + '-' + mm + '-' + dd;
             return today;
+        },
+        backupchat(){
+            Window.socket.emit('backup')
         }
      }
  })

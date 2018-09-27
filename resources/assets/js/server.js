@@ -28,9 +28,14 @@ io.on('connection', function(socket) {
     });
 
     socket.on('seen',({from,to}) => {
-        _.filter(messages,{from,to}).map(message => {
-            message.seen = true;
-        });
+        messages.map(message => {
+            if(message.from == from && message.to == to){
+                message.seen = true
+            }
+        })
+        // _.filter(messages,{from,to}).map(message => {
+        //     message.seen = true;
+        // });
         socket.emit('seen-message',{from,to});
     });
 

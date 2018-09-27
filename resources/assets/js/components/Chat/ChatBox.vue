@@ -14,7 +14,8 @@
                                 v-for="(msg , pm) in mymessages_from" :key="pm" 
                                 :userid="pm" 
                                 :badge="msg.length" 
-                                @selectContact="selectContact" >
+                                @selectContact="selectContact" 
+                                v-if="pm != user_id" >
                             </contact-fetch>
 
                             <!-- Hot Contacts (Public, Support) -->
