@@ -53,8 +53,8 @@ export default {
             if(this.msg.length == 0){
                 return;
             }
-            let {user_id} = this.$session.get('user');
-            let message = {from : user_id, to : this.contact.user_id, text : this.msg};
+            let {username} = this.$session.get('user');
+            let message = {from : username, to : this.contact.user_id, text : this.msg};
             this.msg = '';
             Window.socket.emit('send',message);
         }
