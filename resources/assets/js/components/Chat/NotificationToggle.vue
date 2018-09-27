@@ -8,9 +8,9 @@
 <script>
 export default {
   data(){
-    let {user_id} = this.$session.get('user');
+    let {username} = this.$session.get('user');
     return {
-      sound : null, user_id 
+      sound : null, user_id : username
     }
   },
   mounted(){
