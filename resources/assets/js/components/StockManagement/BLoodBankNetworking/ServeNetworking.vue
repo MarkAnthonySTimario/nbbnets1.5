@@ -44,6 +44,7 @@
                         This will make the list more easy to manage.<br/><br/>
                         You can do this by clicking the <button class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-minus"></span></button> button.<br/><br/>
                         The request will not be visible from the list, but the record will still be in our system.
+                        
                     </div>
                 </div>
             </div>
