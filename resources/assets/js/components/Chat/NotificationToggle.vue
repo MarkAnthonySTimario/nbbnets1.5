@@ -41,9 +41,11 @@ export default {
       let {user_id} = this;
       let {messages} = this.$store.state;
       return _.filter(messages, message => {
-        if((message.to.toUpperCase() == user_id.toUpperCase() || message.to.toUpperCase() == 'ALL' || message.to.toUpperCase() == 'FACILITY') && message.seen == false){
-          if(message.from != user_id){
-            return message;
+        if(message.to){
+          if((message.to.toUpperCase() == user_id.toUpperCase() || message.to.toUpperCase() == 'ALL' || message.to.toUpperCase() == 'FACILITY') && message.seen == false){
+            if(message.from != user_id){
+              return message;
+            }
           }
         }
       })
