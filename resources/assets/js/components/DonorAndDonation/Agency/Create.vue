@@ -13,7 +13,7 @@
                           <div class="form-group required">
                               <label for="" class="control-label col-lg-4">Agency Name</label>
                               <div class="col-lg-8">
-                                  <input type="text" class="form-control input-sm" v-model="agency_name">
+                                  <input type="text" class="form-control input-sm" v-model="agency_name" maxlength="100">
                               </div>
                           </div>
 
