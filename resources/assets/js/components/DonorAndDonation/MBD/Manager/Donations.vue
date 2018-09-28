@@ -138,10 +138,11 @@ export default {
       },
       assignDonorToDonationID(donation){
           let donation_id = prompt("Scan/Enter Donation ID")
+          let facility_cd = this.$session.get('user').facility_cd
           
           if(donation_id){
               this.$http.post(this,'mbd/assigndonortodonationid',{
-                  seqno : donation.seqno, donation_id
+                  seqno : donation.seqno, donation_id, facility_cd
               })
               .then(({data}) => {
                   this.loadDonations()
