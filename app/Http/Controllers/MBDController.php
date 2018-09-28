@@ -80,6 +80,10 @@ class MBDController extends Controller
         $d1 = Donation::find($seqno);
         $d2 = Donation::whereDonationId($donation_id)->first();
 
+        if(!$d1 || !$d2){
+            return;
+        }
+
         $d2->donor_sn = $d1->donor_sn;
         $d2->save();
         $d1->delete();
