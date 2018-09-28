@@ -44,6 +44,7 @@ Route::post('mbd/donationRemove', 'DonationController@donationRemove');
 Route::post('mbd/checkDonationIDs', 'DonationController@checkDonationIDs');
 Route::post('mbd/updateDonationDetails', 'DonationController@updateDonationDetails');
 Route::post('mbd/report', 'MBDController@report');
+Route::post('mbd/assigndonortodonationid', 'MBDController@assignDonorToDonationID');
 
 Route::post('donors', 'DonorController@search');
 Route::post('donor/create', 'DonorController@create');

@@ -71,4 +71,16 @@ class MBDController extends Controller
         }
         return $donations->get();
     }
+
+    function assignDonorToDonationID(Request $r){
+        $seqno = $r->get('seqno');
+        $donation_id = $r->get('donation_id');
+
+        $d1 = Donation::find($seqno);
+        $d2 = Donation::whereDonationId($donation_id)->first();
+
+        $d2->donor_sn = $d1->donor_sn;
+        $d2->save();
+        $d1->delete();
+    }
 }

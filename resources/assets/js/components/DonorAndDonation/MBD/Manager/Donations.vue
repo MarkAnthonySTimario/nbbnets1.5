@@ -35,7 +35,7 @@
                 <!-- <td><button class="btn btn-danger btn-xs" v-if="!d.processing" @click.prevent="confirmRemove(d.seqno)"><span class="glyphicon glyphicon-remove"></span></button></td> -->
                 <td>
                     <router-link :to="('/MBD/'+schedid+'/SearchDonor?donation_id='+d.donation_id)" class="btn btn-info btn-xs" v-if="!d.donor"><span class="glyphicon glyphicon-user"></span></router-link>
-                    <!-- <button :to="('/MBD/'+schedid+'/SearchDonor?donation_id='+d.donation_id)" class="btn btn-info btn-xs" v-if="!d.donation_id"><span class="glyphicon glyphicon-user"></span></button> -->
+                    <button @click="assignDonorToDonationID(d)" :to="('/MBD/'+schedid+'/SearchDonor?donation_id='+d.donation_id)" class="btn btn-info btn-xs" v-if="!d.mh_pe_stat" title="Assign Donor to a Donation ID"><span class="glyphicon glyphicon-paperclip"></span></button>
                 </td>
                 <td v-if="!d.donor" colspan="3"></td>
                 <td v-if="d.donor">{{d.donor.lname}}, {{d.donor.fname}} {{d.donor.mname}}</td>
@@ -135,6 +135,18 @@ export default {
       },
       assignDonor(donation_id){
           this.$router.replace("/MBD/"+this.schedid+"/AddDonor/"+donation_id);
+      },
+      assignDonorToDonationID(donation){
+          let donation_id = prompt("Scan/Enter Donation ID")
+          
+          if(donation_id){
+              this.$http.post(this,'mbd/assigndonortodonationid',{
+                  seqno : donation.seqno, donation_id
+              })
+              .then(({data}) => {
+                  this.loadDonations()
+              })
+          }
       },
       sortBy(field){
           if(field == 'lname'){
