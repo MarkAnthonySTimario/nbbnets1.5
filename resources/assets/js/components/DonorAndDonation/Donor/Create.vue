@@ -189,8 +189,7 @@ export default {
             let {donor_photo, seqno, donor_id, name_suffix, lname, fname, mname, bdate, gender, 
             civil_stat, occupation, tel_no, mobile_no, email, nationality, home, office} = this;
             let {facility_cd,user_id} = this.$session.get("user");
-            alert(occupation)
-            return;
+            
             this.$http.post(this,"donor/create",{
                 donor_photo, seqno, donor_id, name_suffix, lname, fname, mname, bdate, gender, 
                 civil_stat, occupation, tel_no, mobile_no, email, nationality, home, office, 
